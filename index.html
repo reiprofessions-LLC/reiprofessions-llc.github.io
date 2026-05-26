@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DealSnap — Buyer Brain + Field Engine</title>
-  <meta name="description" content="Buyer-first CRM and field prospecting dashboard for DealSnap with Notion Buyers synced to Supabase." />
+  <title>DealSnap — Buy Box Brain + Field Engine</title>
+  <meta name="description" content="Buy-box-first CRM and field prospecting dashboard for DealSnap with the Buy Boxes source synced to Supabase." />
   <meta name="theme-color" content="#07090d" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -157,7 +157,7 @@
       <article class="panel auth-panel">
         <div class="eyebrow"><span class="dot"></span> secure dual-engine access</div>
         <h2>Login to the <span>buyer brain</span> and field engine.</h2>
-        <p class="copy">Notion Buyers is mirrored into Supabase, and the CRM stays clean by using expandable buyer profiles instead of one giant wall of fields. DealSnap remains the field engine that matches prospects back into live buy boxes.</p>
+        <p class="copy">Buy Boxes (Investors) is mirrored into Supabase, and the CRM stays clean by using expandable buyer profiles instead of one giant wall of fields. DealSnap remains the field engine that matches prospects back into live buy boxes.</p>
         <form class="form" id="auth-form">
           <div class="row2">
             <div class="field">
@@ -224,7 +224,7 @@
           <div class="sigil" aria-hidden="true"></div>
           <div>
             <h1>DealSnap</h1>
-            <p>Notion Buyers → Supabase → DealSnap matching bridge</p>
+            <p>Buy Boxes (Investors) → Supabase → DealSnap matching bridge</p>
           </div>
         </div>
         <nav class="nav">
@@ -239,7 +239,7 @@
         <article class="panel hero">
           <div class="eyebrow"><span class="dot"></span> buyer-first, expandable, not cluttered</div>
           <h2>Buyer brain. <span>Field snap.</span></h2>
-          <p class="copy">The Buyers database from Notion is mirrored into Supabase with extra columns for real matching, then surfaced here as expandable cards so the CRM stays dense without getting messy. DealSnap stays responsible for OCR, distress cues, and proximity scans.</p>
+          <p class="copy">The Buy Boxes (Investors) database from Notion is mirrored into Supabase with extra columns for real matching, then surfaced here as expandable cards so the CRM stays dense without getting messy. DealSnap stays responsible for OCR, distress cues, and proximity scans.</p>
           <div class="actions">
             <a class="btn primary" href="#crm">Open CRM Brain <span>→</span></a>
             <a class="btn" href="#deal-snap">Open DealSnap <span>→</span></a>
@@ -295,7 +295,7 @@
           <div class="section-head">
             <div>
               <h3>Backend bridge</h3>
-              <p>Notion Buyers is mirrored into public.buyers in Supabase, with a bridge view for matching and a sync-state record for the integration layer.</p>
+              <p>Buy Boxes (Investors) is mirrored into public.buyers in Supabase, with a bridge view for matching and a sync-state record for the integration layer.</p>
             </div>
           </div>
           <div class="bridge-grid" id="bridge-grid"></div>
@@ -330,14 +330,14 @@
         { label: 'Draft queue', value: 'Live', note: 'Email/text staging from matches' },
       ],
       status: [
-        { title: 'Notion sync', detail: 'The Buyers database is mirrored into public.buyers and tagged as synced in integration state.', pill: 'Synced' },
+        { title: 'Notion sync', detail: 'The Buy Boxes (Investors) database is mirrored into public.buyers and tagged as synced in integration state.', pill: 'Synced' },
         { title: 'Expandability', detail: 'Buyer cards open into nested sections so the CRM stays dense without becoming a wall of noise.', pill: 'Clean' },
         { title: 'Matching bridge', detail: 'Supabase view buyers_match_bridge exposes the fields DealSnap needs for ranking and follow-up.', pill: 'Ready' },
       ],
       bridge: [
         { title: 'public.buyers', body: 'Normalized buyer store with the current Notion snapshot and matching-friendly columns.' },
         { title: 'public.buyers_match_bridge', body: 'Active buyer projection with core criteria, notes, and raw payloads for DealSnap.' },
-        { title: 'public.integration_sync_states', body: 'Sync record shows the Notion Buyers database as mirrored and current.' },
+        { title: 'public.integration_sync_states', body: 'Sync record shows the Buy Boxes (Investors) database as mirrored and current.' },
         { title: 'DealSnap handoff', body: 'Prospect matches can be drafted into email/text without leaving the modular flow.' },
       ],
       coverage: [
