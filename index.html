@@ -141,10 +141,49 @@
     .modal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
     .modal-grid .full{grid-column:1/-1}
     .hidden{display:none !important}
+
+    .hero-shell{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:stretch;width:100%}
+    .hero-copy,.hero-stack,.alert-card,.buyer-card{border-radius:24px;background:linear-gradient(180deg,#11161e,#151b24);color:var(--bone);border:1px solid rgba(245,240,232,.08);box-shadow:var(--shadow-strong)}
+    .hero-copy{padding:22px;display:grid;gap:14px;min-height:220px}
+    .hero-stack{padding:18px;display:grid;gap:14px;align-content:start}
+    .hero-copy h2{margin:0;font-family:'Bebas Neue',sans-serif;font-size:58px;line-height:.9;letter-spacing:.08em}
+    .hero-copy p{margin:0;max-width:760px;color:rgba(245,240,232,.74);line-height:1.6}
+    .workflow-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .workflow-step{padding:12px 14px;border-radius:18px;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.08);display:grid;gap:6px}
+    .workflow-step span{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--mist)}
+    .workflow-step strong{font-size:13px;line-height:1.3}
+    .hero-metric{padding:16px;border-radius:20px;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.08);display:grid;gap:8px}
+    .hero-metric span{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--mist)}
+    .hero-metric strong{font-family:'Bebas Neue',sans-serif;font-size:48px;line-height:1;color:var(--bone)}
+    .hero-metric small{color:rgba(245,240,232,.68);line-height:1.45}
+    .alert-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .alert-card{padding:16px;min-height:92px;background:linear-gradient(180deg,#12161d,#1b2230)}
+    .alert-card strong{display:block;font-size:15px;margin-bottom:6px}
+    .alert-card span{color:rgba(245,240,232,.72);font-size:13px;line-height:1.45}
+    .alert-empty{padding:16px;border-radius:20px;border:1px dashed rgba(13,15,20,.18);background:rgba(255,255,255,.44);color:rgba(13,15,20,.68);grid-column:1/-1}
+    .buyer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .buyer-card{padding:16px;display:grid;gap:12px;background:linear-gradient(180deg,#11161e,#151b24);color:var(--bone)}
+    .buyer-card .lead-meta,.buyer-card p,.buyer-card .field strong,.buyer-card .field span,.buyer-card label{color:inherit}
+    .buyer-card .field{background:rgba(245,240,232,.05);border-color:rgba(245,240,232,.08)}
+    .buyer-card .field input,.buyer-card .field textarea{width:100%;margin-top:8px;padding:10px 11px;border-radius:12px;border:1px solid rgba(245,240,232,.12);background:rgba(13,15,20,.5);color:var(--bone);outline:none}
+    .buyer-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .buyer-card .chip,.buyer-card .status{background:rgba(245,240,232,.08);color:var(--bone)}
+    .buyer-card .chip.gold{background:rgba(200,168,75,.18);color:var(--bone)}
+    .buyer-card .btn.secondary{background:transparent;color:var(--bone);border-color:rgba(245,240,232,.16)}
+    .match-panel{display:grid;gap:10px}
+    .match-row{padding:12px 13px;border-radius:16px;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.08);display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .match-row strong{display:block;font-size:14px;margin-bottom:4px}
+    .match-row span{display:block;color:rgba(245,240,232,.72);font-size:12px;line-height:1.4}
+    .match-score{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+    .match-btn{display:inline-flex;align-items:center;gap:8px}
+    .match-badge{padding:6px 10px;border-radius:999px;background:rgba(232,66,26,.14);color:var(--bone);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
+    .workflow-highlight{display:flex;gap:8px;flex-wrap:wrap}
+    .workflow-highlight .pill{background:rgba(245,240,232,.08);border-color:rgba(245,240,232,.12);color:var(--bone)}
+
     @media (max-width: 1180px){
       .app{grid-template-columns:1fr}
       .sidebar{position:relative;height:auto}
-      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid{grid-template-columns:1fr 1fr}
+      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.hero-shell,.alert-bar,.buyer-grid,.buyer-fields{grid-template-columns:1fr 1fr}
       .drawer{width:min(500px,calc(100vw - 36px))}
     }
     @media (max-width: 760px){
@@ -161,14 +200,15 @@
     <aside class="sidebar">
       <div class="brand">
         <h1>NATIONWIDE<br>PROSPECTING CRM</h1>
-        <p>Functional operations shell for leads, DealSnap intake, deal flow, property management, and vendors.</p>
+        <p>Buyer-first DealSnap OS for lead capture, underwriting, matchmaking, and operational handoff.</p>
       </div>
       <div class="nav">
-        <button class="nav-item active" data-jump="#dashboard"><span class="nav-ico">⌂</span><span><strong>Dashboard</strong><small>KPI cards and activity</small></span></button>
+        <button class="nav-item active" data-jump="#dashboard"><span class="nav-ico">⌂</span><span><strong>Dashboard</strong><small>Workflow status and alerts</small></span></button>
         <button class="nav-item" data-jump="#ocr"><span class="nav-ico">◫</span><span><strong>DealSnap</strong><small>Convert docs into leads</small></span></button>
-        <button class="nav-item" data-jump="#pipeline"><span class="nav-ico">↺</span><span><strong>Kanban Pipeline</strong><small>Drag to update stage</small></span></button>
-        <button class="nav-item" data-jump="#leads"><span class="nav-ico">▦</span><span><strong>All Leads</strong><small>Profiles and property data</small></span></button>
-        <button class="nav-item" data-jump="#tenants"><span class="nav-ico">⚑</span><span><strong>Property Management</strong><small>Asset-level payment ledger</small></span></button>
+        <button class="nav-item" data-jump="#pipeline"><span class="nav-ico">↺</span><span><strong>Kanban Pipeline</strong><small>Lead to contract flow</small></span></button>
+        <button class="nav-item" data-jump="#leads"><span class="nav-ico">▦</span><span><strong>Leads</strong><small>Capture and underwriting</small></span></button>
+        <button class="nav-item" data-jump="#buyers"><span class="nav-ico">◎</span><span><strong>Buyers</strong><small>Matchmaking and buy boxes</small></span></button>
+        <button class="nav-item" data-jump="#tenants"><span class="nav-ico">⚑</span><span><strong>Property Management</strong><small>Operational side</small></span></button>
         <button class="nav-item" data-jump="#vendors"><span class="nav-ico">◉</span><span><strong>Vendors</strong><small>Contractors and services</small></span></button>
       </div>
       <div class="side-foot">
@@ -184,24 +224,39 @@
 
     <main class="main">
       <section class="panel topbar" id="dashboard">
-        <div class="hero">
-          <span class="kicker">visual crm / lead flow / rental ops</span>
-          <h2>Dashboard</h2>
-          <p>Core surfaces only: KPI cards, DealSnap, Kanban Pipeline, All Leads, Tenant Management, and Vendors. Live Supabase data is used when available, with the mockup baseline as fallback.</p>
-        </div>
-        <div style="display:grid;gap:14px;justify-items:end">
-          <div class="pill-row">
-            <span class="pill">Signal Red <strong>#E8421A</strong></span>
-            <span class="pill">Gold <strong>#C8A84B</strong></span>
-            <span class="pill">Ink <strong>#0D0F14</strong></span>
-            <span class="pill">Bone <strong>#F5F0E8</strong></span>
-            <span class="pill">Mist <strong>#8B95A3</strong></span>
+        <div class="hero-shell">
+          <div class="hero-copy">
+            <span class="kicker">deal snap / buyer-first operating system</span>
+            <h2>Nationwide Prospecting CRM</h2>
+            <p>Lead capture, underwriting, buyer matching, and property operations are organized in one high-velocity system.</p>
+            <div class="workflow-strip">
+              <div class="workflow-step"><span>Step 01</span><strong>Lead Capture</strong></div>
+              <div class="workflow-step"><span>Step 02</span><strong>Underwriting</strong></div>
+              <div class="workflow-step"><span>Step 03</span><strong>Buyer Matching</strong></div>
+              <div class="workflow-step"><span>Step 04</span><strong>Operations</strong></div>
+            </div>
+            <div class="workflow-highlight">
+              <span class="pill">Signal Red <strong>#E8421A</strong></span>
+              <span class="pill">Gold <strong>#C8A84B</strong></span>
+              <span class="pill">Ink <strong>#0D0F14</strong></span>
+              <span class="pill">Bone <strong>#F5F0E8</strong></span>
+              <span class="pill">Mist <strong>#8B95A3</strong></span>
+            </div>
           </div>
-          <div class="hero-actions">
-            <button class="btn primary" id="openLeadModal">Add Lead</button>
-            <button class="btn secondary" id="refreshData">Refresh Data</button>
+          <div class="hero-stack">
+            <div class="hero-metric">
+              <span>Potential Buyers Found</span>
+              <strong id="matchSummaryCount">0</strong>
+              <small id="matchSummaryText">Matching alerts appear here after underwriting.</small>
+            </div>
+            <div class="hero-actions">
+              <button class="btn primary" id="openLeadModal">Add Lead</button>
+              <button class="btn secondary" id="openBuyerModal">Add Buyer</button>
+              <button class="btn secondary" id="refreshData">Refresh Data</button>
+            </div>
           </div>
         </div>
+        <div class="alert-bar" id="matchAlertBar"></div>
       </section>
 
       <section class="panel section">
@@ -230,7 +285,7 @@
 
       <section class="panel section" id="leads">
         <div class="section-title">
-          <div><h3>All Leads</h3><p>Lead cards with property info, owner details, and contact history.</p></div>
+          <div><h3>Leads</h3><p>Lead capture and underwriting feed the buyer matching queue.</p></div>
           <div class="sub" id="leadCount">—</div>
         </div>
         <div class="stack">
@@ -267,12 +322,21 @@
         </div>
       </section>
 
+      <section class="panel section" id="buyers">
+        <div class="section-title">
+          <div><h3>Buyers</h3><p>Detailed buy-box entry with zip codes, price ranges, preferred strategies, and asset types.</p></div>
+          <div class="ledger-actions"><button class="btn primary" id="openBuyerModal">Add Buyer</button><button class="btn secondary" id="refreshBuyers">Refresh Matches</button></div>
+        </div>
+        <div class="buyer-grid" id="buyerCards"></div>
+      </section>
+
       <section class="panel section" id="tenants">
         <div class="section-title">
           <div><h3>Property Management</h3><p>Asset-level ledger editing for payments, debt, and history tied to each individual property.</p></div>
           <div class="sub" id="tenantCount">—</div>
         </div>
         <div class="card-grid" id="tenantCards"></div>
+        <div class="profile-grid" id="tenantProfiles" style="margin-top:16px"></div>
       </section>
 
       <section class="panel section" id="vendors">
@@ -314,6 +378,26 @@
     </div>
   </div>
 
+  <div class="modal" id="buyerModal">
+    <div class="lead-profile">
+      <button class="drawer-close" id="closeBuyerModal">×</button>
+      <div class="profile-top"><div><h4>Add Buyer</h4><div class="lead-meta">Create a detailed buy box for match scoring and outreach.</div></div></div>
+      <div class="modal-grid">
+        <label class="field full"><span>Buyer Name</span><input id="b_name" placeholder="Buyer or capital partner" /></label>
+        <label class="field"><span>Market</span><input id="b_market" placeholder="San Antonio, TX" /></label>
+        <label class="field"><span>Contact</span><input id="b_contact" placeholder="email or phone" /></label>
+        <label class="field"><span>Zip Codes</span><input id="b_zips" placeholder="78212, 78213" /></label>
+        <label class="field"><span>Min Price</span><input id="b_min" inputmode="numeric" placeholder="100000" /></label>
+        <label class="field"><span>Max Price</span><input id="b_max" inputmode="numeric" placeholder="400000" /></label>
+        <label class="field"><span>Preferred Strategies</span><input id="b_strategies" placeholder="Sober Living, Midterm Rental" /></label>
+        <label class="field"><span>Asset Types</span><input id="b_assets" placeholder="Single Family, Duplex" /></label>
+        <label class="field"><span>Status</span><input id="b_status" placeholder="active" /></label>
+        <label class="field full"><span>Buy Box Notes</span><textarea id="b_notes" rows="4" placeholder="Any specific filters or timing"></textarea></label>
+      </div>
+      <div class="ledger-actions"><button class="btn primary" id="saveBuyer">Save Buyer</button><button class="btn secondary" id="cancelBuyer">Cancel</button></div>
+    </div>
+  </div>
+
   <div class="drawer" id="drawer"></div>
 
   <script>
@@ -343,11 +427,11 @@
         { id:'berkshire', name:'Berkshire', type:'lead', market:'Dallas, TX', status:'contract', strategy:'SubTo', rent:2500, fees:300, debt:1200, contact:'buyer@example.com', score:88, property:'The Berkshire Apartments', owner:'Ownership group', history:'Under contract', notes:'Contract stage' }
       ],
       buyers: [
-        { id:'buyer-1', name:'Althing Properties', type:'buyer', market:'Texas', status:'active', strategy:'Buyer Pool', rent:0, fees:0, debt:0, contact:'investors@althingproperties.com', score:86, property:'Buy box', owner:'Landon Cole', history:'Repeat counterpart', notes:'Buyer / developer' }
+        { id:'buyer-1', name:'Althing Properties', type:'buyer', market:'Texas / San Antonio', status:'active', strategy:'Buyer Pool', rent:0, fees:0, debt:0, contact:'investors@althingproperties.com', score:86, property:'Buy box', owner:'Landon Cole', history:'Repeat counterpart', notes:'Buyer / developer', zipCodes:['78212','78213','78233'], minPrice:120000, maxPrice:450000, preferredStrategies:['Sober Living','Midterm Rental','SubTo'], assetTypes:['Single Family','Duplex','Small Multifamily'], buyerNotes:'Open to creative structures and steady cash flow.' }
       ],
       tenants: [
-        { id:'laurel', name:'123 W. Laurel', lease:'active', property:'123 W. Laurel, San Antonio', monthlyRent:1750, pastDebt:0, balanceOwed:350, paymentHistory:['Jun $1750','May $1750','Apr $1750'] },
-        { id:'rosewood', name:'711 W. Rosewood', lease:'active', property:'711 W. Rosewood, San Antonio', monthlyRent:1925, pastDebt:125, balanceOwed:525, paymentHistory:['Jun $1925','May $1925','Apr $1800'] }
+        { id:'laurel', name:'123 W. Laurel', lease:'active', strategy:'Sober Living', property:'123 W. Laurel, San Antonio', monthlyRent:1750, pastDebt:0, balanceOwed:350, paymentHistory:['Jun $1750','May $1750','Apr $1750'], activityLog:['Rent paid on time','Balance carried from prior cycle','Ready for buyer match review'], notes:'Profile built for asset-level review' },
+        { id:'rosewood', name:'711 W. Rosewood', lease:'active', strategy:'Midterm Rental', property:'711 W. Rosewood, San Antonio', monthlyRent:1925, pastDebt:125, balanceOwed:525, paymentHistory:['Jun $1925','May $1925','Apr $1800'], activityLog:['Rent adjusted after prior cycle','Payments logged for three months','Potential buyer interest flagged'], notes:'Profile built for asset-level review' }
       ],
       vendors: [
         { id:'vendor-1', name:'Ryan Urias', category:'Contractor', contact:'(210) 555-0199', status:'active', notes:'Framing and rehab scheduling' },
@@ -419,9 +503,62 @@
       };
     }
     function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
-    function normalizeTenant(item){ const history = Array.isArray(item.paymentHistory) ? item.paymentHistory : (Array.isArray(item.payment_history) ? item.payment_history : []); return { id:item.id||crypto.randomUUID(), name:item.name||item.tenant_name||item.property_name||'Tenant', property:item.property||item.property_name||item.address||'—', lease:item.lease||item.lease_status||'active', monthlyRent:Number(item.monthlyRent||item.monthly_rent||item.rent||0)||0, pastDebt:Number(item.pastDebt||item.past_debt||0)||0, balanceOwed:Number(item.balanceOwed||item.balance_owed||item.amount_due||0)||0, paymentHistory:history.length ? history : ['No payments logged'], raw:item }; }
+    function normalizeTenant(item){ const history = Array.isArray(item.paymentHistory) ? item.paymentHistory : (Array.isArray(item.payment_history) ? item.payment_history : []); const activity = Array.isArray(item.activityLog) ? item.activityLog : (Array.isArray(item.activity_log) ? item.activity_log : []); return { id:item.id||crypto.randomUUID(), name:item.name||item.tenant_name||item.property_name||'Tenant', property:item.property||item.property_name||item.address||'—', lease:item.lease||item.lease_status||'active', strategy:item.strategy||item.deal_strategy||item.exit_strategy||'Midterm Rental', monthlyRent:Number(item.monthlyRent||item.monthly_rent||item.rent||0)||0, pastDebt:Number(item.pastDebt||item.past_debt||0)||0, balanceOwed:Number(item.balanceOwed||item.balance_owed||item.amount_due||0)||0, paymentHistory:history.length ? history : ['No payments logged'], activityLog:activity.length ? activity : ['No activity logged'], notes:item.notes || item.description || '', raw:item }; }
     function normalizeVendor(item){ return { id:item.id||crypto.randomUUID(), name:item.vendor_name||item.name||item.company_name||'Vendor', category:item.category||item.vendor_type||item.type||'Service', contact:item.phone||item.email||item.contact||'—', status:item.status||(item.active===false?'inactive':'active'), notes:item.notes||item.scheduling||item.schedule||'—', raw:item }; }
-    function normalizeBuyer(item){ return normalizeLead({...item, type:'buyer'}); }
+    function splitList(v){ return String(v ?? '').split(/\n|,|\|/).map(s => s.trim()).filter(Boolean); }
+    function leadZipText(lead){ return [lead.market, lead.property, lead.notes, lead.history].filter(Boolean).join(' ').match(/\b\d{5}\b/g) || []; }
+    function strategyAssetFor(lead){
+      const s = String(lead.strategy || '').toLowerCase();
+      if (s.includes('sober')) return ['sober living', 'residential'];
+      if (s.includes('midterm')) return ['midterm rental', 'residential'];
+      if (s.includes('subto')) return ['single family', 'duplex', 'small multifamily'];
+      if (s.includes('lease')) return ['single family', 'duplex'];
+      if (s.includes('owner finance')) return ['single family', 'duplex', 'small multifamily'];
+      if (s.includes('buyer pool')) return ['any'];
+      return [s || 'any'];
+    }
+    function matchBuyerToLead(lead, buyer){
+      let score = 0;
+      const leadMarket = String(lead.market || '').toLowerCase();
+      const buyerMarket = String(buyer.market || '').toLowerCase();
+      const leadZips = leadZipText(lead);
+      const buyerZips = (buyer.zipCodes || []).map(z => String(z).toLowerCase());
+      if (leadZips.length && buyerZips.length && leadZips.some(z => buyerZips.includes(z))) score += 40;
+      else if (buyerMarket && leadMarket && (leadMarket.includes(buyerMarket) || buyerMarket.includes(leadMarket))) score += 20;
+      const leadStrategy = String(lead.strategy || '').toLowerCase();
+      const preferred = (buyer.preferredStrategies || []).map(s => String(s).toLowerCase());
+      const assets = (buyer.assetTypes || []).map(s => String(s).toLowerCase());
+      if (preferred.some(p => leadStrategy.includes(p) || p.includes(leadStrategy))) score += 35;
+      const leadAssets = strategyAssetFor(lead);
+      if (assets.length && leadAssets.some(a => assets.some(b => b.includes(a) || a.includes(b)))) score += 25;
+      if (buyer.minPrice && Number(lead.rent || 0) && Number(lead.rent) < Number(buyer.minPrice)) score -= 5;
+      if (buyer.maxPrice && Number(lead.rent || 0) && Number(lead.rent) > Number(buyer.maxPrice)) score -= 5;
+      return score;
+    }
+    function buyerMatchesForLead(lead){
+      return state.buyers.map(buyer => ({ buyer, score: matchBuyerToLead(lead, buyer) })).filter(x => x.score >= 20).sort((a,b) => b.score - a.score).slice(0, 5);
+    }
+    function leadMatchesForBuyer(buyer){
+      return state.leads.map(lead => ({ lead, score: matchBuyerToLead(lead, buyer) })).filter(x => x.score >= 20).sort((a,b) => b.score - a.score).slice(0, 5);
+    }
+    function propertyMatchesForTenant(property){
+      return state.buyers.map(buyer => ({ buyer, score: matchBuyerToLead({ ...property, type:'lead', market: property.property || property.market || 'San Antonio', strategy: property.strategy || 'Other', rent: property.monthlyRent, notes: property.notes, history: (property.activityLog || []).join(' ') }, buyer) })).filter(x => x.score >= 20).sort((a,b) => b.score - a.score).slice(0, 5);
+    }
+    function buyerSummary(buyer){
+      const zips = (buyer.zipCodes || []).join(', ') || 'Any zip';
+      const range = buyer.minPrice || buyer.maxPrice ? `${usdFmt(buyer.minPrice || 0)} - ${usdFmt(buyer.maxPrice || 0)}` : 'Open range';
+      const strategies = (buyer.preferredStrategies || []).join(', ') || 'Any strategy';
+      const assets = (buyer.assetTypes || []).join(', ') || 'Any asset';
+      return { zips, range, strategies, assets };
+    }
+    async function persistBuyer(item){
+      const table = chooseTable(tableCandidates.buyers);
+      const payload = { name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, market:item.market, contact:item.contact, strategy:item.strategy, zipCodes:(item.zipCodes || []).join(', '), minPrice:item.minPrice, maxPrice:item.maxPrice, preferredStrategies:(item.preferredStrategies || []).join(', '), assetTypes:(item.assetTypes || []).join(', '), notes:item.notes || '', buyerNotes:item.buyerNotes || '', updated_at:new Date().toISOString() };
+      try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
+      localStorage.setItem(`buyer-${item.id}`, JSON.stringify(item));
+    }
+
+    function normalizeBuyer(item){ const lead = normalizeLead({...item, type:'buyer'}); const zipCodes = splitList(item.zipCodes || item.zip_codes || item.service_zips || item.zips || ''); const preferredStrategies = splitList(item.preferredStrategies || item.preferred_strategies || item.strategy_preferences || item.strategies || item.strategy || ''); const assetTypes = splitList(item.assetTypes || item.asset_types || item.asset_type || item.assetClass || item.asset_class || ''); return { ...lead, zipCodes, minPrice:Number(item.minPrice || item.min_price || item.priceMin || 0) || 0, maxPrice:Number(item.maxPrice || item.max_price || item.priceMax || 0) || 0, preferredStrategies: preferredStrategies.length ? preferredStrategies : ['Buyer Pool'], assetTypes, buyerNotes:item.buyerNotes || item.buy_box_notes || item.buyBoxNotes || item.notes || '' }; }
     async function loadData(){
       const [leads,buyers,ocr,tenants,vendors] = await Promise.all([
         fetchFirst(tableCandidates.leads), fetchFirst(tableCandidates.buyers), fetchFirst(tableCandidates.ocr), fetchFirst(tableCandidates.tenants), fetchFirst(tableCandidates.vendors)
@@ -447,15 +584,33 @@
     function renderKpis(){
       const liveLeads = state.leads.length;
       const leads = state.source === 'live' ? liveLeads : BASELINE.kpis.leads;
+      const matches = state.leads.reduce((sum, lead) => sum + buyerMatchesForLead(lead).length, 0);
       const cards = [
-        ['Active Leads', leads, 'Live' , '+12 this week'],
-        ['Pipeline Value', usdFmt(BASELINE.kpis.pipelineValue), 'Total', '+$840K in motion'],
-        ['Under Contract', BASELINE.kpis.contract, 'In escrow', '+2 this month'],
-        ['Closed YTD', BASELINE.kpis.closed, 'Won', '+3 vs last year']
+        ['Leads', leads, 'Live', 'Lead capture pipeline'],
+        ['Buyers', state.buyers.length, 'Buyer', 'Matchmaking buy boxes'],
+        ['Properties', state.tenants.length, 'Ops', 'Property Management profiles'],
+        ['DealSnap Items', state.ocr.length, 'Intake', 'Document conversion queue']
       ];
-      $('kpiGrid').innerHTML = cards.map(([title,value,badge,note]) => `<div class="kpi-card"><div class="kpi-top"><h4 class="kpi-label">${title}</h4><span class="badge ${badge==='Live'?'good':'dark'}">${badge}</span></div><div class="kpi-value">${value}</div><div class="kpi-note">${note}</div></div>`).join('');
+      $('kpiGrid').innerHTML = cards.map(([title,value,badge,note]) => `<div class="kpi-card"><div class="kpi-top"><h4 class="kpi-label">${title}</h4><span class="badge ${(badge==='Buyer' || badge==='Live') ? 'good' : 'dark'}">${badge}</span></div><div class="kpi-value">${value}</div><div class="kpi-note">${note}</div></div>`).join('');
       $('recordCount').textContent = `${leadTable().length} records shown`;
     }
+
+    function renderMatchAlerts(){
+      const leadMatches = state.leads.map(lead => ({ lead, matches: buyerMatchesForLead(lead) })).filter(item => item.matches.length > 0);
+      $('matchSummaryCount').textContent = numFmt(leadMatches.reduce((sum, item) => sum + item.matches.length, 0));
+      $('matchSummaryText').textContent = leadMatches.length ? `${leadMatches.length} lead${leadMatches.length === 1 ? '' : 's'} have buyer matches ready` : 'No buyer matches yet. Lead Capture → Underwriting → Buyer Matching.';
+      $('matchAlertBar').innerHTML = leadMatches.slice(0, 3).map(({lead, matches}) => `<article class="alert-card"><strong>${escapeHtml(lead.name)}</strong><span>${matches[0].buyer.name} • ${matches.length} potential match${matches.length === 1 ? '' : 'es'}</span></article>`).join('') || '<div class="alert-empty">No potential buyers found yet. Keep the workflow moving from lead capture to underwriting, then buyer matching.</div>';
+    }
+    function renderBuyers(){
+      const items = state.buyers;
+      $('buyerCount').textContent = `${items.length} buyers`;
+      $('buyerCards').innerHTML = items.map(item => {
+        const fitLeads = leadMatchesForBuyer(item);
+        const summary = buyerSummary(item);
+        return `<article class="buyer-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.contact || item.market || 'Buyer record')}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="chips"><span class="chip gold">${fitLeads.length} potential matches</span><span class="chip">${escapeHtml(item.strategy || 'Buyer Pool')}</span><button class="btn secondary" data-open-lead="${escapeHtml(item.id)}">View Profile</button></div><div class="profile-fields"><div class="field"><span>Zip Codes</span><strong>${escapeHtml(summary.zips)}</strong></div><div class="field"><span>Price Range</span><strong>${escapeHtml(summary.range)}</strong></div><div class="field"><span>Preferred Strategies</span><strong>${escapeHtml(summary.strategies)}</strong></div><div class="field"><span>Asset Types</span><strong>${escapeHtml(summary.assets)}</strong></div></div><div class="buyer-fields"><label class="field"><span>Zip Codes</span><input value="${escapeHtml((item.zipCodes || []).join(', '))}" data-buyer-field="zipCodes" data-buyer-id="${escapeHtml(item.id)}"></label><label class="field"><span>Min Price</span><input value="${Number(item.minPrice || 0)}" inputmode="numeric" data-buyer-field="minPrice" data-buyer-id="${escapeHtml(item.id)}"></label><label class="field"><span>Max Price</span><input value="${Number(item.maxPrice || 0)}" inputmode="numeric" data-buyer-field="maxPrice" data-buyer-id="${escapeHtml(item.id)}"></label><label class="field"><span>Preferred Strategies</span><input value="${escapeHtml((item.preferredStrategies || []).join(', '))}" data-buyer-field="preferredStrategies" data-buyer-id="${escapeHtml(item.id)}"></label><label class="field"><span>Asset Types</span><input value="${escapeHtml((item.assetTypes || []).join(', '))}" data-buyer-field="assetTypes" data-buyer-id="${escapeHtml(item.id)}"></label><label class="field"><span>Notes</span><textarea rows="3" data-buyer-field="buyerNotes" data-buyer-id="${escapeHtml(item.id)}">${escapeHtml(item.buyerNotes || item.notes || '')}</textarea></label></div><div class="ledger-actions"><button class="btn primary match-btn" data-find-matches="${escapeHtml(item.id)}">Find Buyer Matches</button><button class="btn secondary" data-open-lead="${escapeHtml(item.id)}">View Profile</button><button class="btn secondary" data-save-buyer="${escapeHtml(item.id)}">Save Buyer</button></div></article>`;
+      }).join('');
+    }
+
     function renderOcr(){
       const items = ocrMatches();
       $('ocrCount').textContent = `${items.length} items shown`;
@@ -483,22 +638,30 @@
     function renderLeads(){
       const items = leadTable();
       $('leadCount').textContent = `${items.length} rows shown`;
-      $('leadsTable').innerHTML = items.map(item => `<tr class="lead-row" data-lead="${escapeHtml(item.id)}"><td><strong>${escapeHtml(item.name)}</strong><div class="lead-meta">${escapeHtml(item.property || item.notes || 'CRM record')}</div></td><td><span class="badge ${item.type==='buyer'?'good':'warn'}">${escapeHtml(item.type)}</span></td><td class="lead-meta">${escapeHtml(item.market || '—')}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.strategy || 'Other')}</td><td class="lead-meta">${escapeHtml(item.contact || '—')}</td><td>${item.score ? pctFmt(item.score) : '—'}</td></tr>`).join('');
-      $('leadProfiles').innerHTML = items.slice(0,6).map(item => `<article class="lead-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="chips"><span class="chip">${escapeHtml(item.type)}</span><span class="chip gold">${item.score ? pctFmt(item.score) : '—'}</span><button class="btn secondary" data-open-lead="${escapeHtml(item.id)}">Open</button></div></article>`).join('');
+      $('leadsTable').innerHTML = items.map(item => { const matches = item.type === 'lead' ? buyerMatchesForLead(item).length : 0; return `<tr class="lead-row" data-lead="${escapeHtml(item.id)}"><td><strong>${escapeHtml(item.name)}</strong><div class="lead-meta">${escapeHtml(item.property || item.notes || 'CRM record')}</div></td><td><span class="badge ${item.type==='buyer'?'good':'warn'}">${escapeHtml(item.type)}</span></td><td class="lead-meta">${escapeHtml(item.market || '—')}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.strategy || 'Other')}</td><td class="lead-meta">${escapeHtml(item.contact || '—')}</td><td>${matches ? `<span class="match-badge">${matches} buyers</span>` : (item.score ? pctFmt(item.score) : '—')}</td></tr>`; }).join('');
+      $('leadProfiles').innerHTML = items.slice(0,6).map(item => { const matches = item.type === 'lead' ? buyerMatchesForLead(item) : []; return `<article class="lead-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="chips"><span class="chip">${escapeHtml(item.type)}</span><span class="chip gold">${item.score ? pctFmt(item.score) : '—'}</span><span class="chip red">${matches.length} matches</span>${item.type === 'lead' ? `<button class="btn primary match-btn" data-find-matches="${escapeHtml(item.id)}">Find Buyer Matches</button>` : ''}<button class="btn secondary" data-open-lead="${escapeHtml(item.id)}">Open</button></div></article>`; }).join('');
     }
     function renderTenants(){
       const items = filteredTenants();
       $('tenantCount').textContent = `${items.length} records shown`;
-      $('tenantCards').innerHTML = items.map(item => `<article class="tenant-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.property)}</p></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="ledger"><div class="ledger-grid"><div class="ledger-box"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="ledger-box"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="ledger-box"><span>Current Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="ledger-box"><span>Payment History</span><strong>${item.paymentHistory.length} entries</strong></div></div><div class="payment-history">${item.paymentHistory.map(p => `<span class="payment-pill">${escapeHtml(p)}</span>`).join('')}</div><div class="ledger-edit"><label><span>Monthly Rent</span><input value="${item.monthlyRent}" inputmode="numeric" data-tenant-field="monthlyRent" data-tenant-id="${escapeHtml(item.id)}"></label><label><span>Past Debt</span><input value="${item.pastDebt}" inputmode="numeric" data-tenant-field="pastDebt" data-tenant-id="${escapeHtml(item.id)}"></label><label><span>Balance Owed</span><input value="${item.balanceOwed}" inputmode="numeric" data-tenant-field="balanceOwed" data-tenant-id="${escapeHtml(item.id)}"></label><label class="full" style="grid-column:1/-1"><span>Payment History (pipe-separated)</span><input value="${escapeHtml(item.paymentHistory.join(' | '))}" data-tenant-field="paymentHistory" data-tenant-id="${escapeHtml(item.id)}"></label></div></div></article>`).join('');
+      $('tenantCards').innerHTML = items.map(item => {
+        const matches = propertyMatchesForTenant(item);
+        return `<article class="tenant-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.property)}</p></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="chips"><span class="chip gold">${matches.length} potential buyers</span><span class="chip">${escapeHtml(item.strategy || 'Property')}</span><button class="btn secondary" data-open-property="${escapeHtml(item.id)}">Open Profile</button></div><div class="profile-fields"><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${item.paymentHistory.length} entries</strong></div><div class="field"><span>Activity Log</span><strong>${item.activityLog.length} notes</strong></div></div></article>`;
+      }).join('');
+      $('tenantProfiles').innerHTML = items.map(item => {
+        const matches = propertyMatchesForTenant(item);
+        return `<article class="lead-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property)}</div></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="profile-fields"><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Midterm Rental')}</strong></div><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${escapeHtml(item.paymentHistory.join(' • '))}</strong></div><div class="field"><span>Activity Log</span><strong>${escapeHtml((item.activityLog || []).join(' • '))}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">Matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="ledger-actions"><button class="btn primary" data-open-property="${escapeHtml(item.id)}">Open Property Profile</button><button class="btn secondary" data-find-matches="${escapeHtml(item.id)}">Run Matchmaking</button></div></article>`;
+      }).join('');
     }
     function renderVendors(){
       const items = filteredVendors();
       $('vendorCount').textContent = `${items.length} records shown`;
       $('vendorsTable').innerHTML = items.map(item => `<tr><td><strong>${escapeHtml(item.name)}</strong></td><td class="lead-meta">${escapeHtml(item.category)}</td><td class="lead-meta">${escapeHtml(item.contact)}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.notes)}</td></tr>`).join('');
     }
-    function render(){ renderKpis(); renderOcr(); renderPipeline(); renderLeads(); renderTenants(); renderVendors(); }
-    function openLead(item){ state.selected = item; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Rent</span><strong>${usdFmt(item.rent)}</strong></div><div class="field"><span>Fees</span><strong>${usdFmt(item.fees)}</strong></div><div class="field"><span>Debt</span><strong>${usdFmt(item.debt)}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="inline-edit"><label><span>Name</span><input id="d_name" value="${escapeHtml(item.name)}"></label><label><span>Status</span><input id="d_status" value="${escapeHtml(item.status)}"></label><label><span>Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.rent||0)}"></label><label><span>Fees</span><input id="d_fees" inputmode="numeric" value="${Number(item.fees||0)}"></label><label><span>Debt</span><input id="d_debt" inputmode="numeric" value="${Number(item.debt||0)}"></label><label class="full"><span>Notes</span><textarea id="d_notes" rows="4">${escapeHtml(item.notes || item.history || '')}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
+    function render(){ renderKpis(); renderMatchAlerts(); renderOcr(); renderPipeline(); renderLeads(); renderBuyers(); renderTenants(); renderVendors(); }
+    function openLead(item){ state.selected = item; const matches = item.type === 'buyer' ? leadMatchesForBuyer(item) : buyerMatchesForLead(item); const matchTitle = item.type === 'buyer' ? 'Potential Leads found' : 'Potential Buyers found'; const matchCopy = item.type === 'buyer' ? 'Lead prospects ready for outreach.' : 'Buyer prospects ready for outreach.'; const emptyCopy = item.type === 'buyer' ? 'No lead matches yet. Broaden the buyer box or open more deals.' : 'No buyer matches yet. Run underwriting or broaden the buyer box.'; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Rent</span><strong>${usdFmt(item.rent)}</strong></div><div class="field"><span>Fees</span><strong>${usdFmt(item.fees)}</strong></div><div class="field"><span>Debt</span><strong>${usdFmt(item.debt)}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">${matchTitle}</h3><p style="margin:6px 0 0">${matches.length ? `${matches.length} match${matches.length === 1 ? '' : 'es'} ready for outreach. ${matchCopy}` : emptyCopy}</p></div><div class="sub">Match priority</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(item.type === 'buyer' ? m.lead.name : m.buyer.name)}</strong><span>${escapeHtml(item.type === 'buyer' ? (m.lead.strategy || 'Any strategy') : (m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml(item.type === 'buyer' ? (m.lead.market || 'Any market') : (m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Capture the deal, underwrite it, then try broader matching filters.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="inline-edit"><label><span>Name</span><input id="d_name" value="${escapeHtml(item.name)}"></label><label><span>Status</span><input id="d_status" value="${escapeHtml(item.status)}"></label><label><span>Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.rent||0)}"></label><label><span>Fees</span><input id="d_fees" inputmode="numeric" value="${Number(item.fees||0)}"></label><label><span>Debt</span><input id="d_debt" inputmode="numeric" value="${Number(item.debt||0)}"></label><label class="full"><span>Notes</span><textarea id="d_notes" rows="4">${escapeHtml(item.notes || item.history || '')}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
     function closeLead(){ show($('drawer'), false); state.selected = null; }
+    function openProperty(item){ state.selected = item; const matches = propertyMatchesForTenant(item); $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || 'Property profile')}</div></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="profile-fields"><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Midterm Rental')}</strong></div><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${escapeHtml(item.paymentHistory.join(' • '))}</strong></div><div class="field"><span>Activity Log</span><strong>${escapeHtml((item.activityLog || []).join(' • '))}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">Matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="inline-edit"><label><span>Strategy</span><input id="d_strategy" value="${escapeHtml(item.strategy || 'Midterm Rental')}"></label><label><span>Monthly Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.monthlyRent||0)}"></label><label><span>Past Debt</span><input id="d_pastDebt" inputmode="numeric" value="${Number(item.pastDebt||0)}"></label><label><span>Balance Owed</span><input id="d_balanceOwed" inputmode="numeric" value="${Number(item.balanceOwed||0)}"></label><label class="full"><span>Payment History</span><textarea id="d_history" rows="4">${escapeHtml(item.paymentHistory.join(' | '))}</textarea></label><label class="full"><span>Activity Log</span><textarea id="d_activity" rows="4">${escapeHtml((item.activityLog || []).join(' | '))}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
     async function persistLeadPatch(item){
       const table = chooseTable(tableCandidates.leads);
       const payload = { name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, deal_status:item.status, strategy:item.strategy, rent:item.rent, fees:item.fees, debt:item.debt, notes:item.notes, contact_history:item.history, property:item.property, owner:item.owner, market:item.market, updated_at:new Date().toISOString() };
@@ -507,7 +670,7 @@
     }
     async function persistTenant(item){
       const table = chooseTable(tableCandidates.tenants);
-      const payload = { tenant_id:item.id, tenant_name:item.name, monthly_rent:item.monthlyRent, past_debt:item.pastDebt, balance_owed:item.balanceOwed, payment_history:item.paymentHistory, updated_at:new Date().toISOString() };
+      const payload = { tenant_id:item.id, tenant_name:item.name, strategy:item.strategy, monthly_rent:item.monthlyRent, past_debt:item.pastDebt, balance_owed:item.balanceOwed, payment_history:item.paymentHistory, activity_log:item.activityLog, notes:item.notes, updated_at:new Date().toISOString() };
       try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
       localStorage.setItem(`tenant-${item.id}`, JSON.stringify(item));
     }
@@ -516,6 +679,14 @@
       const payload = { vendor_name:item.name, category:item.category, phone:item.contact, status:item.status, notes:item.notes, updated_at:new Date().toISOString() };
       try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
       localStorage.setItem(`vendor-${item.id}`, JSON.stringify(item));
+    }
+    async function createBuyerFromModal(){
+      const item = { id: crypto.randomUUID(), name: $('b_name').value.trim(), type:'buyer', market: $('b_market').value.trim(), status: $('b_status').value.trim() || 'active', strategy: 'Buyer Pool', contact: $('b_contact').value.trim(), score: 0, property:'Buy box', owner:'Buyer', history:'Created from buyer modal', notes: $('b_notes').value.trim(), buyerNotes: $('b_notes').value.trim(), zipCodes: splitList($('b_zips').value), minPrice: Number($('b_min').value || 0) || 0, maxPrice: Number($('b_max').value || 0) || 0, preferredStrategies: splitList($('b_strategies').value), assetTypes: splitList($('b_assets').value), raw:{} };
+      if (!item.name) return alert('Buyer name required');
+      state.buyers.unshift(item);
+      const table = chooseTable(tableCandidates.buyers);
+      try { await api(table, { method:'POST', headers:{ Prefer:'return=minimal' }, body: JSON.stringify({ id:item.id, name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, market:item.market, contact:item.contact, strategy:item.strategy, zipCodes:item.zipCodes.join(', '), minPrice:item.minPrice, maxPrice:item.maxPrice, preferredStrategies:item.preferredStrategies.join(', '), assetTypes:item.assetTypes.join(', '), notes:item.notes, buyerNotes:item.buyerNotes, updated_at:new Date().toISOString() }) }); } catch(e) {}
+      render(); closeBuyerModal();
     }
     async function createLeadFromModal(){
       const item = { id: crypto.randomUUID(), name: $('m_name').value.trim(), type:'lead', market: $('m_market').value.trim(), status: $('m_status').value.trim(), strategy: $('m_strategy').value.trim(), contact: $('m_contact').value.trim(), score: 0, property: $('m_property').value.trim(), owner: $('m_owner').value.trim(), rent: Number($('m_rent').value || 0) || 0, fees: Number($('m_fees').value || 0) || 0, debt: Number($('m_debt').value || 0) || 0, history: $('m_notes').value.trim(), notes: $('m_notes').value.trim(), raw:{} };
@@ -549,6 +720,8 @@
       render();
     }
     function openModal(){ renderStrategySelect('Sober Living'); syncDefaultsFromStrategy('Sober Living'); show($('backdrop'), true); show($('leadModal'), true); }
+    function openBuyerModal(){ show($('backdrop'), true); show($('buyerModal'), true); }
+    function closeBuyerModal(){ show($('backdrop'), false); show($('buyerModal'), false); }
     function renderStrategySelect(selected='Sober Living'){ const sel = $('m_strategy'); if (!sel) return; const opts = state.strategyChoices.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('') + '<option value="__new__">Create New Strategy</option>'; sel.innerHTML = opts; sel.value = state.strategyChoices.includes(selected) ? selected : 'Sober Living'; }
     function syncDefaultsFromStrategy(name){ const d = strategyDefaults(name); $('m_rent').value = d.rent; $('m_fees').value = d.fees; $('m_debt').value = d.debt; }
     function closeModal(){ show($('backdrop'), false); show($('leadModal'), false); }
@@ -557,16 +730,23 @@
     document.addEventListener('click', async (e) => {
       const nav = e.target.closest('[data-jump]'); if (nav) document.querySelector(nav.dataset.jump)?.scrollIntoView({behavior:'smooth', block:'start'});
       const leadBtn = e.target.closest('[data-open-lead]'); if (leadBtn) return openLead(allRecords().find(x => x.id === leadBtn.dataset.openLead));
+      const propBtn = e.target.closest('[data-open-property]'); if (propBtn) return openProperty(state.tenants.find(x => x.id === propBtn.dataset.openProperty));
       const row = e.target.closest('[data-lead]'); if (row) return openLead(allRecords().find(x => x.id === row.dataset.lead));
       const ocr = e.target.closest('[data-ocr-convert]'); if (ocr) return handleOcrConvert(ocr.dataset.ocrConvert);
       const reviewed = e.target.closest('[data-ocr-mark]'); if (reviewed){ const item = state.ocr.find(x => x.id === reviewed.dataset.ocrMark); if (item) item.status='reviewed'; renderOcr(); }
       const close1 = e.target.closest('#closeModal'); if (close1) return closeModal();
       const close2 = e.target.closest('#cancelLead'); if (close2) return closeModal();
-      const close3 = e.target.closest('#drawerClose') || e.target.closest('#drawerClose2'); if (close3) return closeLead();
+      const closeBuyer1 = e.target.closest('#closeBuyerModal'); if (closeBuyer1) return closeBuyerModal();
+      const closeBuyer2 = e.target.closest('#cancelBuyer'); if (closeBuyer2) return closeBuyerModal();
+      const drawerFind = e.target.closest('[data-find-matches]'); if (drawerFind) { const lead = allRecords().find(x => x.id === drawerFind.dataset.findMatches); if (!lead) return; if (lead.type === 'buyer') return openLead(lead); const prop = state.tenants.find(x => x.id === drawerFind.dataset.findMatches); if (prop) return openProperty(prop); return openLead(lead); }
+      const drawerSaveBuyer = e.target.closest('[data-save-buyer]'); if (drawerSaveBuyer) { const item = state.buyers.find(x => x.id === drawerSaveBuyer.dataset.saveBuyer); if (item) persistBuyer(item); return; }
       const saveLead = e.target.closest('#saveLead'); if (saveLead) return createLeadFromModal();
+      const saveBuyer = e.target.closest('#saveBuyer'); if (saveBuyer) return createBuyerFromModal();
       const openLeadModal = e.target.closest('#openLeadModal'); if (openLeadModal) return openModal();
+      const openBuyerModalBtn = e.target.closest('#openBuyerModal'); if (openBuyerModalBtn) return openBuyerModal();
       const refresh = e.target.closest('#refreshData'); if (refresh) return loadData();
-      const modalBackdrop = e.target.id === 'backdrop'; if (modalBackdrop) { closeModal(); closeLead(); }
+      const refreshBuyers = e.target.closest('#refreshBuyers'); if (refreshBuyers) return render();
+      const modalBackdrop = e.target.id === 'backdrop'; if (modalBackdrop) { closeModal(); closeBuyerModal(); closeLead(); }
       const laneCard = e.target.closest('.lane-card');
       if (laneCard && !e.target.closest('button')) {
         openLead(allRecords().find(x => x.id === laneCard.dataset.id));
@@ -596,6 +776,23 @@
       if (e.target.id === 'd_name' || e.target.id === 'd_status' || e.target.id === 'd_notes' || e.target.id === 'd_rent' || e.target.id === 'd_fees' || e.target.id === 'd_debt') {
         const item = state.selected; if (!item) return; item.name = $('d_name').value; item.status = $('d_status').value; item.notes = $('d_notes').value; item.history = $('d_notes').value; item.rent = Number($('d_rent').value || 0) || 0; item.fees = Number($('d_fees').value || 0) || 0; item.debt = Number($('d_debt').value || 0) || 0; }
     });
+    document.addEventListener('change', async e => {
+      const buyerField = e.target.closest('[data-buyer-field]');
+      if (!buyerField) return;
+      const item = state.buyers.find(x => x.id === buyerField.dataset.buyerId);
+      if (!item) return;
+      const field = buyerField.dataset.buyerField;
+      const value = buyerField.value;
+      if (field === 'zipCodes') item.zipCodes = splitList(value);
+      else if (field === 'preferredStrategies') item.preferredStrategies = splitList(value);
+      else if (field === 'assetTypes') item.assetTypes = splitList(value);
+      else if (field === 'buyerNotes') item.buyerNotes = value;
+      else if (field === 'minPrice' || field === 'maxPrice') item[field] = Number(value || 0) || 0;
+      else item[field] = value;
+      await persistBuyer(item);
+      renderBuyers();
+      renderMatchAlerts();
+    });
     document.addEventListener('dragstart', e => { const card = e.target.closest('.lane-card'); if (card) e.dataTransfer.setData('text/plain', card.dataset.id); });
     document.addEventListener('dragover', e => { const lane = e.target.closest('.lane'); if (lane) { e.preventDefault(); lane.classList.add('dragover'); } });
     document.addEventListener('dragleave', e => { const lane = e.target.closest('.lane'); if (lane) lane.classList.remove('dragover'); });
@@ -606,7 +803,7 @@
     document.getElementById('boardModeBar').addEventListener('click', e => { const btn = e.target.closest('button[data-board-mode]'); if (!btn) return; document.querySelectorAll('#boardModeBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.boardMode = btn.dataset.boardMode; render(); });
     document.addEventListener('click', async e => {
       const drawerSave = e.target.closest('#drawerSave');
-      if (drawerSave && state.selected) { await persistLeadPatch(state.selected); closeLead(); render(); }
+      if (drawerSave && state.selected) { if (state.tenants.some(x => x.id === state.selected.id)) { state.selected.strategy = $('d_strategy').value; state.selected.monthlyRent = Number($('d_rent').value || 0) || 0; state.selected.pastDebt = Number($('d_pastDebt').value || 0) || 0; state.selected.balanceOwed = Number($('d_balanceOwed').value || 0) || 0; state.selected.paymentHistory = String($('d_history').value || '').split('|').map(s => s.trim()).filter(Boolean); state.selected.activityLog = String($('d_activity').value || '').split('|').map(s => s.trim()).filter(Boolean); state.selected.notes = state.selected.activityLog.join(' | '); await persistTenant(state.selected); } else { await persistLeadPatch(state.selected); } closeLead(); render(); }
     });
     async function seedLocal(){
       if (localStorage.getItem('miles-functional-seeded')) return;
