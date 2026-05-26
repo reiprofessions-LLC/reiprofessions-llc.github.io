@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DealSnap for Prospecting like a Pro</title>
-  <meta name="description" content="DealSnap for Prospecting like a Pro for leads, pipeline, property management, and vendors." />
+  <title>Nationwide Prospecting CRM — Miles</title>
+  <meta name="description" content="Nationwide Prospecting CRM for leads, DealSnap, pipeline, property management, and vendors." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -56,9 +56,6 @@
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:var(--signal-red);color:var(--bone);box-shadow:0 14px 28px rgba(232,66,26,.18)}
     .btn.secondary{background:#fff;color:var(--ink);border-color:rgba(13,15,20,.12)}
-    .btn.secondary:disabled,.btn.primary:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-    .btn.danger{background:rgba(232,66,26,.12);color:var(--signal-red);border-color:rgba(232,66,26,.20)}
-    .btn.danger:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
     .stack{display:grid;gap:18px}
     .section{padding:22px}
     .section-title{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
@@ -84,15 +81,6 @@
     .workspace{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
     .card{padding:16px;display:grid;gap:12px}
-    .ocr-card.selected{border-color:rgba(232,66,26,.75);box-shadow:0 18px 36px rgba(232,66,26,.10);transform:translateY(-1px)}
-    .ocr-bulkbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px;border-radius:22px;background:linear-gradient(180deg,rgba(13,15,20,.96),rgba(20,26,36,.96));border:1px solid rgba(200,168,75,.18);box-shadow:var(--shadow-strong);color:var(--bone);margin-bottom:14px}
-    .ocr-bulkbar strong{display:block;font-size:15px;letter-spacing:.02em}
-    .ocr-bulkbar span{display:block;margin-top:4px;color:rgba(245,240,232,.72);font-size:12px;line-height:1.45}
-    .ocr-bulkbar .ledger-actions{margin-left:auto}
-    .ocr-select{position:relative;width:28px;height:28px;flex:0 0 auto;display:grid;place-items:center}
-    .ocr-select input{position:absolute;inset:0;opacity:0;cursor:pointer}
-    .ocr-select span{width:22px;height:22px;border-radius:8px;border:1px solid rgba(13,15,20,.14);background:#fff;display:grid;place-items:center;color:transparent;font-size:13px;font-weight:900;transition:.18s ease;box-shadow:0 8px 16px rgba(13,15,20,.08)}
-    .ocr-select input:checked + span{background:var(--signal-red);border-color:rgba(232,66,26,.92);color:var(--bone);box-shadow:0 10px 18px rgba(232,66,26,.22)}
     .card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
     .card h4,.lead-profile h4,.tenant-card h4,.vendor-card h4{margin:0;font-size:16px}
     .card p,.lead-meta,.tenant-meta,.vendor-meta{margin:0;color:rgba(13,15,20,.68);font-size:13px;line-height:1.5}
@@ -198,41 +186,31 @@
     .match-badge{padding:6px 10px;border-radius:999px;background:rgba(232,66,26,.14);color:var(--bone);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
     .workflow-highlight{display:flex;gap:8px;flex-wrap:wrap}
     .workflow-highlight .pill{background:rgba(245,240,232,.08);border-color:rgba(245,240,232,.12);color:var(--bone)}
+    .property-card{background:linear-gradient(180deg,rgba(17,22,30,.95),rgba(13,15,20,.95));color:var(--bone);border:1px solid rgba(200,168,75,.16)}
+    .property-card .card-head p,.property-card .field span,.property-card .lead-meta{color:rgba(245,240,232,.7)}
+    .property-shell{display:grid;gap:18px}
+    .property-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding-bottom:10px;border-bottom:1px solid rgba(200,168,75,.12)}
+    .property-header h4{font-size:26px;line-height:1.1;margin:6px 0 0}
+    .property-header .kicker{display:inline-flex;padding:5px 10px;border-radius:999px;background:rgba(200,168,75,.14);border:1px solid rgba(200,168,75,.2);color:var(--gold);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+    .property-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .property-stat{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 15px;display:grid;gap:6px}
+    .property-stat span{color:rgba(245,240,232,.65);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
+    .property-stat strong{font-size:18px;color:var(--bone);line-height:1.15}
+    .property-panel{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:16px}
+    .property-sections{display:grid;gap:14px}
+    .property-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .property-fields.view-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .property-fields.edit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .property-fields .field,.property-edit.field{background:rgba(13,15,20,.22);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px}
+    .property-fields .field span,.property-edit.field span{display:block;color:rgba(245,240,232,.6);font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+    .property-fields .field strong{color:var(--bone);font-size:14px;line-height:1.45;word-break:break-word}
+    .property-edit.field input,.property-edit.field textarea,.property-edit.field select{width:100%;background:rgba(245,240,232,.96);color:var(--ink);border:1px solid rgba(200,168,75,.25);border-radius:12px;padding:10px 12px}
+    .property-edit.field textarea{min-height:92px;resize:vertical}
+    .empty-state{padding:16px;border-radius:16px;border:1px dashed rgba(255,255,255,.14);color:rgba(245,240,232,.6);text-align:center}
+    .profile-fields-tight{gap:10px}
+    .profile-fields-tight .field{padding:12px}
+    .drawer .lead-profile.property-profile{box-shadow:var(--shadow-strong)}
 
-    .agent-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-    .agent-card{padding:16px;border-radius:22px;background:linear-gradient(180deg,#11161e,#151b24);color:var(--bone);border:1px solid rgba(245,240,232,.08);box-shadow:var(--shadow-strong);display:grid;gap:12px}
-    .agent-card.off{opacity:.72;filter:saturate(.8)}
-    .agent-card .field{background:rgba(245,240,232,.05);border-color:rgba(245,240,232,.08)}
-    .agent-card .field strong,.agent-card .field span,.agent-card p{color:inherit}
-    .agent-controls{display:flex;gap:8px;flex-wrap:wrap}
-    .agent-toggle{padding:8px 10px;border-radius:999px;border:1px solid rgba(245,240,232,.12);background:rgba(245,240,232,.08);color:var(--bone);font-weight:700;cursor:pointer}
-    .agent-toggle.on{background:rgba(200,168,75,.18);border-color:rgba(200,168,75,.28)}
-    .agent-feed{display:grid;gap:10px}
-    .feed-item{padding:14px 15px;border-radius:18px;background:rgba(245,240,232,.06);border:1px solid rgba(245,240,232,.08);display:grid;gap:6px}
-    .feed-item strong{font-size:14px}
-    .feed-item span{color:rgba(245,240,232,.72);font-size:12px;line-height:1.45}
-    .dropzone{position:relative;padding:22px;border-radius:26px;background:radial-gradient(circle at top right, rgba(200,168,75,.16), transparent 40%), linear-gradient(180deg,#0d0f14,#1a2230);border:1px dashed rgba(200,168,75,.55);box-shadow:var(--shadow-strong);color:var(--bone);overflow:hidden}
-    .dropzone::before{content:'';position:absolute;inset:10px;border:1px solid rgba(232,66,26,.16);border-radius:20px;pointer-events:none}
-    .dropzone.is-over{border-color:rgba(232,66,26,.92);transform:translateY(-1px)}
-    .dropzone-top{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;position:relative;z-index:1}
-    .dropzone-badge{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(200,168,75,.22),rgba(232,66,26,.12));border:1px solid rgba(245,240,232,.10);font-size:22px;box-shadow:0 14px 30px rgba(0,0,0,.22)}
-    .dropzone h4{margin:0;font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:.08em;line-height:.9}
-    .dropzone p{margin:8px 0 0;color:rgba(245,240,232,.72);line-height:1.5;max-width:820px}
-    .dropzone-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;margin-top:14px}
-    .dropzone input[type='file']{display:none}
-    .scan-pill{padding:9px 12px;border-radius:999px;background:rgba(245,240,232,.08);border:1px solid rgba(245,240,232,.12);font-size:12px;letter-spacing:.11em;text-transform:uppercase}
-    .scanning{display:inline-flex;gap:6px;align-items:center}
-    .scanning i{width:7px;height:7px;border-radius:999px;background:var(--gold);animation:pulseDots 1s infinite ease-in-out}
-    .scanning i:nth-child(2){animation-delay:.15s}.scanning i:nth-child(3){animation-delay:.3s}
-    @keyframes pulseDots{0%,80%,100%{transform:scale(.65);opacity:.35}40%{transform:scale(1);opacity:1}}
-    .intake-queue{display:grid;gap:10px;margin-top:14px}
-    .queue-item{padding:14px 15px;border-radius:18px;background:rgba(245,240,232,.06);border:1px solid rgba(245,240,232,.08);display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .queue-item strong{display:block;font-size:14px;margin-bottom:4px}
-    .queue-item span{display:block;color:rgba(245,240,232,.70);font-size:12px;line-height:1.45}
-    .queue-meta{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:.11em;white-space:nowrap}
-    .activity-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-    .feed-shell,.agent-shell{padding:22px}
-    .mini-sub{color:var(--mist);font-size:12px;text-transform:uppercase;letter-spacing:.14em}
     @media (max-width: 1180px){
       .app{grid-template-columns:1fr}
       .sidebar{position:relative;height:auto}
@@ -241,7 +219,7 @@
     }
     @media (max-width: 760px){
       .main{padding:14px}
-      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.ledger-grid,.profile-fields,.modal-grid,.ledger-edit,.network-grid,.agent-grid,.activity-grid{grid-template-columns:1fr}
+      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.ledger-grid,.profile-fields,.modal-grid,.ledger-edit,.network-grid{grid-template-columns:1fr}
       .topbar{padding:18px}
       .section{padding:18px}
       .drawer,.modal{width:calc(100vw - 20px);right:10px;left:10px;transform:none;top:10px}
@@ -252,12 +230,12 @@
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <h1>DealSnap for Prospecting like a Pro</h1>
-        <p>Buyer-first DealSnap for Prospecting like a Pro OS for lead capture, underwriting, matchmaking, and operational handoff.</p>
+        <h1>NATIONWIDE<br>PROSPECTING CRM</h1>
+        <p>Buyer-first DealSnap OS for lead capture, underwriting, matchmaking, and operational handoff.</p>
       </div>
       <div class="nav">
         <button class="nav-item active" data-jump="#dashboard"><span class="nav-ico">⌂</span><span><strong>Dashboard</strong><small>Workflow status and alerts</small></span></button>
-        <button class="nav-item" data-jump="#ocr"><span class="nav-ico">◫</span><span><strong>DealSnap for Prospecting like a Pro</strong><small>Convert docs into leads</small></span></button>
+        <button class="nav-item" data-jump="#ocr"><span class="nav-ico">◫</span><span><strong>DealSnap</strong><small>Convert docs into leads</small></span></button>
         <button class="nav-item" data-jump="#pipeline"><span class="nav-ico">↺</span><span><strong>Kanban Pipeline</strong><small>Lead to contract flow</small></span></button>
         <button class="nav-item" data-jump="#leads"><span class="nav-ico">▦</span><span><strong>Leads</strong><small>Capture and underwriting</small></span></button>
         <button class="nav-item" data-jump="#buyers"><span class="nav-ico">◎</span><span><strong>Buyers</strong><small>Matchmaking and buy boxes</small></span></button>
@@ -313,31 +291,6 @@
         <div class="alert-bar" id="matchAlertBar"></div>
       </section>
 
-      <section class="panel section" id="agents">
-        <div class="section-title">
-          <div><h3>Agent Hub</h3><p>Active agents stay visible here and can be toggled or run manually while they work the DealSnap for Prospecting like a Pro system.</p></div>
-          <div class="sub" id="agentCount">—</div>
-        </div>
-        <div class="agent-grid" id="agentGrid"></div>
-      </section>
-
-      <section class="panel section" id="activity">
-        <div class="section-title">
-          <div><h3>Activity Feed</h3><p>Live workflow telemetry from DealSnap for Prospecting like a Pro, underwriting, and buyer matching.</p></div>
-          <div class="sub" id="activityCount">—</div>
-        </div>
-        <div class="activity-grid">
-          <div class="panel feed-shell" style="background:linear-gradient(180deg,#11161e,#151b24);color:var(--bone)">
-            <div class="section-title" style="margin-bottom:12px"><div><h3 style="font-size:18px;margin:0">Live Feed</h3><p style="margin:6px 0 0;color:rgba(245,240,232,.72)">Agent movement, conversions, and match flags appear here in real time.</p></div><div class="mini-sub">Agent telemetry</div></div>
-            <div class="agent-feed" id="activityFeed"></div>
-          </div>
-          <div class="panel agent-shell" style="background:linear-gradient(180deg,#11161e,#151b24);color:var(--bone)">
-            <div class="section-title" style="margin-bottom:12px"><div><h3 style="font-size:18px;margin:0">Workflow Control</h3><p style="margin:6px 0 0;color:rgba(245,240,232,.72)">Use these buttons to simulate background agent execution and status handoffs.</p></div><div class="mini-sub">Auto-run hooks</div></div>
-            <div class="agent-feed" id="workflowSummary"></div>
-          </div>
-        </div>
-      </section>
-
       <section class="panel section">
         <div class="section-title">
           <div><h3>KPIs</h3><p>Exact mockup baseline is applied until live records are available.</p></div>
@@ -348,28 +301,10 @@
 
       <section class="panel section" id="ocr">
         <div class="section-title">
-          <div><h3>DealSnap for Prospecting like a Pro</h3><p>Document intake mapped to the DealSnap for Prospecting like a Pro workflow with conversion actions.</p></div>
+          <div><h3>DealSnap</h3><p>Document intake mapped to the DealSnap workflow with conversion actions.</p></div>
           <div class="sub" id="ocrCount">—</div>
         </div>
-        <div class="dropzone" id="dealSnapDropzone">
-          <input id="dealSnapInput" type="file" accept="image/*,application/pdf" multiple />
-          <div class="dropzone-top">
-            <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-              <div class="dropzone-badge">◫</div>
-              <div>
-                <h4>Drop Screenshot Here</h4>
-                <p>Drag a DealSnap for Prospecting like a Pro screenshot into this polished intake bay or click to upload. The system will stage a short scanning sequence before adding it to the intake queue.</p>
-              </div>
-            </div>
-            <div class="scan-pill" id="scanStatus"><span class="scanning"><i></i><i></i><i></i></span> Ready for intake</div>
-          </div>
-          <div class="dropzone-actions">
-            <button class="btn primary" id="dealSnapBrowse">Browse Files</button>
-            <button class="btn secondary" id="dealSnapSeed">Simulate Scan</button>
-          </div>
-          <div class="intake-queue" id="dealSnapQueue"></div>
-        </div>
-        <div class="card-grid" id="ocrCards" style="margin-top:14px"></div>
+        <div class="card-grid" id="ocrCards"></div>
       </section>
 
       <section class="panel section" id="pipeline">
@@ -516,20 +451,13 @@
         { label: 'Conventional', value: 10 }
       ],
       activity: [
-        { text: 'Agent Pope matched 1004 Kinney to 3 Buyers.', meta: 'Underwriter → Matcher • Today' },
-        { text: 'Underwriter Agent processed the newest DealSnap for Prospecting like a Pro intake.', meta: 'DealSnap for Prospecting like a Pro → Underwriting • Today' },
-        { text: 'Follow-up Bot queued outreach after buyer flags were raised.', meta: 'Matcher → Follow-up • Today' },
-        { text: 'New DealSnap for Prospecting like a Pro lead in Uvalde Co. queued for review.', meta: 'Today • DealSnap for Prospecting like a Pro' }
-      ],
-      agents: [
-        { id:'lead-scraper', name:'Lead Scraper', status:'active', pulse:'Watching screenshots', detail:'Captures new DealSnap for Prospecting like a Pro uploads and prepares intake records.' },
-        { id:'underwriter', name:'Underwriter Agent', status:'active', pulse:'Auto-processing', detail:'Scores intake items and promotes viable leads for review.' },
-        { id:'matcher', name:'Buyer Matcher', status:'active', pulse:'Flagging buyers', detail:'Maps underwritten leads to buyer pools and alert queues.' },
-        { id:'follow-up', name:'Follow-up Bot', status:'standby', pulse:'Queued', detail:'Drafts reminders and follow-up prompts after a match.' }
+        { text: 'New DealSnap lead in Uvalde Co. queued for review.', meta: 'Today • DealSnap' },
+        { text: 'Phil Essex replied on a Frio County opportunity.', meta: 'Today • Lead follow-up' },
+        { text: 'Title Search order placed and confirmed.', meta: 'Today • Title workflow' }
       ],
       ocr: [
-        { title: 'Uvalde Co. screenshot', status: 'queued', confidence: 91, source: 'DealSnap for Prospecting like a Pro webhook', note: 'Waiting for extraction' },
-        { title: 'Frio Co. document', status: 'review', confidence: 83, source: 'DealSnap for Prospecting like a Pro queue', note: 'Needs address normalization' },
+        { title: 'Uvalde Co. screenshot', status: 'queued', confidence: 91, source: 'DealSnap webhook', note: 'Waiting for extraction' },
+        { title: 'Frio Co. document', status: 'review', confidence: 83, source: 'DealSnap queue', note: 'Needs address normalization' },
         { title: 'Title Search receipt', status: 'processing', confidence: 76, source: 'workflow', note: 'Attachment detected' }
       ],
       leads: [
@@ -561,7 +489,7 @@
         { id:'network-vanessa', name:'Vanessa', role:'Lender', company:'FundWithSequel', market:'Private money', status:'Active', email:'vanessa@fundwithsequel.com', phone:'', linkedin:'', focus:['Loan Processing','Bridge'], channels:['Email'], notes:'Loan processor / funding support on acquisitions.', nextFollowUp:'', source:'User contacts / funding network' }
       ]
     };
-    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], network:[], agents:[], activity:[], search:'', filter:'all', selected:null, boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'], scanQueue:[], scanId:0, ocrSelected:[] };
+    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], network:[], search:'', filter:'all', selected:null, selectedKind:null, drawerMode:'view', boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'] };
     const $ = id => document.getElementById(id);
     const escapeHtml = s => String(s ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const numFmt = v => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Number(v) || 0);
@@ -570,7 +498,6 @@
     const statusClass = s => {
       s = String(s||'').toLowerCase();
       if (['closed','approved','active','contract','qualified'].includes(s)) return 'good';
-      if (['archived'].includes(s)) return 'dark';
       if (['queued','new','review','contacted','processing','open'].includes(s)) return 'warn';
       return 'dark';
     };
@@ -589,7 +516,7 @@
       leads: ['deal_intakes?select=*&order=updated_at.desc&limit=200','dealintakes?select=*&order=updated_at.desc&limit=200','leads?select=*&order=updated_at.desc&limit=200'],
       buyers: ['buyers?select=*&order=updated_at.desc&limit=200','buyer_profiles?select=*&order=updated_at.desc&limit=200'],
       ocr: ['ocr_queue?select=*&order=updated_at.desc&limit=200','ocr_documents?select=*&order=updated_at.desc&limit=200','documents?select=*&order=updated_at.desc&limit=200'],
-      tenants: ['tenant_ledger?select=*&order=updated_at.desc&limit=200','tenants?select=*&order=updated_at.desc&limit=200','tenant_management?select=*&order=updated_at.desc&limit=200'],
+      tenants: ['deal_intakes?select=*&order=updated_at.desc&limit=200','tenant_ledger?select=*&order=updated_at.desc&limit=200','tenants?select=*&order=updated_at.desc&limit=200','tenant_management?select=*&order=updated_at.desc&limit=200'],
       vendors: ['vendors?select=*&order=updated_at.desc&limit=200','vendor_profiles?select=*&order=updated_at.desc&limit=200'],
       network: ['network_contacts?select=*&order=updated_at.desc&limit=200','realtor_broker_contacts?select=*&order=updated_at.desc&limit=200','referral_partners?select=*&order=updated_at.desc&limit=200']
     };
@@ -627,21 +554,288 @@
         raw: item
       };
     }
-    function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap for Prospecting like a Pro item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap for Prospecting like a Pro queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
-    function normalizeTenant(item){ const history = Array.isArray(item.paymentHistory) ? item.paymentHistory : (Array.isArray(item.payment_history) ? item.payment_history : []); const activity = Array.isArray(item.activityLog) ? item.activityLog : (Array.isArray(item.activity_log) ? item.activity_log : []); return { id:item.id||crypto.randomUUID(), name:item.name||item.tenant_name||item.property_name||'Tenant', property:item.property||item.property_name||item.address||'—', lease:item.lease||item.lease_status||'active', strategy:item.strategy||item.deal_strategy||item.exit_strategy||'Midterm Rental', monthlyRent:Number(item.monthlyRent||item.monthly_rent||item.rent||0)||0, pastDebt:Number(item.pastDebt||item.past_debt||0)||0, balanceOwed:Number(item.balanceOwed||item.balance_owed||item.amount_due||0)||0, paymentHistory:history.length ? history : ['No payments logged'], activityLog:activity.length ? activity : ['No activity logged'], notes:item.notes || item.description || '', raw:item }; }
+    function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
+    function normalizeTenant(item){
+      const sourcePayload = item.source_payload || item.sourcePayload || {};
+      const merged = { ...(item.raw || {}), ...sourcePayload, ...item };
+      const paymentHistory = Array.isArray(merged.paymentHistory) ? merged.paymentHistory : Array.isArray(merged.payment_history) ? merged.payment_history : [];
+      const activityLog = Array.isArray(merged.activityLog) ? merged.activityLog : Array.isArray(merged.activity_log) ? merged.activity_log : [];
+      const houseRules = Array.isArray(merged.houseRules) ? merged.houseRules : splitList(merged.house_rules || merged.houseRulesText || '');
+      const compliance = Array.isArray(merged.compliance) ? merged.compliance : splitList(merged.compliance_notes || '');
+      const staffing = Array.isArray(merged.staffing) ? merged.staffing : splitList(merged.staffing_notes || '');
+      const residents = Array.isArray(merged.residents) ? merged.residents : splitList(merged.residentIntake || merged.resident_intake || '');
+      const maintenance = Array.isArray(merged.maintenance) ? merged.maintenance : splitList(merged.maintenance_notes || '');
+      const funding = Array.isArray(merged.funding) ? merged.funding : splitList(merged.funding_notes || '');
+      const propertyType = firstMeaningful(merged.propertyType, merged.property_type, merged.assetClass, merged.asset_class, merged.structureType, merged.structure_type, merged['Property Type'], merged.strategy, merged.type, 'Property');
+      const address = firstMeaningful(merged.address, merged.address_line1, merged.property, merged['Property Address (Text)'], merged['Property Address (portfolio)'], merged.location, '—');
+      const cityState = firstMeaningful(merged.cityState, merged['City/State'], [merged.city, merged.state].filter(Boolean).join(', '), merged.market, '—');
+      return {
+        id: merged.id || crypto.randomUUID(),
+        name: merged.name || merged.intake_name || merged.deal_name || merged.tenant_name || merged.property_name || merged.address || 'Property',
+        propertyType: String(propertyType || 'Property'),
+        assetClass: String(firstMeaningful(merged.assetClass, merged.asset_class, merged['Asset Class'], propertyType) || ''),
+        structureType: String(firstMeaningful(merged.structureType, merged.structure_type, merged['Structure Type']) || ''),
+        propertyKind: detectPropertyKind(merged),
+        address: String(address || '—'),
+        city: String(merged.city || ''),
+        state: String(merged.state || ''),
+        cityState: String(cityState || '—'),
+        county: String(firstMeaningful(merged.county, merged['County']) || ''),
+        apn: String(firstMeaningful(merged.apn, merged['APN / Parcel ID']) || ''),
+        acreage: numVal(firstMeaningful(merged.acreage, merged['Acreage']) || 0),
+        unitCount: numVal(firstMeaningful(merged.unitCount, merged.units, merged['Unit Count']) || 0),
+        lotCount: numVal(firstMeaningful(merged.lotCount, merged.padCount, merged.pads, merged['Lot Count']) || 0),
+        padCount: numVal(firstMeaningful(merged.padCount, merged.pads) || 0),
+        padMix: String(firstMeaningful(merged.padMix, merged['Pad Mix (RV/MH/Cabins)']) || ''),
+        unitMix: String(firstMeaningful(merged.unitMix, merged['Unit Mix']) || ''),
+        unitSizes: String(firstMeaningful(merged.unitSizes, merged['Unit Sizes (sf)']) || ''),
+        occupancy: percentFrom(firstMeaningful(merged.occupancy, merged['Occupancy (%)']) || 0),
+        noiAnnual: numVal(firstMeaningful(merged.noiAnnual, merged.noi, merged['NOI (Annual)']) || 0),
+        revenueT12: numVal(firstMeaningful(merged.revenueT12, merged.revenue, merged['Revenue (T12)']) || 0),
+        expensesT12: numVal(firstMeaningful(merged.expensesT12, merged.expenses, merged['Expenses (T12)']) || 0),
+        avgRent: numVal(firstMeaningful(merged.avgRent, merged.avg_in_place_rent, merged['Avg In-Place Rent']) || 0),
+        marketRent: numVal(firstMeaningful(merged.marketRent, merged['Market Rent']) || 0),
+        avgMonthlyLotRent: numVal(firstMeaningful(merged.avgMonthlyLotRent, merged['Avg Monthly Lot Rent ($)']) || 0),
+        yearBuilt: numVal(firstMeaningful(merged.yearBuilt, merged['Year Built']) || 0),
+        purchasePrice: numVal(firstMeaningful(merged.purchasePrice, merged.asking_price, merged.seller_price, merged['Purchase Price']) || 0),
+        sellerPrice: numVal(firstMeaningful(merged.sellerPrice, merged.seller_price, merged['Seller Price']) || 0),
+        arv: numVal(firstMeaningful(merged.arv, merged['ARV']) || 0),
+        capRate: percentFrom(firstMeaningful(merged.capRate, merged.current_cap_rate, merged['Current Cap Rate (%)']) || 0),
+        monthlyPayment: numVal(firstMeaningful(merged.monthlyPayment, merged.monthly_payment) || 0),
+        downPayment: numVal(firstMeaningful(merged.downPayment, merged.down_payment) || 0),
+        earnestMoney: numVal(firstMeaningful(merged.earnestMoney, merged.earnest_money) || 0),
+        rentRollReceived: truthyBool(firstMeaningful(merged.rentRollReceived, merged.rent_roll_received, merged['Rent Roll Received']) || false),
+        t12Received: truthyBool(firstMeaningful(merged.t12Received, merged.t12_received, merged['T12 Received']) || false),
+        utilities: String(firstMeaningful(merged.utilities, merged['Utilities (Power/Water/Sewer)']) || ''),
+        electricProvider: String(firstMeaningful(merged.electricProvider, merged['Electric Provider']) || ''),
+        waterProvider: String(firstMeaningful(merged.waterProvider, merged['Water Provider']) || ''),
+        sewerProvider: String(firstMeaningful(merged.sewerProvider, merged['Sewer Provider']) || ''),
+        internetProvider: String(firstMeaningful(merged.internetProvider, merged['Internet Provider']) || ''),
+        concretePads: truthyBool(firstMeaningful(merged.concretePads, merged['Concrete Pads']) || false),
+        accessRoad: String(firstMeaningful(merged.accessRoad, merged['Access / Road']) || ''),
+        onSiteManager: truthyBool(firstMeaningful(merged.onSiteManager, merged['On-site Manager']) || false),
+        monthlyRent: numVal(firstMeaningful(merged.monthlyRent, merged.monthly_rent, merged.rent, merged['Monthly Rent']) || 0),
+        pastDebt: numVal(firstMeaningful(merged.pastDebt, merged.past_debt) || 0),
+        balanceOwed: numVal(firstMeaningful(merged.balanceOwed, merged.balance_owed, merged.amount_due) || 0),
+        paymentHistory: paymentHistory.length ? paymentHistory : ['No payments logged'],
+        activityLog: activityLog.length ? activityLog : ['No activity logged'],
+        houseRules,
+        compliance,
+        staffing,
+        residents,
+        maintenance,
+        funding,
+        notes: String(firstMeaningful(merged.notes, merged.description, merged.intake_notes, merged.source_notes) || ''),
+        sourcePageId: String(firstMeaningful(merged.source_page_id, merged.sourcePageId) || ''),
+        sourceSystem: String(firstMeaningful(merged.source_system, merged.sourceSystem, 'notion') || 'notion'),
+        sourcePayload,
+        raw: merged
+      };
+    }
     function normalizeVendor(item){ return { id:item.id||crypto.randomUUID(), name:item.vendor_name||item.name||item.company_name||'Vendor', category:item.category||item.vendor_type||item.type||'Service', contact:item.phone||item.email||item.contact||'—', status:item.status||(item.active===false?'inactive':'active'), notes:item.notes||item.scheduling||item.schedule||'—', raw:item }; }
     function normalizeNetwork(item){
       const focus = Array.isArray(item.focus) ? item.focus : splitList(item.focus || item.marketFocus || item['Market Focus'] || '');
       const channels = Array.isArray(item.channels) ? item.channels : splitList(item.channels || item['Outreach Channel'] || '');
       return { id:item.id||crypto.randomUUID(), name:item.name||item.contact_name||item.primary_contact_name||'Network Contact', role:item.role||item.category||item.contact_type||'Partner', company:item.company||item.company_brokerage||item['Company/Brokerage']||item.organization||'—', market:item.market||item.location||item['Location (City/State)']||'—', status:item.status||item.contact_status||item['Contact Status']||'Pending', email:item.email||item['Email']||'', phone:item.phone||item['Phone']||item['Phone Number']||'', linkedin:item.linkedin||item['LinkedIn Profile']||'', focus, channels, notes:item.notes||item['Notes']||'', nextFollowUp:item.nextFollowUp||item.next_follow_up||item['date:Next Follow-Up:start']||'', source:item.source||'Network', raw:item }; }
     function splitList(v){ return String(v ?? '').split(/\n|,|\|/).map(s => s.trim()).filter(Boolean); }
-    function ocrVisibleItems(){ return ocrMatches().filter(item => String(item.status || '').toLowerCase() !== 'archived'); }
-    function syncOcrSelection(items){ const ids = new Set(items.map(item => item.id)); state.ocrSelected = (state.ocrSelected || []).filter(id => ids.has(id)); }
-    async function persistOcr(item, patch={}){ const table = chooseTable(tableCandidates.ocr); const payload = { title:item.title, file_name:item.title, document_name:item.title, status:item.status, ocr_status:item.status, confidence:item.confidence, source:item.source, notes:item.note, preview_text:item.note, ocr_text:item.note, updated_at:new Date().toISOString(), ...patch }; try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {} localStorage.setItem(`ocr-${item.id}`, JSON.stringify(item)); }
-    async function deleteOcrRow(item){ const table = chooseTable(tableCandidates.ocr); try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'DELETE', headers:{ Prefer:'return=minimal' } }); } catch(e) {} }
-    async function archiveOcrRow(item){ item.status = 'Archived'; item.raw = { ...(item.raw || {}), status:item.status, ocr_status:item.status }; await persistOcr(item, { status:'Archived', ocr_status:'Archived' }); }
-    function toggleOcrSelection(id, checked){ const next = new Set(state.ocrSelected || []); if (checked) next.add(id); else next.delete(id); state.ocrSelected = [...next]; renderOcr(); }
-    async function handleOcrSelectionAction(action){ const items = ocrVisibleItems().filter(item => (state.ocrSelected || []).includes(item.id)); if (!items.length) return; if (action === 'delete' && !confirm(`Delete ${items.length} selected DealSnap item${items.length === 1 ? '' : 's'}?`)) return; if (action === 'delete') { await Promise.all(items.map(item => deleteOcrRow(item))); state.ocr = state.ocr.filter(item => !items.some(sel => sel.id === item.id)); } else { await Promise.all(items.map(item => archiveOcrRow(item))); } state.ocrSelected = []; pushActivity(`${action === 'delete' ? 'Deleted' : 'Archived'} ${items.length} DealSnap intake item${items.length === 1 ? '' : 's'}.`, 'OCR intake'); render(); }
+    function splitParagraphs(v){ return String(v ?? '').split(/\n|\|/).map(s => s.trim()).filter(Boolean); }
+    function firstMeaningful(...values){ for (const v of values.flat()) { if (Array.isArray(v)) { if (v.length) return v; continue; } if (v === 0) return 0; if (v === false) return false; if (v === null || v === undefined) continue; const s = String(v).trim(); if (s && s !== '__NO__' && s !== '—' && s !== 'null' && s !== 'undefined') return v; } return ''; }
+    function numVal(v){ if (typeof v === 'number') return Number.isFinite(v) ? v : 0; const s = String(v ?? '').replace(/[$,%\s,]/g,''); if (!s) return 0; const n = Number(s); return Number.isFinite(n) ? n : 0; }
+    function percentFrom(v){ if (typeof v === 'number') return v <= 1 ? v : v / 100; const s = String(v ?? '').trim(); if (!s) return 0; if (s.endsWith('%')) return numVal(s) / 100; const n = numVal(s); return n > 1 ? n / 100 : n; }
+    function truthyBool(v){ if (v === true) return true; const s = String(v ?? '').toLowerCase().trim(); return ['true','yes','y','1','__yes__'].includes(s); }
+    function formatMoneyField(v){ const n = numVal(v); return n ? usdFmt(n) : ''; }
+    function formatPercentField(v){ const n = percentFrom(v); return n ? pctFmt(n * 100) : ''; }
+    function formatListField(v){ const list = Array.isArray(v) ? v : splitParagraphs(v); return list.length ? list.join(' • ') : ''; }
+    function isMeaningfulValue(v){ if (Array.isArray(v)) return v.length > 0; if (v === true || v === false) return v === true; if (typeof v === 'number') return v !== 0 && Number.isFinite(v); if (v === null || v === undefined) return false; const s = String(v).trim(); return !!s && s !== '0' && s !== '__NO__' && s !== '—'; }
+    function detectPropertyKind(item){
+      const text = [item.propertyType, item.assetClass, item.structureType, item.strategy, item.name, item.notes, item.property, item.cityState].filter(Boolean).join(' ').toLowerCase();
+      const lotSignals = numVal(item.lotCount) || numVal(item.padCount) || numVal(item.avgMonthlyLotRent);
+      if (text.includes('sober') || text.includes('midterm') || text.includes('co-living') || text.includes('rto') || text.includes('rent-to-own')) return 'operations';
+      if (text.includes('rv') || text.includes('park') || text.includes('mhp') || text.includes('mobile home') || lotSignals) return 'rv';
+      if (text.includes('apartment') || text.includes('multifamily') || text.includes('mf') || text.includes('garden') || numVal(item.unitCount) >= 5) return 'multifamily';
+      return 'default';
+    }
+    function propertyProfileConfig(item){
+      const kind = detectPropertyKind(item);
+      const configs = {
+        multifamily: { label: 'Multifamily', summary: [
+          { key: 'unitCount', label: 'Units', kind: 'number' },
+          { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+          { key: 'noiAnnual', label: 'NOI', kind: 'money' },
+          { key: 'yearBuilt', label: 'Year Built', kind: 'number' }
+        ], sections: [
+          { title: 'Asset profile', fields: [
+            { key: 'propertyType', label: 'Property Type', kind: 'text' },
+            { key: 'address', label: 'Address', kind: 'text' },
+            { key: 'cityState', label: 'City / State', kind: 'text' },
+            { key: 'county', label: 'County', kind: 'text' },
+            { key: 'acreage', label: 'Acreage', kind: 'number' },
+            { key: 'unitCount', label: 'Unit Count', kind: 'number' },
+            { key: 'unitMix', label: 'Unit Mix', kind: 'text' },
+            { key: 'unitSizes', label: 'Unit Sizes', kind: 'text' },
+            { key: 'yearBuilt', label: 'Year Built', kind: 'number' }
+          ]},
+          { title: 'Income & operations', fields: [
+            { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+            { key: 'avgRent', label: 'Avg In-Place Rent', kind: 'money' },
+            { key: 'marketRent', label: 'Market Rent', kind: 'money' },
+            { key: 'noiAnnual', label: 'NOI', kind: 'money' },
+            { key: 'revenueT12', label: 'Revenue (T12)', kind: 'money' },
+            { key: 'expensesT12', label: 'Expenses (T12)', kind: 'money' },
+            { key: 'capRate', label: 'Cap Rate', kind: 'percent' },
+            { key: 'rentRollReceived', label: 'Rent Roll Received', kind: 'bool' },
+            { key: 't12Received', label: 'T12 Received', kind: 'bool' },
+            { key: 'utilities', label: 'Utilities', kind: 'text' },
+            { key: 'onSiteManager', label: 'On-site Manager', kind: 'bool' }
+          ]},
+          { title: 'Capital stack', fields: [
+            { key: 'purchasePrice', label: 'Purchase Price', kind: 'money' },
+            { key: 'sellerPrice', label: 'Seller Price', kind: 'money' },
+            { key: 'arv', label: 'ARV', kind: 'money' },
+            { key: 'monthlyPayment', label: 'Monthly Payment', kind: 'money' },
+            { key: 'downPayment', label: 'Down Payment', kind: 'money' },
+            { key: 'earnestMoney', label: 'Earnest Money', kind: 'money' }
+          ]}
+        ] },
+        rv: { label: 'RV Resort / Park', summary: [
+          { key: 'lotCount', label: 'Lots', kind: 'number' },
+          { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+          { key: 'avgMonthlyLotRent', label: 'Lot Rent', kind: 'money' },
+          { key: 'noiAnnual', label: 'NOI', kind: 'money' }
+        ], sections: [
+          { title: 'Park profile', fields: [
+            { key: 'propertyType', label: 'Property Type', kind: 'text' },
+            { key: 'address', label: 'Address', kind: 'text' },
+            { key: 'cityState', label: 'City / State', kind: 'text' },
+            { key: 'county', label: 'County', kind: 'text' },
+            { key: 'acreage', label: 'Acreage', kind: 'number' },
+            { key: 'lotCount', label: 'Lot Count', kind: 'number' },
+            { key: 'padCount', label: 'Pad Count', kind: 'number' },
+            { key: 'padMix', label: 'Pad Mix', kind: 'text' },
+            { key: 'concretePads', label: 'Concrete Pads', kind: 'bool' },
+            { key: 'accessRoad', label: 'Access / Road', kind: 'text' }
+          ]},
+          { title: 'Income & utilities', fields: [
+            { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+            { key: 'avgMonthlyLotRent', label: 'Avg Monthly Lot Rent', kind: 'money' },
+            { key: 'revenueT12', label: 'Revenue (T12)', kind: 'money' },
+            { key: 'expensesT12', label: 'Expenses (T12)', kind: 'money' },
+            { key: 'noiAnnual', label: 'NOI', kind: 'money' },
+            { key: 'capRate', label: 'Cap Rate', kind: 'percent' },
+            { key: 'utilities', label: 'Utilities', kind: 'text' },
+            { key: 'electricProvider', label: 'Electric Provider', kind: 'text' },
+            { key: 'waterProvider', label: 'Water Provider', kind: 'text' },
+            { key: 'sewerProvider', label: 'Sewer Provider', kind: 'text' },
+            { key: 'internetProvider', label: 'Internet Provider', kind: 'text' }
+          ]},
+          { title: 'Capital stack', fields: [
+            { key: 'purchasePrice', label: 'Purchase Price', kind: 'money' },
+            { key: 'sellerPrice', label: 'Seller Price', kind: 'money' },
+            { key: 'arv', label: 'ARV', kind: 'money' }
+          ]}
+        ] },
+        operations: { label: 'Sober Living / Midterm', summary: [
+          { key: 'monthlyRent', label: 'Monthly Rent', kind: 'money' },
+          { key: 'balanceOwed', label: 'Balance Owed', kind: 'money' },
+          { key: 'pastDebt', label: 'Past Debt', kind: 'money' },
+          { key: 'paymentHistory', label: 'Payments', kind: 'list' }
+        ], sections: [
+          { title: 'Operations profile', fields: [
+            { key: 'propertyType', label: 'Property Type', kind: 'text' },
+            { key: 'strategy', label: 'Strategy', kind: 'text' },
+            { key: 'address', label: 'Address', kind: 'text' },
+            { key: 'cityState', label: 'City / State', kind: 'text' },
+            { key: 'monthlyRent', label: 'Monthly Rent', kind: 'money' },
+            { key: 'pastDebt', label: 'Past Debt', kind: 'money' },
+            { key: 'balanceOwed', label: 'Balance Owed', kind: 'money' },
+            { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+            { key: 'rentRollReceived', label: 'Rent Roll Received', kind: 'bool' },
+            { key: 't12Received', label: 'T12 Received', kind: 'bool' }
+          ]},
+          { title: 'Operating notes', fields: [
+            { key: 'houseRules', label: 'House Rules', kind: 'list' },
+            { key: 'compliance', label: 'Compliance', kind: 'list' },
+            { key: 'staffing', label: 'Staffing', kind: 'list' },
+            { key: 'residents', label: 'Resident Intake', kind: 'list' },
+            { key: 'maintenance', label: 'Maintenance', kind: 'list' },
+            { key: 'funding', label: 'Funding', kind: 'list' },
+            { key: 'utilities', label: 'Utilities', kind: 'text' },
+            { key: 'activityLog', label: 'Activity Log', kind: 'list' },
+            { key: 'notes', label: 'Notes', kind: 'text' }
+          ]}
+        ] },
+        default: { label: 'Property', summary: [
+          { key: 'propertyType', label: 'Property Type', kind: 'text' },
+          { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+          { key: 'noiAnnual', label: 'NOI', kind: 'money' },
+          { key: 'purchasePrice', label: 'Purchase Price', kind: 'money' }
+        ], sections: [
+          { title: 'Property profile', fields: [
+            { key: 'propertyType', label: 'Property Type', kind: 'text' },
+            { key: 'address', label: 'Address', kind: 'text' },
+            { key: 'cityState', label: 'City / State', kind: 'text' },
+            { key: 'county', label: 'County', kind: 'text' },
+            { key: 'occupancy', label: 'Occupancy', kind: 'percent' },
+            { key: 'noiAnnual', label: 'NOI', kind: 'money' },
+            { key: 'purchasePrice', label: 'Purchase Price', kind: 'money' },
+            { key: 'arv', label: 'ARV', kind: 'money' },
+            { key: 'notes', label: 'Notes', kind: 'text' }
+          ]}
+        ] }
+      };
+      return { kind, ...configs[kind] };
+    }
+    function renderValueDisplay(field, value){
+      if (!isMeaningfulValue(value)) return '';
+      if (field.kind === 'money') return formatMoneyField(value);
+      if (field.kind === 'percent') return formatPercentField(value);
+      if (field.kind === 'bool') return truthyBool(value) ? 'Yes' : '';
+      if (field.kind === 'list') return formatListField(value);
+      if (Array.isArray(value)) return value.join(' • ');
+      return String(value);
+    }
+    function renderValueEditor(field, value){
+      const safe = escapeHtml(Array.isArray(value) ? value.join('\n') : String(value ?? ''));
+      const current = field.kind === 'bool' ? (truthyBool(value) ? 'true' : (String(value).trim() === 'false' ? 'false' : '')) : safe;
+      if (field.kind === 'money' || field.kind === 'number' || field.kind === 'percent') return `<input data-property-field="${field.key}" data-value-kind="${field.kind}" inputmode="decimal" value="${field.kind === 'percent' ? (percentFrom(value) ? String((percentFrom(value) * 100).toFixed(2).replace(/\.00$/, '')) : '') : String(numVal(value) || '')}">`;
+      if (field.kind === 'bool') return `<select data-property-field="${field.key}" data-value-kind="bool"><option value="">—</option><option value="true" ${current === 'true' ? 'selected' : ''}>Yes</option><option value="false" ${current === 'false' ? 'selected' : ''}>No</option></select>`;
+      if (field.kind === 'list') return `<textarea data-property-field="${field.key}" data-value-kind="list" rows="3">${safe}</textarea>`;
+      return `<input data-property-field="${field.key}" data-value-kind="text" value="${safe}">`;
+    }
+    function renderSectionFields(item, fields, editMode){
+      const nodes = fields.map(field => {
+        const value = item[field.key];
+        if (!editMode && !isMeaningfulValue(value)) return '';
+        if (editMode) return `<label class="property-edit field"><span>${escapeHtml(field.label)}</span>${renderValueEditor(field, value)}</label>`;
+        return `<div class="field"><span>${escapeHtml(field.label)}</span><strong>${escapeHtml(renderValueDisplay(field, value) || '—')}</strong></div>`;
+      }).filter(Boolean).join('');
+      return nodes || (editMode ? '<div class="empty-state">No editable values yet.</div>' : '<div class="empty-state">No populated fields yet.</div>');
+    }
+    function renderPropertySummaryCards(item, cfg){
+      return cfg.summary.map(field => {
+        const value = item[field.key];
+        if (!isMeaningfulValue(value)) return '';
+        const display = renderValueDisplay(field, value);
+        return `<div class="property-stat"><span>${escapeHtml(field.label)}</span><strong>${escapeHtml(display)}</strong></div>`;
+      }).filter(Boolean).join('');
+    }
+    function renderPropertySectionBlocks(item, cfg, editMode){
+      return cfg.sections.map(section => `<section class="property-panel"><div class="section-title" style="margin:0 0 12px"><div><h3 style="font-size:15px;margin:0">${escapeHtml(section.title)}</h3><p style="margin:6px 0 0">${editMode ? 'Edit the fields that feed the Supabase record.' : 'Only populated fields are shown in view mode.'}</p></div></div><div class="property-fields ${editMode ? 'edit-grid' : 'view-grid'}">${renderSectionFields(item, section.fields, editMode)}</div></section>`).join('');
+    }
+    function readPropertyEditorValues(){
+      const out = {};
+      document.querySelectorAll('[data-property-field]').forEach(el => {
+        const key = el.dataset.propertyField;
+        const kind = el.dataset.valueKind || 'text';
+        const raw = el.value ?? '';
+        if (kind === 'money' || kind === 'number') out[key] = numVal(raw);
+        else if (kind === 'percent') out[key] = percentFrom(raw);
+        else if (kind === 'bool') out[key] = raw === 'true';
+        else if (kind === 'list') out[key] = splitParagraphs(raw);
+        else out[key] = String(raw).trim();
+      });
+      return out;
+    }
     function leadZipText(lead){ return [lead.market, lead.property, lead.notes, lead.history].filter(Boolean).join(' ').match(/\b\d{5}\b/g) || []; }
     function strategyAssetFor(lead){
       const s = String(lead.strategy || '').toLowerCase();
@@ -706,10 +900,6 @@
       state.vendors = vendors.length ? vendors.map(normalizeVendor) : BASELINE.vendors.map(normalizeVendor);
       state.network = network.length ? network.map(normalizeNetwork) : BASELINE.network.map(normalizeNetwork);
       state.source = (leads.length || buyers.length || ocr.length || tenants.length || vendors.length || network.length) ? 'live' : 'baseline';
-      state.ocrSelected = [];
-      state.activity = BASELINE.activity.slice();
-      state.agents = BASELINE.agents.map(x => ({ ...x }));
-      state.scanQueue = [];
       $('syncState').textContent = state.source === 'live' ? 'Connected' : 'Baseline mode';
       $('dataAge').textContent = state.source === 'live' ? `Live data loaded • ${new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}` : 'Using PDF mockup baseline';
       render();
@@ -731,7 +921,7 @@
         ['Leads', leads, 'Live', 'Lead capture pipeline'],
         ['Buyers', state.buyers.length, 'Buyer', 'Matchmaking buy boxes'],
         ['Properties', state.tenants.length, 'Ops', 'Property Management profiles'],
-        ['DealSnap for Prospecting like a Pro Items', state.ocr.length, 'Intake', 'Document conversion queue']
+        ['DealSnap Items', state.ocr.length, 'Intake', 'Document conversion queue']
       ];
       $('kpiGrid').innerHTML = cards.map(([title,value,badge,note]) => `<div class="kpi-card"><div class="kpi-top"><h4 class="kpi-label">${title}</h4><span class="badge ${(badge==='Buyer' || badge==='Live') ? 'good' : 'dark'}">${badge}</span></div><div class="kpi-value">${value}</div><div class="kpi-note">${note}</div></div>`).join('');
       $('recordCount').textContent = `${leadTable().length} records shown`;
@@ -754,35 +944,17 @@
     }
 
     function renderOcr(){
-      const items = ocrVisibleItems();
-      syncOcrSelection(items);
-      const selectedCount = (state.ocrSelected || []).length;
-      $('ocrCount').textContent = `${items.length} active items`;
-      $('ocrCards').innerHTML = `
-        <div class="ocr-bulkbar">
-          <div>
-            <strong>${selectedCount ? `${selectedCount} selected` : 'DealSnap intake queue'}</strong>
-            <span>${items.length ? 'Use the checkboxes to archive or delete in bulk. Archived items are hidden from the active queue by default.' : 'No active items in the queue. Archived records stay hidden by default.'}</span>
-          </div>
-          <div class="ledger-actions">
-            <button class="btn secondary" data-ocr-bulk-archive ${selectedCount ? '' : 'disabled'}>Archive Selected</button>
-            <button class="btn danger" data-ocr-bulk-delete ${selectedCount ? '' : 'disabled'}><span aria-hidden="true">🗑</span> Delete Selected</button>
-          </div>
-        </div>
-        ${items.length ? items.map(item => { const checked = (state.ocrSelected || []).includes(item.id) ? 'checked' : ''; return `<article class="card ocr-card ${checked ? 'selected' : ''}">
-          <div class="card-head">
-            <div style="display:flex;gap:12px;align-items:flex-start">
-              <label class="ocr-select"><input type="checkbox" data-ocr-select="${escapeHtml(item.id)}" ${checked}><span>✓</span></label>
-              <div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.source)}</p></div>
-            </div>
-            <span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span>
-          </div>
-          <div class="chips"><span class="chip">Confidence ${pctFmt(item.confidence)}</span><span class="chip gold">DealSnap for Prospecting like a Pro Intake</span></div>
+      const items = ocrMatches();
+      $('ocrCount').textContent = `${items.length} items shown`;
+      $('ocrCards').innerHTML = items.map(item => `
+        <article class="card">
+          <div class="card-head"><div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.source)}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div>
+          <div class="chips"><span class="chip">Confidence ${pctFmt(item.confidence)}</span><span class="chip gold">DealSnap Intake</span></div>
           <div class="progress"><i style="width:${Math.max(8, Math.min(100, item.confidence))}%"></i></div>
           <p>${escapeHtml(item.note)}</p>
-          <div class="ledger-actions"><button class="btn secondary" data-ocr-archive="${escapeHtml(item.id)}">Archive</button><button class="btn danger" data-ocr-delete="${escapeHtml(item.id)}"><span aria-hidden="true">🗑</span> Delete</button><button class="btn primary" data-ocr-convert="${escapeHtml(item.id)}">Convert to Lead</button><button class="btn secondary" data-ocr-mark="${escapeHtml(item.id)}">Mark Reviewed</button></div>
-        </article>`; }).join('') : '<div class="card" style="grid-column:1/-1;opacity:.8"><strong>No active DealSnap items</strong><p>Archived records stay hidden by default.</p></div>'}
-      `;
+          <div class="ledger-actions"><button class="btn primary" data-ocr-convert="${escapeHtml(item.id)}">Convert to Lead</button><button class="btn secondary" data-ocr-mark="${escapeHtml(item.id)}">Mark Reviewed</button></div>
+        </article>
+      `).join('');
     }
     function renderPipeline(){
       const items = filteredRecords();
@@ -805,15 +977,20 @@
       const items = filteredTenants();
       $('tenantCount').textContent = `${items.length} records shown`;
       $('tenantCards').innerHTML = items.map(item => {
+        const cfg = propertyProfileConfig(item);
         const matches = propertyMatchesForTenant(item);
-        return `<article class="tenant-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.property)}</p></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="chips"><span class="chip gold">${matches.length} potential buyers</span><span class="chip">${escapeHtml(item.strategy || 'Property')}</span><button class="btn secondary" data-open-property="${escapeHtml(item.id)}">Open Profile</button></div><div class="profile-fields"><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${item.paymentHistory.length} entries</strong></div><div class="field"><span>Activity Log</span><strong>${item.activityLog.length} notes</strong></div></div></article>`;
+        const statHtml = renderPropertySummaryCards(item, cfg);
+        return `<article class="tenant-card property-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.address || item.cityState || item.propertyType || 'Property record')}</p></div><span class="status ${statusClass(item.lease || item.status)}">${escapeHtml(item.propertyKind || cfg.label)}</span></div><div class="chips"><span class="chip gold">${matches.length} potential buyers</span><span class="chip">${escapeHtml(item.propertyType || cfg.label)}</span><button class="btn secondary" data-open-property="${escapeHtml(item.id)}">Open Profile</button></div><div class="profile-fields profile-fields-tight">${statHtml || '<div class="field"><span>Property data</span><strong>Ready for underwriting</strong></div>'}</div></article>`;
       }).join('');
       $('tenantProfiles').innerHTML = items.map(item => {
+        const cfg = propertyProfileConfig(item);
         const matches = propertyMatchesForTenant(item);
-        return `<article class="lead-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property)}</div></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="profile-fields"><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Midterm Rental')}</strong></div><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${escapeHtml(item.paymentHistory.join(' • '))}</strong></div><div class="field"><span>Activity Log</span><strong>${escapeHtml((item.activityLog || []).join(' • '))}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">Matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="ledger-actions"><button class="btn primary" data-open-property="${escapeHtml(item.id)}">Open Property Profile</button><button class="btn secondary" data-find-matches="${escapeHtml(item.id)}">Run Matchmaking</button></div></article>`;
+        const statHtml = renderPropertySummaryCards(item, cfg);
+        return `<article class="lead-profile property-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.address || item.cityState || item.propertyType || 'Property profile')}</div></div><span class="status ${statusClass(item.lease || item.status)}">${escapeHtml(item.propertyKind || cfg.label)}</span></div><div class="profile-fields profile-fields-tight">${statHtml || '<div class="field"><span>Property data</span><strong>Ready for underwriting</strong></div>'}</div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">${escapeHtml(cfg.label)} matches</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="ledger-actions"><button class="btn primary" data-open-property="${escapeHtml(item.id)}">Open Property Profile</button><button class="btn secondary" data-find-matches="${escapeHtml(item.id)}">Run Matchmaking</button></div></article>`;
       }).join('');
     }
-    function renderNetwork(){
+    function renderNetwork()
+{
       const items = filteredNetwork();
       $('networkCount').textContent = `${items.length} partners`;
       $('networkCards').innerHTML = items.map(item => `<article class="network-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.company)}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.role)}</span></div><div class="chips"><span class="chip gold">${escapeHtml(item.status)}</span><span class="chip">${escapeHtml(item.market)}</span><button class="btn secondary" data-open-network="${escapeHtml(item.id)}">Open Profile</button></div><div class="profile-fields"><div class="field"><span>Focus Markets</span><strong>${escapeHtml((item.focus || []).join(', ') || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.email || item.phone || '—')}</strong></div><div class="field"><span>Channel</span><strong>${escapeHtml((item.channels || []).join(', ') || '—')}</strong></div><div class="field"><span>Next Follow-Up</span><strong>${escapeHtml(item.nextFollowUp || '—')}</strong></div></div><p>${escapeHtml(item.notes || '—')}</p></article>`).join('');
@@ -823,12 +1000,21 @@
       $('vendorCount').textContent = `${items.length} records shown`;
       $('vendorsTable').innerHTML = items.map(item => `<tr><td><strong>${escapeHtml(item.name)}</strong></td><td class="lead-meta">${escapeHtml(item.category)}</td><td class="lead-meta">${escapeHtml(item.contact)}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.notes)}</td></tr>`).join('');
     }
-    function render(){ renderKpis(); renderMatchAlerts(); renderActivity(); renderAgents(); renderDealSnapQueue(); renderOcr(); renderPipeline(); renderLeads(); renderBuyers(); renderNetwork(); renderTenants(); renderVendors(); }
+    function render(){ renderKpis(); renderMatchAlerts(); renderOcr(); renderPipeline(); renderLeads(); renderBuyers(); renderNetwork(); renderTenants(); renderVendors(); }
     function openLead(item){ state.selected = item; const matches = item.type === 'buyer' ? leadMatchesForBuyer(item) : buyerMatchesForLead(item); const matchTitle = item.type === 'buyer' ? 'Potential Leads found' : 'Potential Buyers found'; const matchCopy = item.type === 'buyer' ? 'Lead prospects ready for outreach.' : 'Buyer prospects ready for outreach.'; const emptyCopy = item.type === 'buyer' ? 'No lead matches yet. Broaden the buyer box or open more deals.' : 'No buyer matches yet. Run underwriting or broaden the buyer box.'; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Rent</span><strong>${usdFmt(item.rent)}</strong></div><div class="field"><span>Fees</span><strong>${usdFmt(item.fees)}</strong></div><div class="field"><span>Debt</span><strong>${usdFmt(item.debt)}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">${matchTitle}</h3><p style="margin:6px 0 0">${matches.length ? `${matches.length} match${matches.length === 1 ? '' : 'es'} ready for outreach. ${matchCopy}` : emptyCopy}</p></div><div class="sub">Match priority</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(item.type === 'buyer' ? m.lead.name : m.buyer.name)}</strong><span>${escapeHtml(item.type === 'buyer' ? (m.lead.strategy || 'Any strategy') : (m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml(item.type === 'buyer' ? (m.lead.market || 'Any market') : (m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Capture the deal, underwrite it, then try broader matching filters.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="inline-edit"><label><span>Name</span><input id="d_name" value="${escapeHtml(item.name)}"></label><label><span>Status</span><input id="d_status" value="${escapeHtml(item.status)}"></label><label><span>Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.rent||0)}"></label><label><span>Fees</span><input id="d_fees" inputmode="numeric" value="${Number(item.fees||0)}"></label><label><span>Debt</span><input id="d_debt" inputmode="numeric" value="${Number(item.debt||0)}"></label><label class="full"><span>Notes</span><textarea id="d_notes" rows="4">${escapeHtml(item.notes || item.history || '')}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
-    function closeLead(){ show($('drawer'), false); state.selected = null; }
-    function openProperty(item){ state.selected = item; const matches = propertyMatchesForTenant(item); $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || 'Property profile')}</div></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="profile-fields"><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Midterm Rental')}</strong></div><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${escapeHtml(item.paymentHistory.join(' • '))}</strong></div><div class="field"><span>Activity Log</span><strong>${escapeHtml((item.activityLog || []).join(' • '))}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">Matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="inline-edit"><label><span>Strategy</span><input id="d_strategy" value="${escapeHtml(item.strategy || 'Midterm Rental')}"></label><label><span>Monthly Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.monthlyRent||0)}"></label><label><span>Past Debt</span><input id="d_pastDebt" inputmode="numeric" value="${Number(item.pastDebt||0)}"></label><label><span>Balance Owed</span><input id="d_balanceOwed" inputmode="numeric" value="${Number(item.balanceOwed||0)}"></label><label class="full"><span>Payment History</span><textarea id="d_history" rows="4">${escapeHtml(item.paymentHistory.join(' | '))}</textarea></label><label class="full"><span>Activity Log</span><textarea id="d_activity" rows="4">${escapeHtml((item.activityLog || []).join(' | '))}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
-    function openNetwork(item){ state.selected = item; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.company || item.market || 'Network contact')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.role)}</span></div><div class="profile-fields"><div class="field"><span>Company / Brokerage</span><strong>${escapeHtml(item.company || '—')}</strong></div><div class="field"><span>Market / Location</span><strong>${escapeHtml(item.market || '—')}</strong></div><div class="field"><span>Status</span><strong>${escapeHtml(item.status || '—')}</strong></div><div class="field"><span>Email</span><strong>${escapeHtml(item.email || '—')}</strong></div><div class="field"><span>Phone</span><strong>${escapeHtml(item.phone || '—')}</strong></div><div class="field"><span>LinkedIn / Profile</span><strong>${escapeHtml(item.linkedin || '—')}</strong></div><div class="field"><span>Focus</span><strong>${escapeHtml((item.focus || []).join(' • ') || '—')}</strong></div><div class="field"><span>Follow-up</span><strong>${escapeHtml(item.nextFollowUp || '—')}</strong></div></div><label class="field"><span>Notes</span><textarea rows="5" readonly>${escapeHtml(item.notes || '')}</textarea></label><div class="ledger-actions"><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
-    async function persistLeadPatch(item){
+    function closeLead(){ show($('drawer'), false); state.selected = null; state.selectedKind = null; state.drawerMode = 'view'; }
+    function openProperty(item, editMode = false){
+      state.selected = item;
+      state.selectedKind = 'property';
+      state.drawerMode = editMode ? 'edit' : 'view';
+      const cfg = propertyProfileConfig(item);
+      const matches = propertyMatchesForTenant(item);
+      const summaryCards = renderPropertySummaryCards(item, cfg) || '<div class="property-stat"><span>Property data</span><strong>Ready for underwriting</strong></div>';
+      const sectionBlocks = renderPropertySectionBlocks(item, cfg, editMode);
+      $('drawer').innerHTML = `<article class="lead-profile property-profile property-${cfg.kind}" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="property-shell"><div class="property-header"><div><span class="kicker">${escapeHtml(cfg.label)}</span><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.address || item.cityState || item.market || 'Property profile')}</div></div><span class="status ${statusClass(item.lease || item.status)}">${escapeHtml(item.status || item.propertyKind || cfg.label)}</span></div><div class="property-stats">${summaryCards}</div><div class="property-panel ${editMode ? 'edit-mode' : 'view-mode'}"><div class="section-title" style="margin:0 0 12px"><div><h3 style="font-size:16px;margin:0">${editMode ? 'Edit property profile' : 'Property profile'}</h3><p style="margin:6px 0 0">${editMode ? 'Only the populated fields in this profile are editable here.' : 'Empty or zero-value fields stay hidden until Edit mode.'}</p></div></div><div class="property-sections">${sectionBlocks}</div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">${cfg.label} matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="ledger-actions">${editMode ? '<button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerEdit">Cancel Edit</button>' : '<button class="btn primary" id="drawerEdit">Edit Profile</button>'}<button class="btn secondary" id="drawerClose2">Close</button></div></div></article>`; show($('drawer'), true);
+    }
+    async function persistLeadPatch
+(item){
       const table = chooseTable(tableCandidates.leads);
       const payload = { name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, deal_status:item.status, strategy:item.strategy, rent:item.rent, fees:item.fees, debt:item.debt, notes:item.notes, contact_history:item.history, property:item.property, owner:item.owner, market:item.market, updated_at:new Date().toISOString() };
       try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
@@ -836,11 +1022,53 @@
     }
     async function persistTenant(item){
       const table = chooseTable(tableCandidates.tenants);
-      const payload = { tenant_id:item.id, tenant_name:item.name, strategy:item.strategy, monthly_rent:item.monthlyRent, past_debt:item.pastDebt, balance_owed:item.balanceOwed, payment_history:item.paymentHistory, activity_log:item.activityLog, notes:item.notes, updated_at:new Date().toISOString() };
+      const payload = {
+        id: item.id,
+        source_system: item.sourceSystem || 'notion',
+        source_page_id: item.sourcePageId || '',
+        source_payload: mapPropertyToPayload(item),
+        notion_last_synced_at: new Date().toISOString(),
+        notion_sync_state: 'synced',
+        intake_status: item.status || item.lease || 'active',
+        docs_status: item.t12Received ? 'received' : 'pending',
+        source_channel: item.sourceChannel || 'Notion',
+        intake_name: item.name,
+        deal_name: item.name,
+        source_contact_name: item.owner || '',
+        source_contact_email: item.contact || '',
+        source_contact_phone: item.phone || '',
+        seller_name: item.owner || '',
+        seller_entity: item.ownerEntity || '',
+        address_line1: item.address || '',
+        address_line2: item.addressLine2 || '',
+        city: item.city || '',
+        state: item.state || '',
+        county: item.county || '',
+        apn: item.apn || '',
+        asset_class: item.assetClass || item.propertyType || '',
+        property_type: item.propertyType || '',
+        structure_type: item.structureType || '',
+        acreage: item.acreage || null,
+        beds: item.beds || null,
+        baths: item.baths || null,
+        units: item.unitCount || item.units || null,
+        sqft: item.squareFeet || item.sqft || null,
+        asking_price: item.purchasePrice || item.askingPrice || null,
+        seller_price: item.sellerPrice || null,
+        down_payment: item.downPayment || null,
+        monthly_payment: item.monthlyPayment || null,
+        earnest_money: item.earnestMoney || null,
+        close_of_escrow_date: item.closeOfEscrowDate || null,
+        manual_review_required: false,
+        intake_notes: item.notes || '',
+        source_notes: item.notes || '',
+        updated_at: new Date().toISOString()
+      };
       try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
       localStorage.setItem(`tenant-${item.id}`, JSON.stringify(item));
     }
-    async function persistVendor(item){
+    async function persistVendor
+(item){
       const table = chooseTable(tableCandidates.vendors);
       const payload = { vendor_name:item.name, category:item.category, phone:item.contact, status:item.status, notes:item.notes, updated_at:new Date().toISOString() };
       try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
@@ -865,13 +1093,11 @@
     async function handleOcrConvert(id){
       const item = state.ocr.find(x => x.id === id);
       if (!item) return;
-      const lead = { id: crypto.randomUUID(), name: item.title, type:'lead', market:'—', status:'new', strategy:'Other', rent:0, fees:0, debt:0, contact:'—', score:item.confidence || 0, property:item.title, owner:'DealSnap for Prospecting like a Pro Import', history:`Converted from DealSnap for Prospecting like a Pro: ${item.note}`, notes:item.note, raw:{} };
+      const lead = { id: crypto.randomUUID(), name: item.title, type:'lead', market:'—', status:'new', strategy:'Other', rent:0, fees:0, debt:0, contact:'—', score:item.confidence || 0, property:item.title, owner:'DealSnap Import', history:`Converted from DealSnap: ${item.note}`, notes:item.note, raw:{} };
       state.leads.unshift(lead);
       item.status = 'converted';
       const table = chooseTable(tableCandidates.leads);
       try { await api(table, { method:'POST', headers:{ Prefer:'return=minimal' }, body: JSON.stringify({ id:lead.id, name:lead.name, deal_name:lead.name, lead_name:lead.name, status:'new', deal_status:'new', property:lead.property, owner:lead.owner, notes:lead.notes, contact_history:lead.history, updated_at:new Date().toISOString() }) }); } catch(e) {}
-      await runUnderwriterAgent(lead);
-      await runMatcherAgent(lead);
       render();
     }
     async function updateLeadStage(id, stage){
@@ -889,59 +1115,6 @@
     }
     function openModal(){ renderStrategySelect('Sober Living'); syncDefaultsFromStrategy('Sober Living'); show($('backdrop'), true); show($('leadModal'), true); }
     function openBuyerModal(){ show($('backdrop'), true); show($('buyerModal'), true); }
-    function pushActivity(text, meta='Live workflow'){ state.activity.unshift({ text, meta }); state.activity = state.activity.slice(0, 12); renderActivity(); }
-    function nextScanLabel(){ state.scanId += 1; return `DS-${String(state.scanId).padStart(3, '0')}`; }
-    function makeScanItem(name, status='queued', note='Scanning screenshot for OCR and deal metadata') { return { id: crypto.randomUUID(), title:name, status, confidence: 0, source:'DealSnap for Prospecting like a Pro upload', note, raw:{} }; }
-    async function processDealSnapUpload(file){
-      const zone = $('scanStatus');
-      zone.innerHTML = '<span class="scanning"><i></i><i></i><i></i></span> Scanning…';
-      state.scanQueue.unshift({ name:file.name, label:nextScanLabel(), status:'Scanning', time:new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}) });
-      state.scanQueue = state.scanQueue.slice(0,4);
-      renderDealSnapQueue();
-      await new Promise(r => setTimeout(r, 1100));
-      const item = makeScanItem(file.name, 'queued', 'Screenshot scanned and staged for DealSnap for Prospecting like a Pro intake');
-      state.ocr.unshift(item);
-      state.scanQueue.unshift({ name:file.name, label:'Queued', status:'Intake', time:'just now' });
-      state.scanQueue = state.scanQueue.slice(0,4);
-      zone.innerHTML = '<span class="scanning"><i></i><i></i><i></i></span> Added to intake queue';
-      pushActivity(`DealSnap for Prospecting like a Pro scanned ${file.name} and added it to intake.`, 'OCR intake');
-      render();
-    }
-    async function runUnderwriterAgent(lead){
-      if (!lead) return;
-      lead.status = lead.status === 'new' ? 'qualified' : lead.status;
-      lead.notes = `${lead.notes || ''}`.trim() || 'Underwriter Agent reviewed this record.';
-      await persistLeadPatch(lead);
-      pushActivity(`Underwriter Agent processed ${lead.name}.`, 'Underwriting');
-      render();
-    }
-    async function runMatcherAgent(lead){
-      if (!lead) return [];
-      const matches = buyerMatchesForLead(lead);
-      const matchCount = matches.length;
-      lead.status = matchCount ? 'contract' : lead.status;
-      await persistLeadPatch(lead);
-      pushActivity(`Agent Pope matched ${lead.property || lead.name} to ${matchCount} Buyers.`, 'Buyer matching');
-      if (matchCount) pushActivity(`Matcher Agent flagged ${matchCount} buyer${matchCount === 1 ? '' : 's'} for ${lead.name}.`, 'Auto-flag');
-      render();
-      return matches;
-    }
-    function renderAgents(){
-      $('agentCount').textContent = `${state.agents.length} active agents`;
-      $('agentGrid').innerHTML = state.agents.map(agent => `<article class="agent-card ${agent.status === 'standby' ? 'off' : ''}"><div class="card-head"><div><h4>${escapeHtml(agent.name)}</h4><p>${escapeHtml(agent.detail)}</p></div><span class="status ${agent.status === 'active' ? 'good' : 'warn'}">${escapeHtml(agent.status)}</span></div><div class="field"><span>Current state</span><strong>${escapeHtml(agent.pulse)}</strong></div><div class="agent-controls"><button class="agent-toggle ${agent.status === 'active' ? 'on' : ''}" data-agent-toggle="${escapeHtml(agent.id)}">${agent.status === 'active' ? 'Enabled' : 'Standby'}</button><button class="btn secondary" data-agent-run="${escapeHtml(agent.id)}">Run Now</button></div></article>`).join('');
-      $('workflowSummary').innerHTML = [
-        { label:'OCR intake', value:`${ocrVisibleItems().length} items`, note:'DealSnap for Prospecting like a Pro uploads enter the queue and get staged for underwriter review.' },
-        { label:'Underwriting', value:`${state.leads.filter(x => ['qualified','contacted','contract'].includes(String(x.status||'').toLowerCase())).length} leads`, note:'Underwriter Agent promotes viable records and updates status.' },
-        { label:'Buyer matching', value:`${state.leads.reduce((sum, lead) => sum + buyerMatchesForLead(lead).length, 0)} matches`, note:'Matcher Agent flags possible buyers automatically after underwriting.' }
-      ].map(item => `<div class="feed-item"><strong>${escapeHtml(item.label)} · ${escapeHtml(item.value)}</strong><span>${escapeHtml(item.note)}</span></div>`).join('');
-    }
-    function renderActivity(){
-      $('activityCount').textContent = `${state.activity.length} events`;
-      $('activityFeed').innerHTML = (state.activity.length ? state.activity : BASELINE.activity).map(item => `<div class="feed-item"><strong>${escapeHtml(item.text)}</strong><span>${escapeHtml(item.meta)}</span></div>`).join('');
-    }
-    function renderDealSnapQueue(){
-      $('dealSnapQueue').innerHTML = state.scanQueue.length ? state.scanQueue.map(item => `<div class="queue-item"><div><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.status)} • ${escapeHtml(item.time || 'just now')}</span></div><div class="queue-meta">${escapeHtml(item.label)}</div></div>`).join('') : '<div class="queue-item"><div><strong>No screenshots queued</strong><span>Drop an image or PDF to stage a new DealSnap for Prospecting like a Pro intake item.</span></div><div class="queue-meta">Ready</div></div>';
-    }
     function closeBuyerModal(){ show($('backdrop'), false); show($('buyerModal'), false); }
     function renderStrategySelect(selected='Sober Living'){ const sel = $('m_strategy'); if (!sel) return; const opts = state.strategyChoices.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('') + '<option value="__new__">Create New Strategy</option>'; sel.innerHTML = opts; sel.value = state.strategyChoices.includes(selected) ? selected : 'Sober Living'; }
     function syncDefaultsFromStrategy(name){ const d = strategyDefaults(name); $('m_rent').value = d.rent; $('m_fees').value = d.fees; $('m_debt').value = d.debt; }
@@ -954,10 +1127,6 @@
       const propBtn = e.target.closest('[data-open-property]'); if (propBtn) return openProperty(state.tenants.find(x => x.id === propBtn.dataset.openProperty));
       const networkBtn = e.target.closest('[data-open-network]'); if (networkBtn) return openNetwork(state.network.find(x => x.id === networkBtn.dataset.openNetwork));
       const row = e.target.closest('[data-lead]'); if (row) return openLead(allRecords().find(x => x.id === row.dataset.lead));
-      const ocrDelete = e.target.closest('[data-ocr-delete]'); if (ocrDelete) { const item = state.ocr.find(x => x.id === ocrDelete.dataset.ocrDelete); if (!item) return; if (!confirm('Delete this DealSnap intake item?')) return; await deleteOcrRow(item); state.ocr = state.ocr.filter(x => x.id !== item.id); state.ocrSelected = (state.ocrSelected || []).filter(id => id !== item.id); pushActivity(`Deleted DealSnap intake item ${item.title}.`, 'OCR intake'); render(); return; }
-      const ocrArchive = e.target.closest('[data-ocr-archive]'); if (ocrArchive) { const item = state.ocr.find(x => x.id === ocrArchive.dataset.ocrArchive); if (!item) return; await archiveOcrRow(item); state.ocrSelected = (state.ocrSelected || []).filter(id => id !== item.id); pushActivity(`Archived DealSnap intake item ${item.title}.`, 'OCR intake'); render(); return; }
-      const ocrBulkArchive = e.target.closest('[data-ocr-bulk-archive]'); if (ocrBulkArchive) return handleOcrSelectionAction('archive');
-      const ocrBulkDelete = e.target.closest('[data-ocr-bulk-delete]'); if (ocrBulkDelete) return handleOcrSelectionAction('delete');
       const ocr = e.target.closest('[data-ocr-convert]'); if (ocr) return handleOcrConvert(ocr.dataset.ocrConvert);
       const reviewed = e.target.closest('[data-ocr-mark]'); if (reviewed){ const item = state.ocr.find(x => x.id === reviewed.dataset.ocrMark); if (item) item.status='reviewed'; renderOcr(); }
       const close1 = e.target.closest('#closeModal'); if (close1) return closeModal();
@@ -965,6 +1134,8 @@
       const closeBuyer1 = e.target.closest('#closeBuyerModal'); if (closeBuyer1) return closeBuyerModal();
       const closeBuyer2 = e.target.closest('#cancelBuyer'); if (closeBuyer2) return closeBuyerModal();
       const drawerFind = e.target.closest('[data-find-matches]'); if (drawerFind) { const lead = allRecords().find(x => x.id === drawerFind.dataset.findMatches); if (!lead) return; if (lead.type === 'buyer') return openLead(lead); const prop = state.tenants.find(x => x.id === drawerFind.dataset.findMatches); if (prop) return openProperty(prop); return openLead(lead); }
+      const drawerEdit = e.target.closest('#drawerEdit'); if (drawerEdit && state.selected && state.selectedKind === 'property') { state.drawerMode = state.drawerMode === 'edit' ? 'view' : 'edit'; openProperty(state.selected, state.drawerMode === 'edit'); return; }
+      const drawerSave = e.target.closest('#drawerSave'); if (drawerSave && state.selected) { if (state.selectedKind === 'property') { const updates = readPropertyEditorValues(); state.selected = { ...state.selected, ...updates, notes: String(updates.notes ?? state.selected.notes ?? '') }; await persistTenant(state.selected); state.drawerMode = 'view'; } else { await persistLeadPatch(state.selected); } closeLead(); render(); }
       const drawerSaveBuyer = e.target.closest('[data-save-buyer]'); if (drawerSaveBuyer) { const item = state.buyers.find(x => x.id === drawerSaveBuyer.dataset.saveBuyer); if (item) persistBuyer(item); return; }
       const saveLead = e.target.closest('#saveLead'); if (saveLead) return createLeadFromModal();
       const saveBuyer = e.target.closest('#saveBuyer'); if (saveBuyer) return createBuyerFromModal();
@@ -972,8 +1143,6 @@
       const openBuyerModalBtn = e.target.closest('#openBuyerModal'); if (openBuyerModalBtn) return openBuyerModal();
       const refresh = e.target.closest('#refreshData'); if (refresh) return loadData();
       const refreshBuyers = e.target.closest('#refreshBuyers'); if (refreshBuyers) return render();
-      const agentToggle = e.target.closest('[data-agent-toggle]'); if (agentToggle) { const agent = state.agents.find(x => x.id === agentToggle.dataset.agentToggle); if (agent) { agent.status = agent.status === 'active' ? 'standby' : 'active'; agent.pulse = agent.status === 'active' ? 'Ready to run' : 'Paused'; pushActivity(`${agent.name} switched to ${agent.status}.`, 'Agent control'); renderAgents(); } return; }
-      const agentRun = e.target.closest('[data-agent-run]'); if (agentRun) { const agent = state.agents.find(x => x.id === agentRun.dataset.agentRun); if (!agent) return; if (agent.id === 'lead-scraper') { pushActivity('Lead Scraper scanned the intake lane for new DealSnap for Prospecting like a Pro items.', 'Lead capture'); const seeded = makeScanItem('Manual scan capture', 'queued', 'Lead Scraper staged a new screenshot for OCR'); state.ocr.unshift(seeded); render(); } else if (agent.id === 'underwriter') { const lead = state.leads[0]; if (lead) { runUnderwriterAgent(lead); } } else if (agent.id === 'matcher') { const lead = state.leads[0]; if (lead) { runMatcherAgent(lead); } } else { pushActivity('Follow-up Bot queued a reminder thread for the next buyer outreach.', 'Follow-up'); render(); } return; }
       const modalBackdrop = e.target.id === 'backdrop'; if (modalBackdrop) { closeModal(); closeBuyerModal(); closeLead(); }
       const laneCard = e.target.closest('.lane-card');
       if (laneCard && !e.target.closest('button')) {
@@ -1005,8 +1174,6 @@
         const item = state.selected; if (!item) return; item.name = $('d_name').value; item.status = $('d_status').value; item.notes = $('d_notes').value; item.history = $('d_notes').value; item.rent = Number($('d_rent').value || 0) || 0; item.fees = Number($('d_fees').value || 0) || 0; item.debt = Number($('d_debt').value || 0) || 0; }
     });
     document.addEventListener('change', async e => {
-      const ocrSelect = e.target.closest('[data-ocr-select]');
-      if (ocrSelect) return toggleOcrSelection(ocrSelect.dataset.ocrSelect, e.target.checked);
       const buyerField = e.target.closest('[data-buyer-field]');
       if (!buyerField) return;
       const item = state.buyers.find(x => x.id === buyerField.dataset.buyerId);
@@ -1028,29 +1195,9 @@
     document.addEventListener('dragleave', e => { const lane = e.target.closest('.lane'); if (lane) lane.classList.remove('dragover'); });
     document.addEventListener('drop', async e => { const lane = e.target.closest('.lane'); if (!lane) return; e.preventDefault(); lane.classList.remove('dragover'); const id = e.dataTransfer.getData('text/plain'); if (!id) return; await updateLeadStage(id, lane.dataset.stage); });
     document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; render(); });
-    const dealSnapDropzone = document.getElementById('dealSnapDropzone');
-    const dealSnapInput = document.getElementById('dealSnapInput');
-    const dealSnapBrowse = document.getElementById('dealSnapBrowse');
-    const dealSnapSeed = document.getElementById('dealSnapSeed');
-    if (dealSnapBrowse) dealSnapBrowse.addEventListener('click', () => dealSnapInput?.click());
-    if (dealSnapSeed) dealSnapSeed.addEventListener('click', async () => {
-      const fake = new File(['DealSnap for Prospecting like a Pro sample'], `DealSnap for Prospecting like a Pro-${Date.now()}.png`, { type:'image/png' });
-      await processDealSnapUpload(fake);
-    });
-    if (dealSnapInput) dealSnapInput.addEventListener('change', async e => { const files = Array.from(e.target.files || []); for (const file of files) await processDealSnapUpload(file); e.target.value = ''; });
-    if (dealSnapDropzone) {
-      ['dragenter','dragover'].forEach(evt => dealSnapDropzone.addEventListener(evt, e => { e.preventDefault(); dealSnapDropzone.classList.add('is-over'); }));
-      ['dragleave','drop'].forEach(evt => dealSnapDropzone.addEventListener(evt, e => { e.preventDefault(); dealSnapDropzone.classList.remove('is-over'); }));
-      dealSnapDropzone.addEventListener('drop', async e => { const files = Array.from(e.dataTransfer?.files || []); for (const file of files) await processDealSnapUpload(file); });
-      dealSnapDropzone.addEventListener('click', e => { if (e.target.closest('button')) return; dealSnapInput?.click(); });
-    }
     document.getElementById('filterBar').addEventListener('click', e => { const btn = e.target.closest('button[data-filter]'); if (!btn) return; document.querySelectorAll('#filterBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.filter = btn.dataset.filter; render(); });
     document.getElementById('strategyBar').addEventListener('click', e => { const btn = e.target.closest('button[data-strategy]'); if (!btn) return; document.querySelectorAll('#strategyBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.strategyFilter = btn.dataset.strategy; render(); });
     document.getElementById('boardModeBar').addEventListener('click', e => { const btn = e.target.closest('button[data-board-mode]'); if (!btn) return; document.querySelectorAll('#boardModeBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.boardMode = btn.dataset.boardMode; render(); });
-    document.addEventListener('click', async e => {
-      const drawerSave = e.target.closest('#drawerSave');
-      if (drawerSave && state.selected) { if (state.tenants.some(x => x.id === state.selected.id)) { state.selected.strategy = $('d_strategy').value; state.selected.monthlyRent = Number($('d_rent').value || 0) || 0; state.selected.pastDebt = Number($('d_pastDebt').value || 0) || 0; state.selected.balanceOwed = Number($('d_balanceOwed').value || 0) || 0; state.selected.paymentHistory = String($('d_history').value || '').split('|').map(s => s.trim()).filter(Boolean); state.selected.activityLog = String($('d_activity').value || '').split('|').map(s => s.trim()).filter(Boolean); state.selected.notes = state.selected.activityLog.join(' | '); await persistTenant(state.selected); } else { await persistLeadPatch(state.selected); } closeLead(); render(); }
-    });
     async function seedLocal(){
       if (localStorage.getItem('miles-functional-seeded')) return;
       localStorage.setItem('miles-functional-seeded', '1');
