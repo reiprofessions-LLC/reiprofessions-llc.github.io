@@ -295,7 +295,7 @@
           <div class="section-head">
             <div>
               <h3>Backend bridge</h3>
-              <p>Buy Boxes (Investors) is mirrored into public.buyers in Supabase, with a bridge view for matching and a sync-state record for the integration layer.</p>
+              <p>Notion Buyers is mirrored into public.buyers in Supabase, with a bridge view for matching and a sync-state record for the integration layer.</p>
             </div>
           </div>
           <div class="bridge-grid" id="bridge-grid"></div>
@@ -312,6 +312,22 @@
         </article>
       </section>
 
+      <section class="panel section" id="land-leads">
+        <div class="section-head">
+          <div>
+            <h3>Live land leads</h3>
+            <p>Queried directly from public.properties so new land rows appear immediately in the CRM.</p>
+          </div>
+          <div class="subtabs">
+            <span class="pill active"><i></i><span id="land-lead-count">0</span> live rows</span>
+            <span class="pill"><i></i>public.properties</span>
+          </div>
+        </div>
+        <div class="crm-list" id="land-leads-list">
+          <div class="queue-item"><div><strong>Loading live land leads…</strong><p>Pulling the rows directly from Supabase.</p></div><div class="state">Syncing</div></div>
+        </div>
+      </section>
+
       <div class="footer-note">The CRM keeps the buyer data organized, DealSnap keeps the field workflow mobile-first, and the Supabase bridge keeps both sides ready for real-time matching. If a buyer is missing fields, the UI flags it and stages a request instead of hiding the problem.</div>
     </div>
   </main>
@@ -321,6 +337,8 @@
     const AUTH_KEY = 'dealsnap_dual_auth_v2';
     const GRAND_CODE = 'GRANDFATHERED10';
     const BUYERS = JSON.parse(document.getElementById('buyers-data').textContent);
+    const SUPABASE_URL = 'https://egpqhzubdeklzstzdmtt.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_iBBJYG09g5LAqXEo7QdC2w_HcyXKzxG';
 
     const app = {
       stats: [
@@ -380,6 +398,96 @@
     function renderBridge(){ document.getElementById('bridge-grid').innerHTML = app.bridge.map(s => `<div class="bridge-card"><strong>${esc(s.title)}</strong><p>${esc(s.body)}</p></div>`).join(''); }
     function renderCoverage(){ document.getElementById('coverage-grid').innerHTML = app.coverage.map(v => `<div class="kv"><div class="k">Normalized column</div><div class="v">${esc(v)}</div></div>`).join(''); }
     function renderDrafts(){ document.getElementById('drafts').innerHTML = app.drafts.length ? app.drafts.map(d => `<div class="queue-item"><div><strong>${esc(d.type)} draft</strong><p>${esc(d.body)}</p></div><div class="state">${esc(d.state)}</div></div>`).join('') : `<div class="queue-item"><div><strong>No drafts queued</strong><p>Run a scan or flag a missing buyer field to stage outreach.</p></div><div class="state">Idle</div></div>`; }
+    function landCard(row, idx) {
+      const payload = row.source_payload || {};
+      const acreage = payload.acreage ? `${payload.acreage} ac` : '—';
+      const price = payload.asking_price ? formatMoney(payload.asking_price) : 'TBD';
+      const ppa = payload.price_per_acre ? `${formatMoney(payload.price_per_acre)}/ac` : '—';
+      const fit = payload.fit_status || 'unclassified';
+      const buyer = payload.buyer_match?.name || 'Unmapped';
+      const signals = (payload.distress_signals || []).slice(0, 4).join(' · ') || 'No distress signals listed';
+      const source = payload.source || row.source_system || '—';
+      const details = [row.city, row.county, row.state].filter(Boolean).join(', ') || '—';
+      return `
+      <details class="buyer-card">
+        <summary>
+          <div class="buyer-top">
+            <div>
+              <div class="eyebrow"><span class="dot"></span> live lead · record ${idx + 1}</div>
+              <h4 class="buyer-name">${esc(row.deal_name || 'Unnamed lead')}</h4>
+              <div class="buyer-meta">${esc(details)} · ${esc(source)}</div>
+            </div>
+            <div class="badges">
+              <span class="badge soft">${esc(fit)}</span>
+              <span class="badge">${esc(buyer)}</span>
+              <span class="badge">${esc(row.asset_class || row.property_type || 'Land')}</span>
+            </div>
+          </div>
+          <div class="badges">
+            <span class="badge soft">${esc(acreage)}</span>
+            <span class="badge">${esc(price)}</span>
+            <span class="badge">${esc(ppa)}</span>
+            <span class="badge">${esc(row.created_at || 'No created_at')}</span>
+          </div>
+        </summary>
+        <div class="buyer-body">
+          <div class="group">
+            <h4>Lead details</h4>
+            <div class="grid-fields">
+              ${kv('City / county', details)}
+              ${kv('State', row.state || '—')}
+              ${kv('Property type', row.property_type || '—')}
+              ${kv('Asset class', row.asset_class || '—')}
+              ${kv('Source system', row.source_system || '—')}
+              ${kv('Buyer match', buyer)}
+            </div>
+          </div>
+          <div class="group">
+            <h4>Signals and notes</h4>
+            <div class="details-grid">
+              ${kv('Notes', payload.notes || '—')}
+              ${kv('Distress signals', signals)}
+              ${kv('Source reference', payload.source || row.source_page_id || row.source_database_id || '—')}
+            </div>
+          </div>
+          <div class="group">
+            <h4>Raw sync payload</h4>
+            <div class="details-grid">
+              ${kv('Fit status', fit)}
+              ${kv('Asking price', payload.asking_price ? formatMoney(payload.asking_price) : '—')}
+              ${kv('Price / acre', payload.price_per_acre ? formatMoney(payload.price_per_acre) : '—')}
+              ${kv('Acreage', payload.acreage ?? '—')}
+            </div>
+          </div>
+        </div>
+      </details>`;
+    }
+
+    function renderLandLeads(rows) {
+      const target = document.getElementById('land-leads-list');
+      const count = document.getElementById('land-lead-count');
+      if (count) count.textContent = String(rows.length);
+      if (!rows.length) {
+        target.innerHTML = `<div class="queue-item"><div><strong>No live land leads returned</strong><p>The dashboard queried public.properties but nothing matched the land filter.</p></div><div class="state">Empty</div></div>`;
+        return;
+      }
+      target.innerHTML = rows.map((row, idx) => landCard(row, idx)).join('');
+    }
+
+    async function loadLandLeads() {
+      const url = `${SUPABASE_URL}/rest/v1/properties?select=id,deal_name,city,state,county,property_type,asset_class,source_system,source_payload,source_page_id,source_database_id,created_at,updated_at&or=(asset_class.eq.land,property_type.ilike.%25land%25)&order=created_at.desc`;
+      const res = await fetch(url, {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          Accept: 'application/json'
+        }
+      });
+      if (!res.ok) throw new Error(`Supabase land lead fetch failed: ${res.status}`);
+      const rows = await res.json();
+      renderLandLeads(Array.isArray(rows) ? rows : []);
+    }
+
 
     function buyerCard(b, idx) {
       const states = (b.states_allowed || []).length ? b.states_allowed.join(', ') : 'None listed';
@@ -555,6 +663,13 @@
         document.getElementById('prospect-input').value = '1427 Elm St, notice of default, vacant, call owner';
       }
     });
+    loadLandLeads().catch(err => {
+      const target = document.getElementById('land-leads-list');
+      const count = document.getElementById('land-lead-count');
+      if (count) count.textContent = '0';
+      if (target) target.innerHTML = `<div class="queue-item"><div><strong>Unable to load live land leads</strong><p>${esc(err?.message || 'Supabase fetch failed')}</p></div><div class="state">Error</div></div>`;
+    });
+
   </script>
 </body>
 </html>
