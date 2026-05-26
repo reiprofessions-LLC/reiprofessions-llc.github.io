@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nationwide Prospecting CRM — Miles</title>
-  <meta name="description" content="Nationwide Prospecting CRM for leads, DealSnap, pipeline, property management, and vendors." />
+  <title>DealSnap for Prospecting like a Pro</title>
+  <meta name="description" content="DealSnap for Prospecting like a Pro for leads, pipeline, property management, and vendors." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -240,12 +240,12 @@
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <h1>NATIONWIDE<br>PROSPECTING CRM</h1>
-        <p>Buyer-first DealSnap OS for lead capture, underwriting, matchmaking, and operational handoff.</p>
+        <h1>DealSnap for Prospecting like a Pro</h1>
+        <p>Buyer-first DealSnap for Prospecting like a Pro OS for lead capture, underwriting, matchmaking, and operational handoff.</p>
       </div>
       <div class="nav">
         <button class="nav-item active" data-jump="#dashboard"><span class="nav-ico">⌂</span><span><strong>Dashboard</strong><small>Workflow status and alerts</small></span></button>
-        <button class="nav-item" data-jump="#ocr"><span class="nav-ico">◫</span><span><strong>DealSnap</strong><small>Convert docs into leads</small></span></button>
+        <button class="nav-item" data-jump="#ocr"><span class="nav-ico">◫</span><span><strong>DealSnap for Prospecting like a Pro</strong><small>Convert docs into leads</small></span></button>
         <button class="nav-item" data-jump="#pipeline"><span class="nav-ico">↺</span><span><strong>Kanban Pipeline</strong><small>Lead to contract flow</small></span></button>
         <button class="nav-item" data-jump="#leads"><span class="nav-ico">▦</span><span><strong>Leads</strong><small>Capture and underwriting</small></span></button>
         <button class="nav-item" data-jump="#buyers"><span class="nav-ico">◎</span><span><strong>Buyers</strong><small>Matchmaking and buy boxes</small></span></button>
@@ -303,7 +303,7 @@
 
       <section class="panel section" id="agents">
         <div class="section-title">
-          <div><h3>Agent Hub</h3><p>Active agents stay visible here and can be toggled or run manually while they work the DealSnap system.</p></div>
+          <div><h3>Agent Hub</h3><p>Active agents stay visible here and can be toggled or run manually while they work the DealSnap for Prospecting like a Pro system.</p></div>
           <div class="sub" id="agentCount">—</div>
         </div>
         <div class="agent-grid" id="agentGrid"></div>
@@ -311,7 +311,7 @@
 
       <section class="panel section" id="activity">
         <div class="section-title">
-          <div><h3>Activity Feed</h3><p>Live workflow telemetry from DealSnap, underwriting, and buyer matching.</p></div>
+          <div><h3>Activity Feed</h3><p>Live workflow telemetry from DealSnap for Prospecting like a Pro, underwriting, and buyer matching.</p></div>
           <div class="sub" id="activityCount">—</div>
         </div>
         <div class="activity-grid">
@@ -336,7 +336,7 @@
 
       <section class="panel section" id="ocr">
         <div class="section-title">
-          <div><h3>DealSnap</h3><p>Document intake mapped to the DealSnap workflow with conversion actions.</p></div>
+          <div><h3>DealSnap for Prospecting like a Pro</h3><p>Document intake mapped to the DealSnap for Prospecting like a Pro workflow with conversion actions.</p></div>
           <div class="sub" id="ocrCount">—</div>
         </div>
         <div class="dropzone" id="dealSnapDropzone">
@@ -346,7 +346,7 @@
               <div class="dropzone-badge">◫</div>
               <div>
                 <h4>Drop Screenshot Here</h4>
-                <p>Drag a DealSnap screenshot into this polished intake bay or click to upload. The system will stage a short scanning sequence before adding it to the intake queue.</p>
+                <p>Drag a DealSnap for Prospecting like a Pro screenshot into this polished intake bay or click to upload. The system will stage a short scanning sequence before adding it to the intake queue.</p>
               </div>
             </div>
             <div class="scan-pill" id="scanStatus"><span class="scanning"><i></i><i></i><i></i></span> Ready for intake</div>
@@ -505,19 +505,19 @@
       ],
       activity: [
         { text: 'Agent Pope matched 1004 Kinney to 3 Buyers.', meta: 'Underwriter → Matcher • Today' },
-        { text: 'Underwriter Agent processed the newest DealSnap intake.', meta: 'DealSnap → Underwriting • Today' },
+        { text: 'Underwriter Agent processed the newest DealSnap for Prospecting like a Pro intake.', meta: 'DealSnap for Prospecting like a Pro → Underwriting • Today' },
         { text: 'Follow-up Bot queued outreach after buyer flags were raised.', meta: 'Matcher → Follow-up • Today' },
-        { text: 'New DealSnap lead in Uvalde Co. queued for review.', meta: 'Today • DealSnap' }
+        { text: 'New DealSnap for Prospecting like a Pro lead in Uvalde Co. queued for review.', meta: 'Today • DealSnap for Prospecting like a Pro' }
       ],
       agents: [
-        { id:'lead-scraper', name:'Lead Scraper', status:'active', pulse:'Watching screenshots', detail:'Captures new DealSnap uploads and prepares intake records.' },
+        { id:'lead-scraper', name:'Lead Scraper', status:'active', pulse:'Watching screenshots', detail:'Captures new DealSnap for Prospecting like a Pro uploads and prepares intake records.' },
         { id:'underwriter', name:'Underwriter Agent', status:'active', pulse:'Auto-processing', detail:'Scores intake items and promotes viable leads for review.' },
         { id:'matcher', name:'Buyer Matcher', status:'active', pulse:'Flagging buyers', detail:'Maps underwritten leads to buyer pools and alert queues.' },
         { id:'follow-up', name:'Follow-up Bot', status:'standby', pulse:'Queued', detail:'Drafts reminders and follow-up prompts after a match.' }
       ],
       ocr: [
-        { title: 'Uvalde Co. screenshot', status: 'queued', confidence: 91, source: 'DealSnap webhook', note: 'Waiting for extraction' },
-        { title: 'Frio Co. document', status: 'review', confidence: 83, source: 'DealSnap queue', note: 'Needs address normalization' },
+        { title: 'Uvalde Co. screenshot', status: 'queued', confidence: 91, source: 'DealSnap for Prospecting like a Pro webhook', note: 'Waiting for extraction' },
+        { title: 'Frio Co. document', status: 'review', confidence: 83, source: 'DealSnap for Prospecting like a Pro queue', note: 'Needs address normalization' },
         { title: 'Title Search receipt', status: 'processing', confidence: 76, source: 'workflow', note: 'Attachment detected' }
       ],
       leads: [
@@ -614,7 +614,7 @@
         raw: item
       };
     }
-    function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
+    function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap for Prospecting like a Pro item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap for Prospecting like a Pro queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
     function normalizeTenant(item){ const history = Array.isArray(item.paymentHistory) ? item.paymentHistory : (Array.isArray(item.payment_history) ? item.payment_history : []); const activity = Array.isArray(item.activityLog) ? item.activityLog : (Array.isArray(item.activity_log) ? item.activity_log : []); return { id:item.id||crypto.randomUUID(), name:item.name||item.tenant_name||item.property_name||'Tenant', property:item.property||item.property_name||item.address||'—', lease:item.lease||item.lease_status||'active', strategy:item.strategy||item.deal_strategy||item.exit_strategy||'Midterm Rental', monthlyRent:Number(item.monthlyRent||item.monthly_rent||item.rent||0)||0, pastDebt:Number(item.pastDebt||item.past_debt||0)||0, balanceOwed:Number(item.balanceOwed||item.balance_owed||item.amount_due||0)||0, paymentHistory:history.length ? history : ['No payments logged'], activityLog:activity.length ? activity : ['No activity logged'], notes:item.notes || item.description || '', raw:item }; }
     function normalizeVendor(item){ return { id:item.id||crypto.randomUUID(), name:item.vendor_name||item.name||item.company_name||'Vendor', category:item.category||item.vendor_type||item.type||'Service', contact:item.phone||item.email||item.contact||'—', status:item.status||(item.active===false?'inactive':'active'), notes:item.notes||item.scheduling||item.schedule||'—', raw:item }; }
     function normalizeNetwork(item){
@@ -710,7 +710,7 @@
         ['Leads', leads, 'Live', 'Lead capture pipeline'],
         ['Buyers', state.buyers.length, 'Buyer', 'Matchmaking buy boxes'],
         ['Properties', state.tenants.length, 'Ops', 'Property Management profiles'],
-        ['DealSnap Items', state.ocr.length, 'Intake', 'Document conversion queue']
+        ['DealSnap for Prospecting like a Pro Items', state.ocr.length, 'Intake', 'Document conversion queue']
       ];
       $('kpiGrid').innerHTML = cards.map(([title,value,badge,note]) => `<div class="kpi-card"><div class="kpi-top"><h4 class="kpi-label">${title}</h4><span class="badge ${(badge==='Buyer' || badge==='Live') ? 'good' : 'dark'}">${badge}</span></div><div class="kpi-value">${value}</div><div class="kpi-note">${note}</div></div>`).join('');
       $('recordCount').textContent = `${leadTable().length} records shown`;
@@ -738,7 +738,7 @@
       $('ocrCards').innerHTML = items.map(item => `
         <article class="card">
           <div class="card-head"><div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.source)}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div>
-          <div class="chips"><span class="chip">Confidence ${pctFmt(item.confidence)}</span><span class="chip gold">DealSnap Intake</span></div>
+          <div class="chips"><span class="chip">Confidence ${pctFmt(item.confidence)}</span><span class="chip gold">DealSnap for Prospecting like a Pro Intake</span></div>
           <div class="progress"><i style="width:${Math.max(8, Math.min(100, item.confidence))}%"></i></div>
           <p>${escapeHtml(item.note)}</p>
           <div class="ledger-actions"><button class="btn primary" data-ocr-convert="${escapeHtml(item.id)}">Convert to Lead</button><button class="btn secondary" data-ocr-mark="${escapeHtml(item.id)}">Mark Reviewed</button></div>
@@ -826,7 +826,7 @@
     async function handleOcrConvert(id){
       const item = state.ocr.find(x => x.id === id);
       if (!item) return;
-      const lead = { id: crypto.randomUUID(), name: item.title, type:'lead', market:'—', status:'new', strategy:'Other', rent:0, fees:0, debt:0, contact:'—', score:item.confidence || 0, property:item.title, owner:'DealSnap Import', history:`Converted from DealSnap: ${item.note}`, notes:item.note, raw:{} };
+      const lead = { id: crypto.randomUUID(), name: item.title, type:'lead', market:'—', status:'new', strategy:'Other', rent:0, fees:0, debt:0, contact:'—', score:item.confidence || 0, property:item.title, owner:'DealSnap for Prospecting like a Pro Import', history:`Converted from DealSnap for Prospecting like a Pro: ${item.note}`, notes:item.note, raw:{} };
       state.leads.unshift(lead);
       item.status = 'converted';
       const table = chooseTable(tableCandidates.leads);
@@ -852,7 +852,7 @@
     function openBuyerModal(){ show($('backdrop'), true); show($('buyerModal'), true); }
     function pushActivity(text, meta='Live workflow'){ state.activity.unshift({ text, meta }); state.activity = state.activity.slice(0, 12); renderActivity(); }
     function nextScanLabel(){ state.scanId += 1; return `DS-${String(state.scanId).padStart(3, '0')}`; }
-    function makeScanItem(name, status='queued', note='Scanning screenshot for OCR and deal metadata') { return { id: crypto.randomUUID(), title:name, status, confidence: 0, source:'DealSnap upload', note, raw:{} }; }
+    function makeScanItem(name, status='queued', note='Scanning screenshot for OCR and deal metadata') { return { id: crypto.randomUUID(), title:name, status, confidence: 0, source:'DealSnap for Prospecting like a Pro upload', note, raw:{} }; }
     async function processDealSnapUpload(file){
       const zone = $('scanStatus');
       zone.innerHTML = '<span class="scanning"><i></i><i></i><i></i></span> Scanning…';
@@ -860,12 +860,12 @@
       state.scanQueue = state.scanQueue.slice(0,4);
       renderDealSnapQueue();
       await new Promise(r => setTimeout(r, 1100));
-      const item = makeScanItem(file.name, 'queued', 'Screenshot scanned and staged for DealSnap intake');
+      const item = makeScanItem(file.name, 'queued', 'Screenshot scanned and staged for DealSnap for Prospecting like a Pro intake');
       state.ocr.unshift(item);
       state.scanQueue.unshift({ name:file.name, label:'Queued', status:'Intake', time:'just now' });
       state.scanQueue = state.scanQueue.slice(0,4);
       zone.innerHTML = '<span class="scanning"><i></i><i></i><i></i></span> Added to intake queue';
-      pushActivity(`DealSnap scanned ${file.name} and added it to intake.`, 'OCR intake');
+      pushActivity(`DealSnap for Prospecting like a Pro scanned ${file.name} and added it to intake.`, 'OCR intake');
       render();
     }
     async function runUnderwriterAgent(lead){
@@ -891,7 +891,7 @@
       $('agentCount').textContent = `${state.agents.length} active agents`;
       $('agentGrid').innerHTML = state.agents.map(agent => `<article class="agent-card ${agent.status === 'standby' ? 'off' : ''}"><div class="card-head"><div><h4>${escapeHtml(agent.name)}</h4><p>${escapeHtml(agent.detail)}</p></div><span class="status ${agent.status === 'active' ? 'good' : 'warn'}">${escapeHtml(agent.status)}</span></div><div class="field"><span>Current state</span><strong>${escapeHtml(agent.pulse)}</strong></div><div class="agent-controls"><button class="agent-toggle ${agent.status === 'active' ? 'on' : ''}" data-agent-toggle="${escapeHtml(agent.id)}">${agent.status === 'active' ? 'Enabled' : 'Standby'}</button><button class="btn secondary" data-agent-run="${escapeHtml(agent.id)}">Run Now</button></div></article>`).join('');
       $('workflowSummary').innerHTML = [
-        { label:'OCR intake', value:`${state.ocr.length} items`, note:'DealSnap uploads enter the queue and get staged for underwriter review.' },
+        { label:'OCR intake', value:`${state.ocr.length} items`, note:'DealSnap for Prospecting like a Pro uploads enter the queue and get staged for underwriter review.' },
         { label:'Underwriting', value:`${state.leads.filter(x => ['qualified','contacted','contract'].includes(String(x.status||'').toLowerCase())).length} leads`, note:'Underwriter Agent promotes viable records and updates status.' },
         { label:'Buyer matching', value:`${state.leads.reduce((sum, lead) => sum + buyerMatchesForLead(lead).length, 0)} matches`, note:'Matcher Agent flags possible buyers automatically after underwriting.' }
       ].map(item => `<div class="feed-item"><strong>${escapeHtml(item.label)} · ${escapeHtml(item.value)}</strong><span>${escapeHtml(item.note)}</span></div>`).join('');
@@ -901,7 +901,7 @@
       $('activityFeed').innerHTML = (state.activity.length ? state.activity : BASELINE.activity).map(item => `<div class="feed-item"><strong>${escapeHtml(item.text)}</strong><span>${escapeHtml(item.meta)}</span></div>`).join('');
     }
     function renderDealSnapQueue(){
-      $('dealSnapQueue').innerHTML = state.scanQueue.length ? state.scanQueue.map(item => `<div class="queue-item"><div><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.status)} • ${escapeHtml(item.time || 'just now')}</span></div><div class="queue-meta">${escapeHtml(item.label)}</div></div>`).join('') : '<div class="queue-item"><div><strong>No screenshots queued</strong><span>Drop an image or PDF to stage a new DealSnap intake item.</span></div><div class="queue-meta">Ready</div></div>';
+      $('dealSnapQueue').innerHTML = state.scanQueue.length ? state.scanQueue.map(item => `<div class="queue-item"><div><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.status)} • ${escapeHtml(item.time || 'just now')}</span></div><div class="queue-meta">${escapeHtml(item.label)}</div></div>`).join('') : '<div class="queue-item"><div><strong>No screenshots queued</strong><span>Drop an image or PDF to stage a new DealSnap for Prospecting like a Pro intake item.</span></div><div class="queue-meta">Ready</div></div>';
     }
     function closeBuyerModal(){ show($('backdrop'), false); show($('buyerModal'), false); }
     function renderStrategySelect(selected='Sober Living'){ const sel = $('m_strategy'); if (!sel) return; const opts = state.strategyChoices.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('') + '<option value="__new__">Create New Strategy</option>'; sel.innerHTML = opts; sel.value = state.strategyChoices.includes(selected) ? selected : 'Sober Living'; }
@@ -930,7 +930,7 @@
       const refresh = e.target.closest('#refreshData'); if (refresh) return loadData();
       const refreshBuyers = e.target.closest('#refreshBuyers'); if (refreshBuyers) return render();
       const agentToggle = e.target.closest('[data-agent-toggle]'); if (agentToggle) { const agent = state.agents.find(x => x.id === agentToggle.dataset.agentToggle); if (agent) { agent.status = agent.status === 'active' ? 'standby' : 'active'; agent.pulse = agent.status === 'active' ? 'Ready to run' : 'Paused'; pushActivity(`${agent.name} switched to ${agent.status}.`, 'Agent control'); renderAgents(); } return; }
-      const agentRun = e.target.closest('[data-agent-run]'); if (agentRun) { const agent = state.agents.find(x => x.id === agentRun.dataset.agentRun); if (!agent) return; if (agent.id === 'lead-scraper') { pushActivity('Lead Scraper scanned the intake lane for new DealSnap items.', 'Lead capture'); const seeded = makeScanItem('Manual scan capture', 'queued', 'Lead Scraper staged a new screenshot for OCR'); state.ocr.unshift(seeded); render(); } else if (agent.id === 'underwriter') { const lead = state.leads[0]; if (lead) { runUnderwriterAgent(lead); } } else if (agent.id === 'matcher') { const lead = state.leads[0]; if (lead) { runMatcherAgent(lead); } } else { pushActivity('Follow-up Bot queued a reminder thread for the next buyer outreach.', 'Follow-up'); render(); } return; }
+      const agentRun = e.target.closest('[data-agent-run]'); if (agentRun) { const agent = state.agents.find(x => x.id === agentRun.dataset.agentRun); if (!agent) return; if (agent.id === 'lead-scraper') { pushActivity('Lead Scraper scanned the intake lane for new DealSnap for Prospecting like a Pro items.', 'Lead capture'); const seeded = makeScanItem('Manual scan capture', 'queued', 'Lead Scraper staged a new screenshot for OCR'); state.ocr.unshift(seeded); render(); } else if (agent.id === 'underwriter') { const lead = state.leads[0]; if (lead) { runUnderwriterAgent(lead); } } else if (agent.id === 'matcher') { const lead = state.leads[0]; if (lead) { runMatcherAgent(lead); } } else { pushActivity('Follow-up Bot queued a reminder thread for the next buyer outreach.', 'Follow-up'); render(); } return; }
       const modalBackdrop = e.target.id === 'backdrop'; if (modalBackdrop) { closeModal(); closeBuyerModal(); closeLead(); }
       const laneCard = e.target.closest('.lane-card');
       if (laneCard && !e.target.closest('button')) {
@@ -989,7 +989,7 @@
     const dealSnapSeed = document.getElementById('dealSnapSeed');
     if (dealSnapBrowse) dealSnapBrowse.addEventListener('click', () => dealSnapInput?.click());
     if (dealSnapSeed) dealSnapSeed.addEventListener('click', async () => {
-      const fake = new File(['DealSnap sample'], `DealSnap-${Date.now()}.png`, { type:'image/png' });
+      const fake = new File(['DealSnap for Prospecting like a Pro sample'], `DealSnap for Prospecting like a Pro-${Date.now()}.png`, { type:'image/png' });
       await processDealSnapUpload(fake);
     });
     if (dealSnapInput) dealSnapInput.addEventListener('change', async e => { const files = Array.from(e.target.files || []); for (const file of files) await processDealSnapUpload(file); e.target.value = ''; });

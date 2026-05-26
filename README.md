@@ -1,2 +1,2 @@
 # reiprofessions-llc.github.io
-DealSnap CRM functional build for GitHub Pages
+DealSnap for Prospecting like a Pro CRM functional build for GitHub Pages
