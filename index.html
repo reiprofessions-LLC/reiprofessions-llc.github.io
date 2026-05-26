@@ -56,6 +56,8 @@
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:var(--signal-red);color:var(--bone);box-shadow:0 14px 28px rgba(232,66,26,.18)}
     .btn.secondary{background:#fff;color:var(--ink);border-color:rgba(13,15,20,.12)}
+    .btn.secondary:disabled,.btn.primary:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+    .btn.danger{background:rgba(232,66,26,.12);color:var(--signal-red);border-color:rgba(232,66,26,.20)}
     .stack{display:grid;gap:18px}
     .section{padding:22px}
     .section-title{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
@@ -81,6 +83,15 @@
     .workspace{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
     .card{padding:16px;display:grid;gap:12px}
+    .ocr-card.selected{border-color:rgba(232,66,26,.75);box-shadow:0 18px 36px rgba(232,66,26,.10);transform:translateY(-1px)}
+    .ocr-bulkbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px;border-radius:22px;background:linear-gradient(180deg,rgba(13,15,20,.96),rgba(20,26,36,.96));border:1px solid rgba(200,168,75,.18);box-shadow:var(--shadow-strong);color:var(--bone);margin-bottom:14px}
+    .ocr-bulkbar strong{display:block;font-size:15px;letter-spacing:.02em}
+    .ocr-bulkbar span{display:block;margin-top:4px;color:rgba(245,240,232,.72);font-size:12px;line-height:1.45}
+    .ocr-bulkbar .ledger-actions{margin-left:auto}
+    .ocr-select{position:relative;width:28px;height:28px;flex:0 0 auto;display:grid;place-items:center}
+    .ocr-select input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .ocr-select span{width:22px;height:22px;border-radius:8px;border:1px solid rgba(13,15,20,.14);background:#fff;display:grid;place-items:center;color:transparent;font-size:13px;font-weight:900;transition:.18s ease;box-shadow:0 8px 16px rgba(13,15,20,.08)}
+    .ocr-select input:checked + span{background:var(--signal-red);border-color:rgba(232,66,26,.92);color:var(--bone);box-shadow:0 10px 18px rgba(232,66,26,.22)}
     .card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
     .card h4,.lead-profile h4,.tenant-card h4,.vendor-card h4{margin:0;font-size:16px}
     .card p,.lead-meta,.tenant-meta,.vendor-meta{margin:0;color:rgba(13,15,20,.68);font-size:13px;line-height:1.5}
@@ -549,7 +560,7 @@
         { id:'network-vanessa', name:'Vanessa', role:'Lender', company:'FundWithSequel', market:'Private money', status:'Active', email:'vanessa@fundwithsequel.com', phone:'', linkedin:'', focus:['Loan Processing','Bridge'], channels:['Email'], notes:'Loan processor / funding support on acquisitions.', nextFollowUp:'', source:'User contacts / funding network' }
       ]
     };
-    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], network:[], agents:[], activity:[], search:'', filter:'all', selected:null, boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'], scanQueue:[], scanId:0 };
+    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], network:[], agents:[], activity:[], search:'', filter:'all', selected:null, boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'], scanQueue:[], scanId:0, ocrSelected:[] };
     const $ = id => document.getElementById(id);
     const escapeHtml = s => String(s ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const numFmt = v => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Number(v) || 0);
@@ -558,6 +569,7 @@
     const statusClass = s => {
       s = String(s||'').toLowerCase();
       if (['closed','approved','active','contract','qualified'].includes(s)) return 'good';
+      if (['archived'].includes(s)) return 'dark';
       if (['queued','new','review','contacted','processing','open'].includes(s)) return 'warn';
       return 'dark';
     };
@@ -622,6 +634,13 @@
       const channels = Array.isArray(item.channels) ? item.channels : splitList(item.channels || item['Outreach Channel'] || '');
       return { id:item.id||crypto.randomUUID(), name:item.name||item.contact_name||item.primary_contact_name||'Network Contact', role:item.role||item.category||item.contact_type||'Partner', company:item.company||item.company_brokerage||item['Company/Brokerage']||item.organization||'—', market:item.market||item.location||item['Location (City/State)']||'—', status:item.status||item.contact_status||item['Contact Status']||'Pending', email:item.email||item['Email']||'', phone:item.phone||item['Phone']||item['Phone Number']||'', linkedin:item.linkedin||item['LinkedIn Profile']||'', focus, channels, notes:item.notes||item['Notes']||'', nextFollowUp:item.nextFollowUp||item.next_follow_up||item['date:Next Follow-Up:start']||'', source:item.source||'Network', raw:item }; }
     function splitList(v){ return String(v ?? '').split(/\n|,|\|/).map(s => s.trim()).filter(Boolean); }
+    function ocrVisibleItems(){ return ocrMatches().filter(item => String(item.status || '').toLowerCase() !== 'archived'); }
+    function syncOcrSelection(items){ const ids = new Set(items.map(item => item.id)); state.ocrSelected = (state.ocrSelected || []).filter(id => ids.has(id)); }
+    async function persistOcr(item, patch={}){ const table = chooseTable(tableCandidates.ocr); const payload = { title:item.title, file_name:item.title, document_name:item.title, status:item.status, ocr_status:item.status, confidence:item.confidence, source:item.source, notes:item.note, preview_text:item.note, ocr_text:item.note, updated_at:new Date().toISOString(), ...patch }; try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {} localStorage.setItem(`ocr-${item.id}`, JSON.stringify(item)); }
+    async function deleteOcrRow(item){ const table = chooseTable(tableCandidates.ocr); try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'DELETE', headers:{ Prefer:'return=minimal' } }); } catch(e) {} }
+    async function archiveOcrRow(item){ item.status = 'Archived'; item.raw = { ...(item.raw || {}), status:item.status, ocr_status:item.status }; await persistOcr(item, { status:'Archived', ocr_status:'Archived' }); }
+    function toggleOcrSelection(id, checked){ const next = new Set(state.ocrSelected || []); if (checked) next.add(id); else next.delete(id); state.ocrSelected = [...next]; renderOcr(); }
+    async function handleOcrSelectionAction(action){ const items = ocrVisibleItems().filter(item => (state.ocrSelected || []).includes(item.id)); if (!items.length) return; if (action === 'delete' && !confirm(`Delete ${items.length} selected DealSnap item${items.length === 1 ? '' : 's'}?`)) return; if (action === 'delete') { await Promise.all(items.map(item => deleteOcrRow(item))); state.ocr = state.ocr.filter(item => !items.some(sel => sel.id === item.id)); } else { await Promise.all(items.map(item => archiveOcrRow(item))); } state.ocrSelected = []; pushActivity(`${action === 'delete' ? 'Deleted' : 'Archived'} ${items.length} DealSnap intake item${items.length === 1 ? '' : 's'}.`, 'OCR intake'); render(); }
     function leadZipText(lead){ return [lead.market, lead.property, lead.notes, lead.history].filter(Boolean).join(' ').match(/\b\d{5}\b/g) || []; }
     function strategyAssetFor(lead){
       const s = String(lead.strategy || '').toLowerCase();
@@ -686,6 +705,7 @@
       state.vendors = vendors.length ? vendors.map(normalizeVendor) : BASELINE.vendors.map(normalizeVendor);
       state.network = network.length ? network.map(normalizeNetwork) : BASELINE.network.map(normalizeNetwork);
       state.source = (leads.length || buyers.length || ocr.length || tenants.length || vendors.length || network.length) ? 'live' : 'baseline';
+      state.ocrSelected = [];
       state.activity = BASELINE.activity.slice();
       state.agents = BASELINE.agents.map(x => ({ ...x }));
       state.scanQueue = [];
@@ -733,17 +753,35 @@
     }
 
     function renderOcr(){
-      const items = ocrMatches();
-      $('ocrCount').textContent = `${items.length} items shown`;
-      $('ocrCards').innerHTML = items.map(item => `
-        <article class="card">
-          <div class="card-head"><div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.source)}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div>
+      const items = ocrVisibleItems();
+      syncOcrSelection(items);
+      const selectedCount = (state.ocrSelected || []).length;
+      $('ocrCount').textContent = `${items.length} active items`;
+      $('ocrCards').innerHTML = `
+        <div class="ocr-bulkbar">
+          <div>
+            <strong>${selectedCount ? `${selectedCount} selected` : 'DealSnap intake queue'}</strong>
+            <span>${items.length ? 'Use the checkboxes to archive or delete in bulk. Archived items are hidden from the active queue by default.' : 'No active items in the queue. Archived records stay hidden by default.'}</span>
+          </div>
+          <div class="ledger-actions">
+            <button class="btn secondary" data-ocr-bulk-archive ${selectedCount ? '' : 'disabled'}>Archive Selected</button>
+            <button class="btn danger" data-ocr-bulk-delete ${selectedCount ? '' : 'disabled'}><span aria-hidden="true">🗑</span> Delete Selected</button>
+          </div>
+        </div>
+        ${items.length ? items.map(item => { const checked = (state.ocrSelected || []).includes(item.id) ? 'checked' : ''; return `<article class="card ocr-card ${checked ? 'selected' : ''}">
+          <div class="card-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <label class="ocr-select"><input type="checkbox" data-ocr-select="${escapeHtml(item.id)}" ${checked}><span>✓</span></label>
+              <div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.source)}</p></div>
+            </div>
+            <span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span>
+          </div>
           <div class="chips"><span class="chip">Confidence ${pctFmt(item.confidence)}</span><span class="chip gold">DealSnap for Prospecting like a Pro Intake</span></div>
           <div class="progress"><i style="width:${Math.max(8, Math.min(100, item.confidence))}%"></i></div>
           <p>${escapeHtml(item.note)}</p>
-          <div class="ledger-actions"><button class="btn primary" data-ocr-convert="${escapeHtml(item.id)}">Convert to Lead</button><button class="btn secondary" data-ocr-mark="${escapeHtml(item.id)}">Mark Reviewed</button></div>
-        </article>
-      `).join('');
+          <div class="ledger-actions"><button class="btn secondary" data-ocr-archive="${escapeHtml(item.id)}">Archive</button><button class="btn danger" data-ocr-delete="${escapeHtml(item.id)}"><span aria-hidden="true">🗑</span> Delete</button><button class="btn primary" data-ocr-convert="${escapeHtml(item.id)}">Convert to Lead</button><button class="btn secondary" data-ocr-mark="${escapeHtml(item.id)}">Mark Reviewed</button></div>
+        </article>`; }).join('') : '<div class="card" style="grid-column:1/-1;opacity:.8"><strong>No active DealSnap items</strong><p>Archived records stay hidden by default.</p></div>'}
+      `;
     }
     function renderPipeline(){
       const items = filteredRecords();
@@ -891,7 +929,7 @@
       $('agentCount').textContent = `${state.agents.length} active agents`;
       $('agentGrid').innerHTML = state.agents.map(agent => `<article class="agent-card ${agent.status === 'standby' ? 'off' : ''}"><div class="card-head"><div><h4>${escapeHtml(agent.name)}</h4><p>${escapeHtml(agent.detail)}</p></div><span class="status ${agent.status === 'active' ? 'good' : 'warn'}">${escapeHtml(agent.status)}</span></div><div class="field"><span>Current state</span><strong>${escapeHtml(agent.pulse)}</strong></div><div class="agent-controls"><button class="agent-toggle ${agent.status === 'active' ? 'on' : ''}" data-agent-toggle="${escapeHtml(agent.id)}">${agent.status === 'active' ? 'Enabled' : 'Standby'}</button><button class="btn secondary" data-agent-run="${escapeHtml(agent.id)}">Run Now</button></div></article>`).join('');
       $('workflowSummary').innerHTML = [
-        { label:'OCR intake', value:`${state.ocr.length} items`, note:'DealSnap for Prospecting like a Pro uploads enter the queue and get staged for underwriter review.' },
+        { label:'OCR intake', value:`${ocrVisibleItems().length} items`, note:'DealSnap for Prospecting like a Pro uploads enter the queue and get staged for underwriter review.' },
         { label:'Underwriting', value:`${state.leads.filter(x => ['qualified','contacted','contract'].includes(String(x.status||'').toLowerCase())).length} leads`, note:'Underwriter Agent promotes viable records and updates status.' },
         { label:'Buyer matching', value:`${state.leads.reduce((sum, lead) => sum + buyerMatchesForLead(lead).length, 0)} matches`, note:'Matcher Agent flags possible buyers automatically after underwriting.' }
       ].map(item => `<div class="feed-item"><strong>${escapeHtml(item.label)} · ${escapeHtml(item.value)}</strong><span>${escapeHtml(item.note)}</span></div>`).join('');
@@ -915,6 +953,10 @@
       const propBtn = e.target.closest('[data-open-property]'); if (propBtn) return openProperty(state.tenants.find(x => x.id === propBtn.dataset.openProperty));
       const networkBtn = e.target.closest('[data-open-network]'); if (networkBtn) return openNetwork(state.network.find(x => x.id === networkBtn.dataset.openNetwork));
       const row = e.target.closest('[data-lead]'); if (row) return openLead(allRecords().find(x => x.id === row.dataset.lead));
+      const ocrDelete = e.target.closest('[data-ocr-delete]'); if (ocrDelete) { const item = state.ocr.find(x => x.id === ocrDelete.dataset.ocrDelete); if (!item) return; if (!confirm('Delete this DealSnap intake item?')) return; await deleteOcrRow(item); state.ocr = state.ocr.filter(x => x.id !== item.id); state.ocrSelected = (state.ocrSelected || []).filter(id => id !== item.id); pushActivity(`Deleted DealSnap intake item ${item.title}.`, 'OCR intake'); render(); return; }
+      const ocrArchive = e.target.closest('[data-ocr-archive]'); if (ocrArchive) { const item = state.ocr.find(x => x.id === ocrArchive.dataset.ocrArchive); if (!item) return; await archiveOcrRow(item); state.ocrSelected = (state.ocrSelected || []).filter(id => id !== item.id); pushActivity(`Archived DealSnap intake item ${item.title}.`, 'OCR intake'); render(); return; }
+      const ocrBulkArchive = e.target.closest('[data-ocr-bulk-archive]'); if (ocrBulkArchive) return handleOcrSelectionAction('archive');
+      const ocrBulkDelete = e.target.closest('[data-ocr-bulk-delete]'); if (ocrBulkDelete) return handleOcrSelectionAction('delete');
       const ocr = e.target.closest('[data-ocr-convert]'); if (ocr) return handleOcrConvert(ocr.dataset.ocrConvert);
       const reviewed = e.target.closest('[data-ocr-mark]'); if (reviewed){ const item = state.ocr.find(x => x.id === reviewed.dataset.ocrMark); if (item) item.status='reviewed'; renderOcr(); }
       const close1 = e.target.closest('#closeModal'); if (close1) return closeModal();
@@ -962,6 +1004,8 @@
         const item = state.selected; if (!item) return; item.name = $('d_name').value; item.status = $('d_status').value; item.notes = $('d_notes').value; item.history = $('d_notes').value; item.rent = Number($('d_rent').value || 0) || 0; item.fees = Number($('d_fees').value || 0) || 0; item.debt = Number($('d_debt').value || 0) || 0; }
     });
     document.addEventListener('change', async e => {
+      const ocrSelect = e.target.closest('[data-ocr-select]');
+      if (ocrSelect) return toggleOcrSelection(ocrSelect.dataset.ocrSelect, e.target.checked);
       const buyerField = e.target.closest('[data-buyer-field]');
       if (!buyerField) return;
       const item = state.buyers.find(x => x.id === buyerField.dataset.buyerId);
