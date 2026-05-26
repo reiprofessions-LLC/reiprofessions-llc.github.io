@@ -486,26 +486,236 @@
       font-size: 0.9rem;
       line-height: 1.7;
     }
+    .app-shell[hidden], .auth-shell[hidden] { display: none !important; }
+    .auth-shell {
+      width: min(1480px, calc(100vw - 24px));
+      margin: 12px auto 18px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(201,164,75,0.16), transparent 24%),
+        radial-gradient(circle at 85% 8%, rgba(111,227,176,0.08), transparent 26%),
+        linear-gradient(180deg, rgba(10, 13, 18, 0.98), rgba(8, 10, 14, 0.98));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .auth-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.7fr);
+      gap: 18px;
+      padding: 18px;
+    }
+    .auth-panel {
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17,22,31,0.98), rgba(11,14,19,0.96));
+      box-shadow: var(--shadow-soft);
+    }
+    .auth-panel h2 {
+      margin: 12px 0 10px;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.94;
+      letter-spacing: -0.06em;
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+    .auth-panel h2 span { color: var(--gold-2); }
+    .auth-panel .copy {
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0 0 20px;
+      max-width: 72ch;
+    }
+    .auth-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      max-width: 560px;
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+    .field label {
+      color: var(--muted);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    .field input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      outline: none;
+      font: inherit;
+    }
+    .field input::placeholder { color: rgba(165,175,189,0.62); }
+    .field input:focus { border-color: rgba(242,210,138,0.38); box-shadow: 0 0 0 4px rgba(201,164,75,0.12); }
+    .auth-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+    .auth-note {
+      color: var(--faint);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,210,138,0.18);
+      background: rgba(242,210,138,0.08);
+      color: var(--gold-2);
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .lock-card {
+      padding: 22px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+    .price-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .price-card {
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    }
+    .price-card.featured {
+      border-color: rgba(242,210,138,0.24);
+      background: radial-gradient(circle at top right, rgba(201,164,75,0.15), transparent 26%), rgba(255,255,255,0.03);
+    }
+    .price-card .tier { color: var(--gold-2); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.18em; }
+    .price-card .rate { font-size: 2rem; font-weight: 900; letter-spacing: -0.05em; margin-top: 8px; }
+    .price-card .desc { color: var(--muted); line-height: 1.6; margin: 8px 0 0; }
+    .price-card ul { margin: 12px 0 0; padding-left: 18px; color: var(--text); line-height: 1.65; }
+    .price-card li + li { margin-top: 6px; }
+    .hint {
+      margin-top: 12px;
+      color: var(--faint);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .auth-banner {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+    .auth-banner strong { display: block; }
+    .auth-banner span { color: var(--muted); font-size: 0.88rem; }
     @media (max-width: 1180px) {
+      .auth-grid { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
       .hero, .dashboard, .split { grid-template-columns: 1fr; }
       .hero-main { min-height: auto; }
       .hero-metrics, .buyers-grid, .buy-boxes, .box-stats, .her-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav { justify-content: flex-start; }
     }
     @media (max-width: 760px) {
-      .page-shell { width: min(100vw - 12px, 1480px); border-radius: 22px; }
-      .topbar, .hero, .dashboard { padding-left: 12px; padding-right: 12px; }
+      .page-shell, .auth-shell { width: min(100vw - 12px, 1480px); border-radius: 22px; }
+      .topbar, .hero, .dashboard, .auth-grid { padding-left: 12px; padding-right: 12px; }
       .hero { padding-top: 12px; }
       .hero-metrics, .buyers-grid, .buy-boxes, .box-stats, .her-metrics, .specs { grid-template-columns: 1fr; }
-      .section, .side-card, .melissa { padding: 16px; }
-      .hero-title { font-size: clamp(2.8rem, 16vw, 4.6rem); }
+      .section, .side-card, .melissa, .auth-panel, .lock-card { padding: 16px; }
+      .hero-title, .auth-panel h2 { font-size: clamp(2.8rem, 16vw, 4.6rem); }
       .hero-copy { font-size: 1rem; }
-      .nav a, .btn { width: 100%; justify-content: center; }
+      .nav a, .btn, .auth-actions .btn { width: 100%; justify-content: center; }
       .section-head, .buyer-top, .box-top, .scan-top, .her-top, .row-item, .feed-item { grid-template-columns: 1fr; flex-direction: column; }
+      .auth-banner { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
+  <section class="auth-shell" id="auth-shell">
+    <div class="auth-grid">
+      <article class="auth-panel">
+        <div class="secure-badge">Secure member access</div>
+        <h2>Buyer-first access, locked behind the wall.</h2>
+        <p class="copy">Authenticate to enter DealSnap. The dashboard stays hidden until the member gate is unlocked, preserving the supernatural buyer-first hierarchy behind a professional subscription layer.</p>
+        <form class="auth-form" id="auth-form">
+          <div class="field-row">
+            <div class="field">
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" name="email" type="email" placeholder="name@company.com" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="loginTier">Access tier</label>
+              <input id="loginTier" name="tier" type="text" value="Grandfathered member" readonly />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="loginCode">Grandfathered access code</label>
+              <input id="loginCode" name="code" type="password" placeholder="Enter grandfathered code" autocomplete="current-password" required />
+            </div>
+            <div class="field">
+              <label for="loginStripe">Payment route</label>
+              <input id="loginStripe" name="stripe" type="text" value="Stripe checkout / payment collection placeholder" readonly />
+            </div>
+          </div>
+          <div class="auth-actions">
+            <button class="btn primary" type="submit">Enter dashboard <span class="arrow">→</span></button>
+            <a class="btn" id="stripe-link" href="#pricing">View subscription gate <span class="arrow">→</span></a>
+          </div>
+          <div class="auth-note">Grandfathered users unlock at $10/month. New members are routed to the pricing gate before the buyer-first dashboard becomes visible.</div>
+        </form>
+        <div class="auth-banner">
+          <div>
+            <strong>Monetization layer active</strong>
+            <span>Exclusive login + subscription gate before dashboard access.</span>
+          </div>
+          <div class="pill"><i></i>Encrypted session via browser storage</div>
+        </div>
+      </article>
+
+      <aside class="lock-card" id="pricing">
+        <h2 style="margin:0;font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);">Subscription pricing</h2>
+        <div class="price-grid">
+          <div class="price-card featured">
+            <div class="tier">Grandfathered tier</div>
+            <div class="rate">$10<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
+            <p class="desc">Reserved for legacy users. This tier preserves access to the supernatural buyer-first dashboard at the starting grandfathered rate.</p>
+            <ul>
+              <li>Authenticated dashboard access</li>
+              <li>Buyer-first hierarchy preserved</li>
+              <li>Buy boxes, DealSnap, and Melissa desk</li>
+            </ul>
+          </div>
+          <div class="price-card">
+            <div class="tier">Standard subscription</div>
+            <div class="rate">Stripe</div>
+            <p class="desc">New members are routed through checkout before entering the dashboard. Replace this placeholder with the live Stripe Checkout link when ready.</p>
+            <ul>
+              <li><a id="stripe-checkout" href="https://example.com/stripe-checkout-placeholder" style="color:var(--gold-2)">Open payment collection placeholder</a></li>
+              <li>Secure onboarding flow</li>
+              <li>Access wall remains in place until authenticated</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hint">Production note: static GitHub Pages can gate the UI and route to Stripe, but a true server-side auth wall would require backend verification.</div>
+      </aside>
+    </div>
+  </section>
+  <main class="app-shell" id="app-shell" hidden>
   <div class="page-shell">
     <header class="topbar">
       <div class="brand">
@@ -882,6 +1092,55 @@
     document.getElementById('her-metrics').innerHTML = data.herMetrics.map(herBox).join('');
     document.getElementById('melissa-status').innerHTML = data.melissaStatus.map(melissaRow).join('');
     document.getElementById('matching-status').innerHTML = data.matching.map(matchRow).join('');
+  </script>
+  <script>
+    const AUTH_KEY = 'dealsnap_auth_v1';
+    const GRAND_FATHERED_CODE = 'GRANDFATHERED10';
+    const CHECKOUT_URL = 'https://example.com/stripe-checkout-placeholder';
+
+    const authShell = document.getElementById('auth-shell');
+    const appShell = document.getElementById('app-shell');
+    const stripeLink = document.getElementById('stripe-link');
+    const checkoutLink = document.getElementById('stripe-checkout');
+    if (stripeLink) stripeLink.setAttribute('href', '#pricing');
+    if (checkoutLink) checkoutLink.setAttribute('href', CHECKOUT_URL);
+
+    function setAuth(tier, email) {
+      localStorage.setItem(AUTH_KEY, JSON.stringify({ tier, email, ts: Date.now() }));
+    }
+
+    function getAuth() {
+      try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; }
+    }
+
+    function renderGate() {
+      const auth = getAuth();
+      if (auth?.tier) {
+        authShell.hidden = true;
+        appShell.hidden = false;
+        document.body.style.overflow = 'auto';
+        return;
+      }
+      authShell.hidden = false;
+      appShell.hidden = true;
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const code = document.getElementById('loginCode').value.trim();
+      const tier = code === GRAND_FATHERED_CODE ? 'grandfathered' : 'subscriber';
+      setAuth(tier, email);
+      renderGate();
+    });
+
+    document.getElementById('stripe-link').addEventListener('click', (event) => {
+      event.preventDefault();
+      document.getElementById('pricing').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    renderGate();
   </script>
 </body>
 </html>
