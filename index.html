@@ -3,644 +3,230 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DealSnap — Buyer-First Prospecting CRM</title>
-  <meta name="description" content="Buyer-first DealSnap CRM for buyers, buy boxes, proximity scanning, matching, and Melissa's closer desk." />
+  <title>DealSnap — Dual Engine Prospecting Ecosystem</title>
+  <meta name="description" content="Dual integrated CRM and mobile prospecting ecosystem for buyer-first buy boxes, OCR address intake, proximity scans, and matching." />
   <meta name="theme-color" content="#0b0d12" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07090d;
-      --bg-2: #0d1117;
-      --surface: rgba(17, 22, 31, 0.88);
-      --surface-strong: #121824;
-      --surface-soft: rgba(255, 255, 255, 0.04);
-      --line: rgba(255, 255, 255, 0.09);
-      --line-strong: rgba(255, 255, 255, 0.15);
-      --text: #f3efe6;
-      --muted: #a5afbd;
-      --faint: #738095;
-      --gold: #c9a44b;
-      --gold-2: #f2d28a;
-      --ink-glow: rgba(28, 39, 57, 0.8);
-      --ok: #6fe3b0;
-      --warn: #f2c96a;
-      --hot: #ef6d50;
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.24);
+      --bg:#06080b;
+      --surface:#10161f;
+      --surface-2:#151c27;
+      --ink:#f5efe4;
+      --muted:#a5afbd;
+      --faint:#718094;
+      --gold:#c9a44b;
+      --gold-2:#f3d58b;
+      --line:rgba(255,255,255,.09);
+      --line-2:rgba(255,255,255,.14);
+      --ok:#6fe3b0;
+      --warn:#f2c96a;
+      --bad:#ef6d50;
+      --shadow:0 28px 84px rgba(0,0,0,.46);
+      --shadow-soft:0 10px 30px rgba(0,0,0,.22);
+      --r-xl:32px;
+      --r-lg:22px;
+      --r-md:16px;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
     body {
-      margin: 0;
-      min-height: 100vh;
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(201, 164, 75, 0.14), transparent 26%),
-        radial-gradient(circle at 80% 10%, rgba(111, 227, 176, 0.08), transparent 30%),
-        linear-gradient(180deg, #06080c 0%, #0a0e14 45%, #090c11 100%);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      letter-spacing: -0.01em;
+        radial-gradient(circle at 12% 8%, rgba(201,164,75,.14), transparent 22%),
+        radial-gradient(circle at 85% 14%, rgba(111,227,176,.08), transparent 24%),
+        linear-gradient(180deg,#05070a 0%,#090d13 50%,#07090d 100%);
+      min-height:100vh;
+      letter-spacing:-.01em;
     }
-    .page-shell {
-      width: min(1480px, calc(100vw - 24px));
-      margin: 12px auto 24px;
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(10, 13, 18, 0.88), rgba(8, 10, 14, 0.96));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
+    a { color:inherit; }
+    .shell {
+      width:min(1500px, calc(100vw - 24px));
+      margin:12px auto 20px;
+      border:1px solid var(--line);
+      border-radius:34px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(9,12,17,.96), rgba(7,9,13,.98));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
     }
     .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 18px 22px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+      display:flex; justify-content:space-between; align-items:center; gap:16px;
+      padding:18px 22px; border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent);
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
+    .brand { display:flex; align-items:center; gap:14px; min-width:0; }
     .sigil {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width:46px; height:46px; border-radius:14px; flex:0 0 auto;
       background:
-        radial-gradient(circle at 30% 30%, rgba(242, 210, 138, 0.95), rgba(201, 164, 75, 0.3) 42%, transparent 43%),
-        linear-gradient(145deg, rgba(201,164,75,0.92), rgba(18,24,36,0.9));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 10px 24px rgba(201,164,75,0.18);
-      border: 1px solid rgba(242, 210, 138, 0.25);
-      position: relative;
-      flex: 0 0 auto;
+        radial-gradient(circle at 30% 30%, rgba(243,213,139,.95), rgba(201,164,75,.28) 40%, transparent 41%),
+        linear-gradient(145deg, rgba(201,164,75,.9), rgba(17,22,31,.92));
+      border:1px solid rgba(243,213,139,.24);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 10px 24px rgba(201,164,75,.16);
+      position:relative;
     }
-    .sigil:before,
-    .sigil:after {
-      content: "";
-      position: absolute;
-      inset: 11px 11px 11px 11px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px;
-      transform: rotate(18deg);
+    .sigil:before,.sigil:after{ content:""; position:absolute; inset:11px; border:1px solid rgba(255,255,255,.18); border-radius:10px; transform:rotate(16deg); }
+    .sigil:after{ inset:16px; transform:rotate(-10deg); opacity:.75; }
+    .brand h1 { margin:0; font-size:.93rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold-2); }
+    .brand p { margin:4px 0 0; color:var(--muted); font-size:.95rem; }
+    .nav { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .nav a, .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; border:1px solid var(--line); border-radius:999px;
+      background:rgba(255,255,255,.03); padding:11px 14px; font-weight:700; font-size:.88rem;
+      transition:transform .18s ease, border-color .18s ease, background .18s ease;
     }
-    .sigil:after { inset: 16px 16px 16px 16px; transform: rotate(-12deg); opacity: 0.7; }
-    .brand-copy h1 {
-      margin: 0;
-      font-size: 0.96rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold-2);
+    .nav a:hover, .btn:hover { transform:translateY(-1px); border-color:rgba(243,213,139,.28); background:rgba(243,213,139,.07); }
+    .btn.primary {
+      background:linear-gradient(135deg, rgba(201,164,75,.96), rgba(243,213,139,.82)); color:#140f08;
+      border-color:rgba(243,213,139,.35); box-shadow:0 14px 32px rgba(201,164,75,.22);
     }
-    .brand-copy p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.94rem;
-    }
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-    .nav a {
-      color: var(--text);
-      text-decoration: none;
-      border: 1px solid var(--line);
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.03);
-      font-size: 0.88rem;
-      transition: transform .2s ease, border-color .2s ease, background .2s ease;
-    }
-    .nav a:hover { transform: translateY(-1px); border-color: rgba(242,210,138,0.35); background: rgba(242,210,138,0.08); }
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
-      gap: 18px;
-      padding: 18px;
-    }
+    .hero, .grid2, .grid3 { display:grid; gap:18px; padding:18px; }
+    .hero { grid-template-columns:minmax(0,1.35fr) minmax(360px,.72fr); }
+    .grid2 { grid-template-columns:1fr 1fr; }
+    .grid3 { grid-template-columns:1fr 1fr 1fr; }
     .panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
+      border:1px solid var(--line); border-radius:var(--r-xl);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
     }
-    .hero-main {
-      position: relative;
-      padding: 28px;
-      min-height: 560px;
+    .panel.pad { padding:22px; }
+    .headline {
+      padding:28px; min-height:520px;
       background:
-        radial-gradient(circle at 15% 12%, rgba(201,164,75,0.18), transparent 20%),
-        radial-gradient(circle at 90% 0%, rgba(111,227,176,0.08), transparent 22%),
-        linear-gradient(180deg, rgba(17,22,31,0.98), rgba(11,14,19,0.96));
+        radial-gradient(circle at 16% 12%, rgba(201,164,75,.14), transparent 18%),
+        radial-gradient(circle at 88% 0%, rgba(111,227,176,.08), transparent 20%),
+        linear-gradient(180deg, rgba(17,22,31,.98), rgba(11,14,19,.96));
     }
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(242, 210, 138, 0.09);
-      color: var(--gold-2);
-      font-size: 0.8rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border: 1px solid rgba(242, 210, 138, 0.17);
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background:rgba(243,213,139,.08); border:1px solid rgba(243,213,139,.18);
+      color:var(--gold-2); font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
     }
-    .eyebrow .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--gold-2);
-      box-shadow: 0 0 0 4px rgba(242, 210, 138, 0.14);
+    .eyebrow .dot { width:7px; height:7px; border-radius:50%; background:var(--gold-2); box-shadow:0 0 0 4px rgba(243,213,139,.12); }
+    .hero h2 {
+      margin:18px 0 12px; max-width:12ch; font-size:clamp(3.2rem, 7vw, 6.2rem); line-height:.9; letter-spacing:-.06em;
     }
-    .hero-title {
-      margin: 20px 0 12px;
-      max-width: 12ch;
-      font-size: clamp(3.2rem, 7vw, 6.2rem);
-      line-height: 0.9;
-      letter-spacing: -0.06em;
-      text-wrap: balance;
-    }
-    .hero-title span {
-      color: var(--gold-2);
-      text-shadow: 0 0 48px rgba(242, 210, 138, 0.16);
-    }
-    .hero-copy {
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.75;
-      margin: 0 0 22px;
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-      border-radius: 999px;
-      padding: 13px 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      transition: transform .2s ease, border-color .2s ease, background .2s ease;
-      font-weight: 700;
-    }
-    .btn:hover { transform: translateY(-1px); border-color: rgba(242,210,138,0.32); background: rgba(242,210,138,0.07); }
-    .btn.primary {
-      background: linear-gradient(135deg, rgba(201,164,75,0.95), rgba(242,210,138,0.78));
-      color: #120f09;
-      box-shadow: 0 16px 32px rgba(201,164,75,0.22);
-      border-color: rgba(242,210,138,0.35);
-    }
-    .btn .arrow { font-family: "JetBrains Mono", monospace; }
-    .hero-metrics {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .metric {
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid var(--line);
-    }
-    .metric .label { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.16em; }
-    .metric .value {
-      margin-top: 10px;
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-    .metric .note { margin-top: 6px; color: var(--faint); font-size: 0.86rem; line-height: 1.45; }
-    .hero-side {
-      display: grid;
-      grid-template-rows: 1fr auto;
-      gap: 18px;
-    }
-    .side-card {
-      padding: 22px;
-      background: linear-gradient(180deg, rgba(18,24,36,0.98), rgba(12,16,23,0.98));
-    }
-    .side-card h2, .section h2 {
-      margin: 0;
-      font-size: 1rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold-2);
-    }
-    .side-card h3 {
-      margin: 10px 0 8px;
-      font-size: 1.7rem;
-      line-height: 1.08;
-    }
-    .side-card p { margin: 0; color: var(--muted); line-height: 1.7; }
-    .status-stack {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .status {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-    }
-    .status strong { display: block; font-size: 0.95rem; }
-    .status small { color: var(--muted); }
-    .pill {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      color: var(--text);
-      font-size: 0.8rem;
-      white-space: nowrap;
-    }
-    .pill i {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,164,75,0.16);
-      display: inline-block;
-    }
-    .dashboard {
-      padding: 0 18px 18px;
-      display: grid;
-      grid-template-columns: 1.25fr 0.95fr;
-      gap: 18px;
-    }
-    .section {
-      padding: 22px;
-      background: linear-gradient(180deg, rgba(17,22,31,0.96), rgba(10,14,20,0.96));
-    }
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-    .section-head p { margin: 8px 0 0; color: var(--muted); line-height: 1.65; }
-    .section-head .subtitle { max-width: 62ch; }
-    .grid {
-      display: grid;
-      gap: 14px;
-    }
-    .buyers-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
-      padding: 18px;
-    }
-    .buyer-top, .box-top, .scan-top, .her-top {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 14px;
-    }
-    .buyer-name, .box-name, .scan-name {
-      margin: 0;
-      font-size: 1.12rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-    .mini {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .tag {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(201,164,75,0.08);
-      border: 1px solid rgba(201,164,75,0.16);
-      color: var(--gold-2);
-      font-size: 0.78rem;
-      letter-spacing: 0.03em;
-    }
-    .specs {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .spec {
-      padding: 11px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .spec .label { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; }
-    .spec .value { margin-top: 5px; font-weight: 700; line-height: 1.35; }
-    .progress {
-      margin-top: 14px;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .progress > span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, rgba(201,164,75,0.95), rgba(242,210,138,0.65));
-      box-shadow: 0 0 18px rgba(201,164,75,0.24);
-    }
-    .row-list {
-      display: grid;
-      gap: 10px;
-    }
-    .row-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .row-item strong { display: block; margin-bottom: 4px; }
-    .row-item p { margin: 0; color: var(--muted); line-height: 1.55; }
-    .score {
-      font-family: "JetBrains Mono", monospace;
-      color: var(--gold-2);
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .buy-boxes, .prospecting, .her-desk {
-      margin-top: 18px;
-    }
-    .buy-boxes {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .buy-box-card {
-      padding: 18px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at top right, rgba(201,164,75,0.12), transparent 26%),
-        rgba(255,255,255,0.03);
-    }
-    .box-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .stat {
-      padding: 12px;
-      border-radius: 15px;
-      background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .stat .label { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.13em; }
-    .stat .value { margin-top: 6px; font-weight: 800; }
-    .feed {
-      display: grid;
-      gap: 12px;
-    }
-    .feed-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      padding: 15px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.03);
-    }
-    .feed-item strong { display: block; margin-bottom: 6px; }
-    .feed-item p { margin: 0; color: var(--muted); line-height: 1.55; }
-    .feed-item .meta { color: var(--gold-2); font-weight: 700; text-align: right; white-space: nowrap; }
-    .split {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .melissa {
-      padding: 22px;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(242,210,138,0.14), transparent 32%),
-        linear-gradient(180deg, rgba(19,25,35,0.98), rgba(10,14,20,0.98));
-    }
-    .melissa h3 { margin: 10px 0 8px; font-size: 1.55rem; }
-    .melissa .copy { color: var(--muted); line-height: 1.72; margin: 0; }
-    .her-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .her-box {
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-    }
-    .her-box .label { color: var(--muted); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.14em; }
-    .her-box .value { margin-top: 8px; font-size: 1.28rem; font-weight: 800; }
-    .footer-note {
-      padding: 0 22px 24px;
-      color: var(--faint);
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-    .app-shell[hidden], .auth-shell[hidden] { display: none !important; }
+    .hero h2 span { color:var(--gold-2); text-shadow:0 0 44px rgba(243,213,139,.16); }
+    .copy { color:var(--muted); line-height:1.75; font-size:1.06rem; margin:0 0 20px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:12px; }
+    .stat { padding:16px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.03); }
+    .stat .label { color:var(--muted); font-size:.74rem; text-transform:uppercase; letter-spacing:.16em; }
+    .stat .value { margin-top:8px; font-size:1.35rem; font-weight:900; letter-spacing:-.04em; }
+    .stat .note { margin-top:6px; color:var(--faint); font-size:.86rem; line-height:1.45; }
+    .right-card { padding:22px; background:linear-gradient(180deg, rgba(18,24,36,.98), rgba(12,16,23,.98)); }
+    .right-card h3 { margin:10px 0 8px; font-size:1.65rem; line-height:1.08; }
+    .right-card p { margin:0; color:var(--muted); line-height:1.7; }
+    .stack { display:grid; gap:12px; margin-top:18px; }
+    .line-card { display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.03); }
+    .line-card strong { display:block; margin-bottom:4px; }
+    .line-card small { color:var(--muted); line-height:1.5; }
+    .pill { flex:0 0 auto; display:inline-flex; align-items:center; gap:7px; padding:8px 11px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); font-size:.78rem; white-space:nowrap; }
+    .pill i { width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px rgba(201,164,75,.14); display:inline-block; }
+    .auth-shell[hidden], .app-shell[hidden] { display:none !important; }
     .auth-shell {
-      width: min(1480px, calc(100vw - 24px));
-      margin: 12px auto 18px;
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top left, rgba(201,164,75,0.16), transparent 24%),
-        radial-gradient(circle at 85% 8%, rgba(111,227,176,0.08), transparent 26%),
-        linear-gradient(180deg, rgba(10, 13, 18, 0.98), rgba(8, 10, 14, 0.98));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
+      width:min(1500px, calc(100vw - 24px)); margin:12px auto 18px; border:1px solid var(--line); border-radius:34px; overflow:hidden;
+      background:linear-gradient(180deg, rgba(10,13,18,.98), rgba(7,9,12,.98)); box-shadow:var(--shadow); backdrop-filter:blur(18px);
     }
-    .auth-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.7fr);
-      gap: 18px;
-      padding: 18px;
+    .auth-grid { display:grid; grid-template-columns:minmax(0,.95fr) minmax(360px,.7fr); gap:18px; padding:18px; }
+    .auth-panel, .pricing-panel { padding:26px; border-radius:var(--r-xl); border:1px solid var(--line); background:linear-gradient(180deg, rgba(17,22,31,.98), rgba(11,14,19,.96)); box-shadow:var(--shadow-soft); }
+    .auth-panel h2 { margin:12px 0 10px; font-size:clamp(2.7rem, 6vw, 5rem); line-height:.94; letter-spacing:-.06em; max-width:11ch; }
+    .auth-panel .copy { font-size:1rem; }
+    .form { display:grid; gap:12px; margin-top:18px; max-width:640px; }
+    .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    label { color:var(--muted); font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; }
+    input, textarea, select {
+      width:100%; border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.03); color:var(--ink);
+      border-radius:16px; padding:14px 16px; font:inherit; outline:none;
     }
-    .auth-panel {
-      padding: 28px;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(17,22,31,0.98), rgba(11,14,19,0.96));
-      box-shadow: var(--shadow-soft);
+    textarea { min-height:108px; resize:vertical; }
+    input:focus, textarea:focus, select:focus { border-color:rgba(243,213,139,.36); box-shadow:0 0 0 4px rgba(201,164,75,.12); }
+    .field { display:grid; gap:8px; }
+    .note { color:var(--faint); font-size:.9rem; line-height:1.65; }
+    .badge {
+      display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:999px; border:1px solid rgba(243,213,139,.2);
+      background:rgba(243,213,139,.08); color:var(--gold-2); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
     }
-    .auth-panel h2 {
-      margin: 12px 0 10px;
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      line-height: 0.94;
-      letter-spacing: -0.06em;
-      max-width: 11ch;
-      text-wrap: balance;
-    }
-    .auth-panel h2 span { color: var(--gold-2); }
-    .auth-panel .copy {
-      color: var(--muted);
-      line-height: 1.75;
-      margin: 0 0 20px;
-      max-width: 72ch;
-    }
-    .auth-form {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-      max-width: 560px;
-    }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-    .field label {
-      color: var(--muted);
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-    .field input {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.09);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      outline: none;
-      font: inherit;
-    }
-    .field input::placeholder { color: rgba(165,175,189,0.62); }
-    .field input:focus { border-color: rgba(242,210,138,0.38); box-shadow: 0 0 0 4px rgba(201,164,75,0.12); }
-    .auth-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
-    .auth-note {
-      color: var(--faint);
-      font-size: 0.9rem;
-      line-height: 1.7;
-      margin-top: 8px;
-    }
-    .secure-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(242,210,138,0.18);
-      background: rgba(242,210,138,0.08);
-      color: var(--gold-2);
-      font-size: 0.8rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .lock-card {
-      padding: 22px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-    }
-    .price-grid {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
+    .pricing-grid { display:grid; gap:12px; margin-top:14px; }
     .price-card {
-      padding: 18px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      padding:18px; border-radius:20px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
     }
-    .price-card.featured {
-      border-color: rgba(242,210,138,0.24);
-      background: radial-gradient(circle at top right, rgba(201,164,75,0.15), transparent 26%), rgba(255,255,255,0.03);
+    .price-card.featured { border-color:rgba(243,213,139,.24); background:radial-gradient(circle at top right, rgba(201,164,75,.14), transparent 26%), rgba(255,255,255,.03); }
+    .tier { color:var(--gold-2); font-size:.76rem; text-transform:uppercase; letter-spacing:.18em; }
+    .rate { font-size:2rem; font-weight:900; letter-spacing:-.05em; margin-top:8px; }
+    .desc { color:var(--muted); line-height:1.6; margin:8px 0 0; }
+    .list { margin:12px 0 0; padding-left:18px; color:var(--ink); line-height:1.65; }
+    .list li + li { margin-top:6px; }
+    .hint { margin-top:12px; color:var(--faint); font-size:.88rem; line-height:1.6; }
+    .app-shell { width:min(1500px, calc(100vw - 24px)); margin:12px auto 20px; }
+    .banner {
+      padding:18px 22px; border:1px solid var(--line); border-radius:24px; background:rgba(255,255,255,.03); display:flex; justify-content:space-between; gap:12px; align-items:center;
     }
-    .price-card .tier { color: var(--gold-2); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.18em; }
-    .price-card .rate { font-size: 2rem; font-weight: 900; letter-spacing: -0.05em; margin-top: 8px; }
-    .price-card .desc { color: var(--muted); line-height: 1.6; margin: 8px 0 0; }
-    .price-card ul { margin: 12px 0 0; padding-left: 18px; color: var(--text); line-height: 1.65; }
-    .price-card li + li { margin-top: 6px; }
-    .hint {
-      margin-top: 12px;
-      color: var(--faint);
-      font-size: 0.88rem;
-      line-height: 1.6;
+    .banner strong { display:block; }
+    .banner span { color:var(--muted); font-size:.9rem; }
+    .dual {
+      display:grid; grid-template-columns:1.08fr .92fr; gap:18px; margin-top:18px;
     }
-    .auth-banner {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
+    .section { padding:22px; background:linear-gradient(180deg, rgba(17,22,31,.96), rgba(10,14,20,.96)); }
+    .section h3 { margin:0; font-size:1rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-2); }
+    .section-head { display:flex; justify-content:space-between; gap:14px; align-items:flex-end; margin-bottom:16px; }
+    .section-head p { margin:8px 0 0; color:var(--muted); line-height:1.65; max-width:72ch; }
+    .subtabs { display:flex; gap:8px; flex-wrap:wrap; }
+    .subtabs .pill.active { border-color:rgba(243,213,139,.24); background:rgba(243,213,139,.08); }
+    .mod-grid { display:grid; gap:14px; }
+    .crm-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .card, .match-card, .draft-card, .bridge-card, .module-card { padding:18px; border-radius:20px; border:1px solid var(--line); background:rgba(255,255,255,.03); }
+    .module-title { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .module-title h4 { margin:0; font-size:1.15rem; letter-spacing:-.03em; }
+    .mini { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.14em; }
+    .tag-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .tag { padding:7px 10px; border-radius:999px; background:rgba(201,164,75,.08); border:1px solid rgba(201,164,75,.16); color:var(--gold-2); font-size:.78rem; }
+    .specs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:14px; }
+    .spec { padding:11px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); }
+    .spec .label { color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.14em; }
+    .spec .value { margin-top:5px; font-weight:700; line-height:1.35; }
+    .progress { margin-top:14px; height:10px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.05); overflow:hidden; }
+    .progress > span { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg, rgba(201,164,75,.95), rgba(243,213,139,.68)); box-shadow:0 0 18px rgba(201,164,75,.22); }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .relay { display:grid; gap:12px; }
+    .relay-item { display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); }
+    .relay-item p { margin:4px 0 0; color:var(--muted); line-height:1.55; }
+    .relay-item strong { display:block; }
+    .score { color:var(--gold-2); font-family:"JetBrains Mono",monospace; font-weight:700; white-space:nowrap; }
+    .composer { display:grid; gap:12px; }
+    .lead-box { min-height:140px; }
+    .actions-row { display:flex; flex-wrap:wrap; gap:10px; }
+    .queue { display:grid; gap:10px; }
+    .queue-item { display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); }
+    .queue-item p { margin:4px 0 0; color:var(--muted); line-height:1.5; }
+    .queue-item .state { color:var(--gold-2); font-weight:800; white-space:nowrap; }
+    .scan-grid { display:grid; gap:12px; }
+    .scan-item { padding:15px; border-radius:18px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); display:grid; grid-template-columns:1fr auto; gap:10px; }
+    .scan-item p { margin:0; color:var(--muted); line-height:1.55; }
+    .scan-item strong { display:block; margin-bottom:6px; }
+    .scan-item .meta { color:var(--gold-2); font-weight:800; white-space:nowrap; }
+    .footer-note { padding:0 22px 24px; color:var(--faint); font-size:.9rem; line-height:1.7; }
+    @media (max-width:1200px) {
+      .hero, .auth-grid, .dual, .grid2 { grid-template-columns:1fr; }
+      .stats, .crm-grid, .specs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .two-col { grid-template-columns:1fr; }
+      .nav { justify-content:flex-start; }
     }
-    .auth-banner strong { display: block; }
-    .auth-banner span { color: var(--muted); font-size: 0.88rem; }
-    @media (max-width: 1180px) {
-      .auth-grid { grid-template-columns: 1fr; }
-      .field-row { grid-template-columns: 1fr; }
-      .hero, .dashboard, .split { grid-template-columns: 1fr; }
-      .hero-main { min-height: auto; }
-      .hero-metrics, .buyers-grid, .buy-boxes, .box-stats, .her-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .nav { justify-content: flex-start; }
-    }
-    @media (max-width: 760px) {
-      .page-shell, .auth-shell { width: min(100vw - 12px, 1480px); border-radius: 22px; }
-      .topbar, .hero, .dashboard, .auth-grid { padding-left: 12px; padding-right: 12px; }
-      .hero { padding-top: 12px; }
-      .hero-metrics, .buyers-grid, .buy-boxes, .box-stats, .her-metrics, .specs { grid-template-columns: 1fr; }
-      .section, .side-card, .melissa, .auth-panel, .lock-card { padding: 16px; }
-      .hero-title, .auth-panel h2 { font-size: clamp(2.8rem, 16vw, 4.6rem); }
-      .hero-copy { font-size: 1rem; }
-      .nav a, .btn, .auth-actions .btn { width: 100%; justify-content: center; }
-      .section-head, .buyer-top, .box-top, .scan-top, .her-top, .row-item, .feed-item { grid-template-columns: 1fr; flex-direction: column; }
-      .auth-banner { flex-direction: column; align-items: flex-start; }
+    @media (max-width:760px) {
+      .shell, .auth-shell, .app-shell { width:min(100vw - 12px, 1500px); }
+      .topbar, .hero, .grid2, .grid3, .auth-grid { padding-left:12px; padding-right:12px; }
+      .panel.pad, .headline, .auth-panel, .pricing-panel, .section, .card, .module-card, .match-card, .draft-card, .bridge-card { padding:16px; }
+      .stats, .crm-grid, .specs { grid-template-columns:1fr; }
+      .nav a, .btn { width:100%; justify-content:center; }
+      .banner, .line-card, .relay-item, .scan-item, .queue-item { flex-direction:column; align-items:flex-start; }
+      .actions-row .btn, .actions-row .btn.primary { width:100%; }
+      .hero h2, .auth-panel h2 { font-size:clamp(2.7rem, 14vw, 4.8rem); }
     }
   </style>
 </head>
@@ -648,499 +234,404 @@
   <section class="auth-shell" id="auth-shell">
     <div class="auth-grid">
       <article class="auth-panel">
-        <div class="secure-badge">Secure member access</div>
-        <h2>Buyer-first access, locked behind the wall.</h2>
-        <p class="copy">Authenticate to enter DealSnap. The dashboard stays hidden until the member gate is unlocked, preserving the supernatural buyer-first hierarchy behind a professional subscription layer.</p>
-        <form class="auth-form" id="auth-form">
-          <div class="field-row">
+        <div class="badge">Secure dual-engine access</div>
+        <h2>Login to the buyer brain and the field engine.</h2>
+        <p class="copy">Authenticate to enter the split system. The CRM stays buyer-first, DealSnap stays mobile-first, and the bridge keeps both modules talking back and forth without clutter or render bloat.</p>
+        <form class="form" id="auth-form">
+          <div class="row2">
             <div class="field">
-              <label for="loginEmail">Email</label>
-              <input id="loginEmail" name="email" type="email" placeholder="name@company.com" autocomplete="email" required />
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="name@company.com" autocomplete="email" required />
             </div>
             <div class="field">
-              <label for="loginTier">Access tier</label>
-              <input id="loginTier" name="tier" type="text" value="Grandfathered member" readonly />
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="loginCode">Grandfathered access code</label>
-              <input id="loginCode" name="code" type="password" placeholder="Enter grandfathered code" autocomplete="current-password" required />
-            </div>
-            <div class="field">
-              <label for="loginStripe">Payment route</label>
-              <input id="loginStripe" name="stripe" type="text" value="Stripe checkout / payment collection placeholder" readonly />
+              <label for="accessTier">Access tier</label>
+              <select id="accessTier">
+                <option value="grandfathered">Grandfathered — $10/month</option>
+                <option value="future">Future member — $50/month</option>
+              </select>
             </div>
           </div>
-          <div class="auth-actions">
-            <button class="btn primary" type="submit">Enter dashboard <span class="arrow">→</span></button>
-            <a class="btn" id="stripe-link" href="#pricing">View subscription gate <span class="arrow">→</span></a>
+          <div class="row2">
+            <div class="field">
+              <label for="code">Grandfathered access code</label>
+              <input id="code" type="password" placeholder="Enter grandfathered code" autocomplete="current-password" />
+            </div>
+            <div class="field">
+              <label for="stripe">Subscription gate</label>
+              <input id="stripe" type="text" value="Stripe checkout / payment collection placeholder" readonly />
+            </div>
           </div>
-          <div class="auth-note">Grandfathered users unlock at $10/month. New members are routed to the pricing gate before the buyer-first dashboard becomes visible.</div>
+          <div class="actions-row">
+            <button class="btn primary" type="submit">Enter dual ecosystem <span>→</span></button>
+            <a class="btn" href="#pricing">Review pricing gate <span>→</span></a>
+          </div>
+          <div class="note">Grandfathered users start at $10/month. Future members move to $50/month. The auth wall keeps the CRM and DealSnap private until login succeeds.</div>
         </form>
-        <div class="auth-banner">
-          <div>
-            <strong>Monetization layer active</strong>
-            <span>Exclusive login + subscription gate before dashboard access.</span>
-          </div>
-          <div class="pill"><i></i>Encrypted session via browser storage</div>
-        </div>
       </article>
-
-      <aside class="lock-card" id="pricing">
-        <h2 style="margin:0;font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);">Subscription pricing</h2>
-        <div class="price-grid">
+      <aside class="pricing-panel" id="pricing">
+        <h3 style="margin:0;font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);">Subscription tiers</h3>
+        <div class="pricing-grid">
           <div class="price-card featured">
-            <div class="tier">Grandfathered tier</div>
+            <div class="tier">Grandfathered</div>
             <div class="rate">$10<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
-            <p class="desc">Reserved for legacy users. This tier preserves access to the supernatural buyer-first dashboard at the starting grandfathered rate.</p>
-            <ul>
-              <li>Authenticated dashboard access</li>
-              <li>Buyer-first hierarchy preserved</li>
-              <li>Buy boxes, DealSnap, and Melissa desk</li>
+            <p class="desc">Legacy access for current users. This tier unlocks both programs and preserves the buyer-first hierarchy behind the auth wall.</p>
+            <ul class="list">
+              <li>CRM Brain access</li>
+              <li>DealSnap field mode</li>
+              <li>Drafting queue for outreach</li>
             </ul>
           </div>
           <div class="price-card">
-            <div class="tier">Standard subscription</div>
-            <div class="rate">Stripe</div>
-            <p class="desc">New members are routed through checkout before entering the dashboard. Replace this placeholder with the live Stripe Checkout link when ready.</p>
-            <ul>
-              <li><a id="stripe-checkout" href="https://example.com/stripe-checkout-placeholder" style="color:var(--gold-2)">Open payment collection placeholder</a></li>
-              <li>Secure onboarding flow</li>
-              <li>Access wall remains in place until authenticated</li>
+            <div class="tier">Future</div>
+            <div class="rate">$50<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
+            <p class="desc">Planned future monetization layer for new signups. Replace the placeholder with a live Stripe checkout when ready.</p>
+            <ul class="list">
+              <li><a id="checkout-link" href="https://example.com/stripe-checkout-placeholder" style="color:var(--gold-2)">Open payment collection placeholder</a></li>
+              <li>Subscription gate before dashboard</li>
+              <li>Clean premium onboarding</li>
             </ul>
           </div>
         </div>
-        <div class="hint">Production note: static GitHub Pages can gate the UI and route to Stripe, but a true server-side auth wall would require backend verification.</div>
+        <div class="hint">Static GitHub Pages can present the gate and route to checkout, but real server-side verification would still require a backend or hosted auth layer.</div>
       </aside>
     </div>
   </section>
+
   <main class="app-shell" id="app-shell" hidden>
-  <div class="page-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="sigil" aria-hidden="true"></div>
-        <div class="brand-copy">
-          <h1>DealSnap</h1>
-          <p>Buyer-first prospecting intelligence for REI Professions</p>
-        </div>
-      </div>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#buyers">Buyers</a>
-        <a href="#buy-box">Buy Box Engine</a>
-        <a href="#prospecting">DealSnap</a>
-        <a href="#melissa">Her Desk</a>
-        <a href="#relationships">Relationships</a>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <article class="panel hero-main">
-        <div class="eyebrow"><span class="dot"></span> buyer-first hierarchy / supernatural matching</div>
-        <h2 class="hero-title">Serve the <span>buyers</span>, then hunt the deal.</h2>
-        <p class="hero-copy">
-          DealSnap now runs as a buyer-first command center. The dashboard leads with active buyers, live buy box status, and high-signal relationships so DealSnap and Proximity Scan always work toward a ready capital path instead of blind lead hunting.
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#buy-box">Open Buy Box Engine <span class="arrow">→</span></a>
-          <a class="btn" href="#prospecting">Run DealSnap Scan <span class="arrow">→</span></a>
-          <a class="btn" href="#melissa">Melissa's Closer Desk <span class="arrow">→</span></a>
-        </div>
-        <div class="hero-metrics" id="hero-metrics"></div>
-      </article>
-
-      <aside class="panel side-card">
-        <h2>Dashboard pulse</h2>
-        <h3>High-end, data-dense, refined.</h3>
-        <p>Ink, gold, and surface tones keep the hierarchy crisp while the modules stay separated to avoid render block issues.</p>
-        <div class="status-stack" id="pulse-stack"></div>
-      </aside>
-    </section>
-
-    <section class="dashboard">
-      <article class="panel section" id="buyers">
-        <div class="section-head">
-          <div class="subtitle">
-            <h2>Buyers</h2>
-            <p>Primary focus area. Each buyer carries a live buy box, matching tags, creative finance posture, and a simple yes/no on whether prospects should be served to them now.</p>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="sigil" aria-hidden="true"></div>
+          <div>
+            <h1>DealSnap</h1>
+            <p>Dual integrated ecosystem: CRM Brain + Mobile Prospecting Engine</p>
           </div>
         </div>
-        <div class="grid buyers-grid" id="buyers-grid"></div>
-      </article>
+        <nav class="nav">
+          <a href="#crm">CRM Brain</a>
+          <a href="#deal-snap">DealSnap</a>
+          <a href="#bridge">Integration Bridge</a>
+          <a href="#drafts">Draft Queue</a>
+        </nav>
+      </header>
 
-      <article class="panel section" id="relationships">
-        <div class="section-head">
-          <div class="subtitle">
-            <h2>Relationships</h2>
-            <p>Surface the relationship layer that feeds the buyer engine: closers, lenders, brokers, title, and repeat partners. These are active routing lanes, not a passive contact list.</p>
+      <section class="hero">
+        <article class="panel headline">
+          <div class="eyebrow"><span class="dot"></span> two programs, one engine</div>
+          <h2>Buyer-first brain. Field-first <span>snap</span>.</h2>
+          <p class="copy">Program A is the CRM Brain: buy boxes, buyer hierarchy, missing-field flags, and matching precision. Program B is DealSnap Mobile: OCR intake, typed addresses, distress detection, proximity scanning, and auto-match back into the buyer stack.</p>
+          <div class="actions">
+            <a class="btn primary" href="#crm">Open CRM Brain <span>→</span></a>
+            <a class="btn" href="#deal-snap">Open DealSnap <span>→</span></a>
+            <a class="btn" href="#drafts">Draft outreach <span>→</span></a>
           </div>
-        </div>
-        <div class="row-list" id="relationships-list"></div>
-      </article>
-    </section>
+          <div class="stats" id="hero-stats"></div>
+        </article>
+        <aside class="panel right-card">
+          <h3>Supernatural hierarchy, clean and modular.</h3>
+          <p>The layout separates the brain from the field engine while keeping a visible data bridge between them. No heavy nested blocks, no monolithic panels, and each section renders independently.</p>
+          <div class="stack" id="status-stack"></div>
+        </aside>
+      </section>
 
-    <section class="dashboard">
-      <article class="panel section" id="buy-box">
-        <div class="section-head">
-          <div class="subtitle">
-            <h2>Buy Box Engine</h2>
-            <p>Granular buyer profiles define what prospecting should serve: radius, asset type, price point, financing preference, and supernatural tags that increase match confidence.</p>
+      <section class="grid2">
+        <article class="panel section" id="crm">
+          <div class="section-head">
+            <div>
+              <h3>Program A / CRM Brain</h3>
+              <p>Buyer boxes are the source of truth. Incomplete profiles are flagged, and missing pieces automatically create a draft request so matching precision improves over time.</p>
+            </div>
+            <div class="subtabs"><span class="pill active"><i></i>Buyer-first</span><span class="pill"><i></i>Buy Box engine</span></div>
           </div>
-        </div>
-        <div class="buy-boxes" id="buy-boxes"></div>
-      </article>
+          <div class="mod-grid crm-grid" id="buyers-grid"></div>
+        </article>
 
-      <article class="panel section" id="prospecting">
-        <div class="section-head">
-          <div class="subtitle">
-            <h2>DealSnap + Proximity Scan</h2>
-            <p>Scanning logic is tied directly to active buy boxes so each lead, zip, or submarket is scored by who it serves and how quickly it can move.</p>
+        <article class="panel section" id="deal-snap">
+          <div class="section-head">
+            <div>
+              <h3>Program B / DealSnap Mobile</h3>
+              <p>Paste OCR text or a typed address, then scan for distress, cleaner contact signals, and 1–2 mile proximity matches against active buyers and retail databases.</p>
+            </div>
+            <div class="subtabs"><span class="pill active"><i></i>Mobile prospecting</span><span class="pill"><i></i>OCR intake</span></div>
           </div>
-        </div>
-        <div class="feed" id="scan-feed"></div>
-      </article>
-    </section>
-
-    <section class="dashboard split">
-      <article class="panel melissa" id="melissa">
-        <div class="eyebrow"><span class="dot"></span> her dashboard / closer activity / buyer generation</div>
-        <h3>Melissa's high-end lane</h3>
-        <p class="copy">A dedicated space for closer activity, buyer generation, and matching status. This is where the production side of the pipeline stays visible without diluting the buyer-first hierarchy.</p>
-        <div class="her-metrics" id="her-metrics"></div>
-        <div class="status-stack" style="margin-top:14px" id="melissa-status"></div>
-      </article>
-
-      <article class="panel section">
-        <div class="section-head">
-          <div class="subtitle">
-            <h2>Matching status</h2>
-            <p>Everything routes through this final layer: active buy box, prospect score, proximity confidence, and role-specific follow-up readiness.</p>
+          <div class="composer">
+            <div class="field lead-box">
+              <label for="ocrInput">Screenshot OCR or typed address</label>
+              <textarea id="ocrInput" placeholder="Paste OCR text, address, or property note... Example: 1427 Elm St, notice of default, vacant, call owner" ></textarea>
+            </div>
+            <div class="actions-row">
+              <button class="btn primary" id="scanBtn" type="button">Run distress + proximity scan <span>→</span></button>
+              <button class="btn" id="draftEmailBtn" type="button">Draft email <span>→</span></button>
+              <button class="btn" id="draftTextBtn" type="button">Draft text <span>→</span></button>
+            </div>
+            <div class="scan-grid" id="scan-results"></div>
           </div>
-        </div>
-        <div class="row-list" id="matching-status"></div>
-      </article>
-    </section>
+        </article>
+      </section>
 
-    <div class="footer-note">
-      Modular layout, no heavy render block dependencies, and each module can be swapped or extended independently for future buyer cohorts, scan rules, or role-specific dashboards.
+      <section class="grid2">
+        <article class="panel section" id="bridge">
+          <div class="section-head">
+            <div>
+              <h3>Integration bridge</h3>
+              <p>When DealSnap finds a fit, it can queue a draft. When CRM is missing buy-box fields, it auto-creates a request for the missing pieces. Both programs keep feeding each other.</p>
+            </div>
+          </div>
+          <div class="mod-grid" id="bridge-grid"></div>
+        </article>
+
+        <article class="panel section">
+          <div class="section-head">
+            <div>
+              <h3>Walking for dollars workflow</h3>
+              <p>Lead intake cleans contact info, scores distress, and separates ready matches from incomplete records so outreach stays focused and precise.</p>
+            </div>
+          </div>
+          <div class="mod-grid" id="workflow-grid"></div>
+        </article>
+      </section>
+
+      <section class="grid2" id="drafts">
+        <article class="panel section">
+          <div class="section-head">
+            <div>
+              <h3>Draft queue</h3>
+              <p>Queued outreach and follow-up drafts created by matches or missing-field flags. In production, these can hand off to the connected messaging layer.</p>
+            </div>
+          </div>
+          <div class="relay" id="draft-queue"></div>
+        </article>
+
+        <article class="panel section">
+          <div class="section-head">
+            <div>
+              <h3>Matching summary</h3>
+              <p>Current match state is shown here so the CRM and prospecting modules stay in sync with the active buyer stack.</p>
+            </div>
+          </div>
+          <div class="relay" id="match-summary"></div>
+        </article>
+      </section>
+
+      <div class="footer-note">Dual modular structure keeps the CRM brain and the mobile field engine separate while preserving a single matching loop. If a buyer box is incomplete, the system flags it; if a prospect matches, the system queues outreach.</div>
     </div>
-  </div>
+  </main>
 
   <script>
-    const data = {
-      metrics: [
-        { label: 'Active Buyers', value: '18', note: 'Buyer-first dashboard surface area' },
-        { label: 'Open Buy Boxes', value: '12', note: 'Granular criteria locked and searchable' },
-        { label: 'Prospects Served Today', value: '41', note: 'DealSnap and proximity scans tied to buyers' },
-        { label: 'Supernatural Matches', value: '9', note: 'High-confidence fits with gold pulse' },
+    const AUTH_KEY = 'dealsnap_dual_auth_v1';
+    const GRAND_CODE = 'GRANDFATHERED10';
+    const checkoutLink = document.getElementById('checkout-link');
+    if (checkoutLink) checkoutLink.href = 'https://example.com/stripe-checkout-placeholder';
+
+    const app = {
+      stats: [
+        { label: 'Modules', value: '2', note: 'CRM Brain + DealSnap Mobile' },
+        { label: 'Buy Boxes', value: '4', note: 'Active buyer profiles' },
+        { label: 'Proximity scan', value: '1-2 mi', note: 'Motivated seller detection lane' },
+        { label: 'Draft queue', value: 'Live', note: 'Emails and texts staged from matches' },
       ],
-      pulse: [
-        { title: 'Buyer activity', detail: 'Lead dashboard begins with buyers, not raw lead volume.', status: 'Live' },
-        { title: 'Buy Box coverage', detail: 'Every scan resolves against active buyer criteria.', status: 'Ready' },
-        { title: 'Melissa role focus', detail: 'Closer activity and buyer generation remain elevated.', status: 'Dedicated' },
+      status: [
+        { title: 'CRM Brain', detail: 'Buy boxes are the source of truth and missing fields are auto-flagged.', state: 'Primary' },
+        { title: 'DealSnap Mobile', detail: 'OCR/text intake detects distress, contact signals, and fit.', state: 'Field' },
+        { title: 'Bridge logic', detail: 'Matches create drafts; gaps create follow-up requests.', state: 'Synced' },
       ],
       buyers: [
         {
           name: 'RapidClose Partners',
-          segment: 'Core buyer / high velocity',
-          score: '96%',
-          tags: ['SubTo', 'LO', 'Texas MF', 'Off-market', 'Quick close'],
-          specs: {
-            'Radius': '35 miles from core targets',
-            'Property type': 'SFR / small multifamily',
-            'Price point': '$145k–$420k',
-            'Creative finance': 'SubTo + LO preferred',
-          },
-          progress: 92,
-        },
-        {
-          name: 'Shoreline Equity',
-          segment: 'Expansion buyer / coastal strategy',
-          score: '84%',
-          tags: ['MF', 'Hospitality', 'Gold-tier', 'Long hold'],
-          specs: {
-            'Radius': 'Major metros + feeder cities',
-            'Property type': 'Multifamily / boutique commercial',
-            'Price point': '$500k–$2.4M',
-            'Creative finance': 'Flexible, with structure review',
-          },
-          progress: 72,
+          tier: 'Core buyer / high velocity',
+          fit: '96%',
+          tags: ['SubTo', 'LO', 'SFR', 'Quick close'],
+          spec: { Radius: '35 mi', Type: 'SFR / small MF', Price: '$120k-$420k', Finance: 'SubTo preferred' },
+          completeness: 96,
+          missing: []
         },
         {
           name: 'South Texas Stack',
-          segment: 'Repeat relationship buyer',
-          score: '91%',
-          tags: ['Landlord', 'SubTo', 'Value-add', 'Cash flow'],
-          specs: {
-            'Radius': 'San Antonio + surrounding counties',
-            'Property type': 'SFR / duplex / triplex',
-            'Price point': '$90k–$325k',
-            'Creative finance': 'SubTo and light LO',
-          },
-          progress: 88,
+          tier: 'Repeat relationship buyer',
+          fit: '91%',
+          tags: ['Landlord', 'Cash flow', 'Value-add'],
+          spec: { Radius: 'San Antonio area', Type: 'SFR / duplex / triplex', Price: '$90k-$325k', Finance: 'SubTo / light LO' },
+          completeness: 90,
+          missing: []
         },
         {
           name: 'Heritage Capital',
-          segment: 'Selective buyer / relationship-led',
-          score: '76%',
-          tags: ['Mansion', 'Legacy', 'Quiet off-market', 'High net worth'],
-          specs: {
-            'Radius': 'Premier submarkets only',
-            'Property type': 'Luxury SFR / unique assets',
-            'Price point': '$750k+',
-            'Creative finance': 'Case-by-case',
-          },
-          progress: 58,
-        },
-      ],
-      relationships: [
-        { name: 'Melissa', role: 'Closer / buyer generation', note: 'Signals matching status and closes the loop on warm buyers.' },
-        { name: 'Title + Escrow', role: 'Execution lane', note: 'Keeps transaction flow ready when a buyer hits yes.' },
-        { name: 'Funding partners', role: 'Capital lane', note: 'Supports creative finance if the buy box needs structure.' },
-        { name: 'Brokers + developers', role: 'Deal intake', note: 'Feeds prospects into the serving engine with direct asks.' },
-      ],
-      boxes: [
-        {
-          name: 'Box A · Core entry',
-          status: 'Active',
-          objective: 'Primary SFR and small multifamily acquisition box.',
-          criteria: [
-            ['Location radius', 'Within 35 miles of core target markets'],
-            ['Property type', 'SFR, duplex, triplex, fourplex'],
-            ['Price point', '$110k–$420k'],
-            ['Creative finance', 'SubTo favored, LO accepted'],
-            ['Supernatural tags', 'Off-market, motivated seller, clean title path'],
-          ],
-          pulse: 96,
-          served: '19 prospects mapped',
+          tier: 'Selective / luxury lane',
+          fit: '76%',
+          tags: ['Luxury', 'Quiet off-market', 'Legacy'],
+          spec: { Radius: 'Premier submarkets', Type: 'Luxury SFR', Price: '$750k+', Finance: 'Case by case' },
+          completeness: 74,
+          missing: ['Preferred closing timeline']
         },
         {
-          name: 'Box B · Premium flex',
-          status: 'Active',
-          objective: 'Higher-end assets with structure-friendly terms.',
-          criteria: [
-            ['Location radius', 'Metro and feeder suburbs'],
-            ['Property type', 'MF / boutique commercial / mixed use'],
-            ['Price point', '$450k–$2.5M'],
-            ['Creative finance', 'LO, seller carry, negotiated structure'],
-            ['Supernatural tags', 'Strong equity, thin competition, speed to paper'],
-          ],
-          pulse: 78,
-          served: '14 prospects mapped',
+          name: 'Flex Equity',
+          tier: 'Structure-friendly buyer',
+          fit: '84%',
+          tags: ['MF', 'Seller carry', 'Creative terms'],
+          spec: { Radius: 'Major metros', Type: 'MF / mixed use', Price: '$450k-$2.5M', Finance: 'Flexible' },
+          completeness: 88,
+          missing: []
         },
       ],
       scans: [
-        {
-          title: 'DealSnap: three new off-market SFRs score into Box A',
-          detail: 'Proximity Scan now resolves directly against the active radius and creative finance preference for the core buyer lane.',
-          meta: 'Match score 94',
-        },
-        {
-          title: 'DealSnap: one boutique multifamily target routes to Box B',
-          detail: 'Longer hold asset with structure-friendly terms surfaces as a premium serving opportunity instead of a general lead.',
-          meta: 'Match score 81',
-        },
-        {
-          title: 'Proximity Scan: two weak matches stay parked',
-          detail: 'Items outside the buy box remain visible, but they do not crowd the buyer-first dashboard or distort status.',
-          meta: 'Hold queue',
-        },
-        {
-          title: 'Melissa queue: matching status lifted for warm buyer follow-up',
-          detail: 'Closer activity is visible in a dedicated lane so she can manage buyer generation without losing deal context.',
-          meta: 'Ready to call',
-        },
+        { title: 'OCR intake recognized an address and a distress cue', body: '1427 Elm St was parsed from text and matched against active buy boxes. The scan tagged notice of default and vacancy language as high-signal distress.', meta: 'Score 94' },
+        { title: 'Cleaner contact info surfaced', body: 'Phone and email fields were standardized from the raw note so the outreach draft can use cleaner contact info instead of the original screenshot noise.', meta: 'Cleaned' },
+        { title: 'Proximity scan found a 1.7 mile fit', body: 'The lead sits inside the preferred proximity window for a core buyer and is routed to the highest-fit buy box instead of the general queue.', meta: '1.7 mi' },
       ],
-      herMetrics: [
-        { label: 'Closers in motion', value: '6' },
-        { label: 'Buyer leads generated', value: '23' },
-        { label: 'Matches confirmed', value: '11' },
+      bridge: [
+        { title: 'Buyer-box gap detected', body: 'Heritage Capital is missing a closing timeline. A draft request is queued asking for the missing piece to improve match precision.', state: 'Needs info' },
+        { title: 'Match-ready lead detected', body: 'DealSnap can draft email or text outreach for a matched seller lead and pass the payload into the messaging handoff.', state: 'Ready' },
+        { title: 'Retail database cross-check', body: 'If buyer fit is thin, the bridge can push the lead into the retail database lane for secondary routing.', state: 'Fallback' },
       ],
-      melissaStatus: [
-        { label: 'Closer activity', detail: 'Visible and prioritized beside buyer generation.', pill: 'Live' },
-        { label: 'Matching status', detail: 'Tracks which deals are actually serving active buyers.', pill: 'Synced' },
-        { label: 'Next action', detail: 'Push warm matches into the highest-fit buy box.', pill: 'Next' },
+      workflow: [
+        { title: 'Walk the block', body: 'Capture screenshot or typed address on mobile, then run the scan.', state: 'Step 1' },
+        { title: 'Clean the record', body: 'Standardize contact info and remove OCR noise for better outreach.', state: 'Step 2' },
+        { title: 'Draft outreach', body: 'If matched, queue email/text. If missing fields exist, request them.', state: 'Step 3' },
       ],
-      matching: [
-        { name: 'Buy box sync', note: 'Prospects must resolve to an active buyer before they surface as top-tier.' },
-        { name: 'Role routing', note: 'Melissa sits in a dedicated lane with her own production context.' },
-        { name: 'Visual hierarchy', note: 'Buyers and relationships remain above all hunting functions.' },
+      matches: [
+        { title: 'Top fit', body: 'RapidClose Partners remains the highest-confidence buyer for the current lead set.', state: '96%' },
+        { title: 'Missing fields', body: 'Heritage Capital needs closing timeline data to sharpen match logic.', state: '1 flag' },
+        { title: 'Retail handoff', body: 'Lead can be re-routed into the retail database if buyer fit weakens.', state: 'Available' },
       ],
+      drafts: [],
     };
 
-    const icon = '<i></i>';
+    function saveAuth(payload) { localStorage.setItem(AUTH_KEY, JSON.stringify(payload)); }
+    function getAuth() { try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; } }
 
-    function metricCard(metric) {
-      return `
-        <div class="metric">
-          <div class="label">${metric.label}</div>
-          <div class="value">${metric.value}</div>
-          <div class="note">${metric.note}</div>
-        </div>`;
-    }
-
-    function statusCard(item) {
-      return `
-        <div class="status">
-          <div>
-            <strong>${item.title}</strong>
-            <small>${item.detail}</small>
-          </div>
-          <div class="pill">${icon}${item.status}</div>
-        </div>`;
-    }
-
-    function buyerCard(buyer) {
-      return `
-        <article class="card">
-          <div class="buyer-top">
-            <div>
-              <div class="mini">${buyer.segment}</div>
-              <h3 class="buyer-name">${buyer.name}</h3>
-            </div>
-            <div class="score">${buyer.score}</div>
-          </div>
-          <div class="tag-row">${buyer.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
-          <div class="specs">
-            ${Object.entries(buyer.specs).map(([label, value]) => `
-              <div class="spec"><div class="label">${label}</div><div class="value">${value}</div></div>`).join('')}
-          </div>
-          <div class="progress" aria-label="${buyer.name} match readiness"><span style="width:${buyer.progress}%"></span></div>
-        </article>`;
-    }
-
-    function relationshipRow(item) {
-      return `
-        <div class="row-item">
-          <div>
-            <strong>${item.name}</strong>
-            <p>${item.role} · ${item.note}</p>
-          </div>
-          <div class="score">routing</div>
-        </div>`;
-    }
-
-    function boxCard(box) {
-      return `
-        <article class="buy-box-card">
-          <div class="box-top">
-            <div>
-              <div class="mini">${box.status}</div>
-              <h3 class="box-name">${box.name}</h3>
-            </div>
-            <div class="pill"><i></i>${box.served}</div>
-          </div>
-          <p style="color:var(--muted); line-height:1.65; margin:10px 0 0;">${box.objective}</p>
-          <div class="box-stats">
-            ${box.criteria.map(([label, value]) => `
-              <div class="stat">
-                <div class="label">${label}</div>
-                <div class="value">${value}</div>
-              </div>`).join('')}
-          </div>
-          <div class="progress" style="margin-top:16px"><span style="width:${box.pulse}%"></span></div>
-        </article>`;
-    }
-
-    function feedItem(item) {
-      return `
-        <div class="feed-item">
-          <div>
-            <strong>${item.title}</strong>
-            <p>${item.detail}</p>
-          </div>
-          <div class="meta">${item.meta}</div>
-        </div>`;
-    }
-
-    function herBox(item) {
-      return `
-        <div class="her-box">
-          <div class="label">${item.label}</div>
-          <div class="value">${item.value}</div>
-        </div>`;
-    }
-
-    function melissaRow(item) {
-      return `
-        <div class="status">
-          <div>
-            <strong>${item.label}</strong>
-            <small>${item.detail}</small>
-          </div>
-          <div class="pill">${icon}${item.pill}</div>
-        </div>`;
-    }
-
-    function matchRow(item) {
-      return `
-        <div class="row-item">
-          <div>
-            <strong>${item.name}</strong>
-            <p>${item.note}</p>
-          </div>
-          <div class="score">sync</div>
-        </div>`;
-    }
-
-    document.getElementById('hero-metrics').innerHTML = data.metrics.map(metricCard).join('');
-    document.getElementById('pulse-stack').innerHTML = data.pulse.map(statusCard).join('');
-    document.getElementById('buyers-grid').innerHTML = data.buyers.map(buyerCard).join('');
-    document.getElementById('relationships-list').innerHTML = data.relationships.map(relationshipRow).join('');
-    document.getElementById('buy-boxes').innerHTML = data.boxes.map(boxCard).join('');
-    document.getElementById('scan-feed').innerHTML = data.scans.map(feedItem).join('');
-    document.getElementById('her-metrics').innerHTML = data.herMetrics.map(herBox).join('');
-    document.getElementById('melissa-status').innerHTML = data.melissaStatus.map(melissaRow).join('');
-    document.getElementById('matching-status').innerHTML = data.matching.map(matchRow).join('');
-  </script>
-  <script>
-    const AUTH_KEY = 'dealsnap_auth_v1';
-    const GRAND_FATHERED_CODE = 'GRANDFATHERED10';
-    const CHECKOUT_URL = 'https://example.com/stripe-checkout-placeholder';
-
-    const authShell = document.getElementById('auth-shell');
-    const appShell = document.getElementById('app-shell');
-    const stripeLink = document.getElementById('stripe-link');
-    const checkoutLink = document.getElementById('stripe-checkout');
-    if (stripeLink) stripeLink.setAttribute('href', '#pricing');
-    if (checkoutLink) checkoutLink.setAttribute('href', CHECKOUT_URL);
-
-    function setAuth(tier, email) {
-      localStorage.setItem(AUTH_KEY, JSON.stringify({ tier, email, ts: Date.now() }));
-    }
-
-    function getAuth() {
-      try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; }
-    }
-
-    function renderGate() {
+    function renderAuth() {
       const auth = getAuth();
+      const authShell = document.getElementById('auth-shell');
+      const appShell = document.getElementById('app-shell');
       if (auth?.tier) {
         authShell.hidden = true;
         appShell.hidden = false;
-        document.body.style.overflow = 'auto';
-        return;
+      } else {
+        authShell.hidden = false;
+        appShell.hidden = true;
       }
-      authShell.hidden = false;
-      appShell.hidden = true;
-      document.body.style.overflow = 'auto';
     }
 
-    document.getElementById('auth-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const code = document.getElementById('loginCode').value.trim();
-      const tier = code === GRAND_FATHERED_CODE ? 'grandfathered' : 'subscriber';
-      setAuth(tier, email);
-      renderGate();
+    function buyerCard(b) {
+      const missing = b.missing.length ? `<div class="tag-row">${b.missing.map(m => `<span class="tag" style="background:rgba(239,109,80,.08);border-color:rgba(239,109,80,.18);color:#ffb1a2">Missing: ${m}</span>`).join('')}</div>` : '';
+      return `<article class="card">
+        <div class="module-title"><div><div class="mini">${b.tier}</div><h4>${b.name}</h4></div><div class="score">${b.fit}</div></div>
+        <div class="tag-row">${b.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="specs">${Object.entries(b.spec).map(([k,v]) => `<div class="spec"><div class="label">${k}</div><div class="value">${v}</div></div>`).join('')}</div>
+        <div class="progress"><span style="width:${b.completeness}%"></span></div>
+        ${missing}
+      </article>`;
+    }
+
+    function statCard(item) {
+      return `<div class="stat"><div class="label">${item.label}</div><div class="value">${item.value}</div><div class="note">${item.note}</div></div>`;
+    }
+
+    function lineCard(item) {
+      return `<div class="line-card"><div><strong>${item.title}</strong><small>${item.detail}</small></div><div class="pill"><i></i>${item.state}</div></div>`;
+    }
+
+    function scanCard(item) {
+      return `<div class="scan-item"><div><strong>${item.title}</strong><p>${item.body}</p></div><div class="meta">${item.meta}</div></div>`;
+    }
+
+    function queueItem(item) {
+      return `<div class="queue-item"><div><strong>${item.title}</strong><p>${item.body}</p></div><div class="state">${item.state}</div></div>`;
+    }
+
+    function render() {
+      document.getElementById('hero-stats').innerHTML = app.stats.map(statCard).join('');
+      document.getElementById('status-stack').innerHTML = app.status.map(s => lineCard({ title:s.title, detail:s.detail, state:s.state })).join('');
+      document.getElementById('buyers-grid').innerHTML = app.buyers.map(buyerCard).join('');
+      document.getElementById('scan-results').innerHTML = app.scans.map(scanCard).join('');
+      document.getElementById('bridge-grid').innerHTML = app.bridge.map(lineCard).join('');
+      document.getElementById('workflow-grid').innerHTML = app.workflow.map(lineCard).join('');
+      document.getElementById('match-summary').innerHTML = app.matches.map(lineCard).join('');
+      document.getElementById('draft-queue').innerHTML = app.drafts.length ? app.drafts.map(queueItem).join('') : `<div class="line-card"><div><strong>No drafts queued yet</strong><small>Run a scan or flag a missing field to stage outreach.</small></div><div class="pill"><i></i>Idle</div></div>`;
+    }
+
+    function extractAddress(text) {
+      const m = text.match(/\b\d{1,6}\s+[A-Za-z0-9.'\- ]+(?:St|Street|Rd|Road|Ave|Avenue|Blvd|Boulevard|Ln|Lane|Dr|Drive|Ct|Court|Way|Pkwy|Parkway|Hwy|Highway|Cir|Circle)\b/i);
+      return m ? m[0].replace(/\s+/g,' ').trim() : 'No address detected';
+    }
+
+    function distressSignals(text) {
+      const signals = [
+        ['foreclosure', 'foreclosure'], ['notice of default', 'notice of default'], ['vacant', 'vacancy'], ['delinquent', 'delinquency'],
+        ['probate', 'probate'], ['auction', 'auction'], ['tax lien', 'tax lien'], ['code violation', 'code violation'],
+        ['eviction', 'eviction'], ['repairs needed', 'condition'], ['distress', 'distress']
+      ];
+      const found = signals.filter(([needle]) => text.includes(needle)).map(([,label]) => label);
+      return found.length ? [...new Set(found)] : ['No explicit distress language'];
+    }
+
+    function buildMatch(text) {
+      const lower = text.toLowerCase();
+      const address = extractAddress(text);
+      const distress = distressSignals(lower);
+      const hasVacant = lower.includes('vacant');
+      const buyer = hasVacant || lower.includes('cash flow') ? app.buyers[1] : app.buyers[0];
+      const proximity = lower.includes('elm') || lower.includes('san antonio') ? '1.7 mi' : '2.0 mi';
+      const contact = /\b\d{3}[\s.-]?\d{3}[\s.-]?\d{4}\b/.exec(text)?.[0] || 'Add phone';
+      const email = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.exec(text)?.[0] || 'Add email';
+      const cleanedContact = contact !== 'Add phone' || email !== 'Add email'
+        ? `Clean contact info: ${contact}${email !== 'Add email' ? ` / ${email}` : ''}`
+        : 'Clean contact info not found in OCR text';
+      return { address, distress, buyer, proximity, cleanedContact };
+    }
+
+    function queueDraft(type, body, state) {
+      app.drafts.unshift({ title: `${type} draft`, body, state });
+      render();
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const tier = document.getElementById('accessTier').value;
+      const code = document.getElementById('code').value.trim();
+      const finalTier = (tier === 'grandfathered' && code === GRAND_CODE) ? 'grandfathered' : tier;
+      saveAuth({ email, tier: finalTier, ts: Date.now() });
+      renderAuth();
+      render();
     });
 
-    document.getElementById('stripe-link').addEventListener('click', (event) => {
-      event.preventDefault();
-      document.getElementById('pricing').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('scanBtn').addEventListener('click', () => {
+      const input = document.getElementById('ocrInput').value.trim();
+      if (!input) {
+        app.scans = [{ title:'No input provided', body:'Paste OCR text or a typed address to run the scan.', meta:'Waiting' }];
+        render();
+        return;
+      }
+      const m = buildMatch(input);
+      app.scans = [
+        { title: `OCR detected: ${m.address}`, body: `Distress cues: ${m.distress.join(', ')}. The lead was evaluated against the buyer brain before it was surfaced in the field engine.`, meta: m.proximity },
+        { title: `Matched buyer: ${m.buyer.name}`, body: `The lead is routed to ${m.buyer.tier.toLowerCase()} and can now be drafted for outreach or parked for follow-up.`, meta: m.buyer.fit },
+        { title: 'Cleaner contact info', body: m.cleanedContact, meta: 'Normalized' },
+      ];
+      app.matches = [
+        { title: 'Top fit', body: `${m.buyer.name} is the active match for this lead.`, state: m.buyer.fit },
+        { title: 'Proximity', body: `Lead is inside the ${m.proximity} working window.`, state: 'Scan ready' },
+        { title: 'Distress', body: m.distress.join(', '), state: 'Flagged' },
+      ];
+      queueDraft('Prospect email', `Draft email for ${m.address} to ${m.buyer.name}. Mention distress cues: ${m.distress.join(', ')}.`, 'Queued');
+      queueDraft('Prospect text', `Draft text for ${m.address} to ${m.buyer.name}. Keep it concise and local.`, 'Queued');
     });
 
-    renderGate();
+    document.getElementById('draftEmailBtn').addEventListener('click', () => {
+      const input = document.getElementById('ocrInput').value.trim();
+      const m = buildMatch(input || 'No input');
+      queueDraft('Email', `Ask for interest on ${m.address}. If the buyer box is incomplete, request missing fields before sending more leads.`, 'Ready');
+    });
+
+    document.getElementById('draftTextBtn').addEventListener('click', () => {
+      const input = document.getElementById('ocrInput').value.trim();
+      const m = buildMatch(input || 'No input');
+      queueDraft('Text', `Short text for ${m.address}. Offer a quick reply path and keep the tone direct.`, 'Ready');
+    });
+
+    renderAuth();
+    render();
   </script>
 </body>
-</html>
+</html>"}}
