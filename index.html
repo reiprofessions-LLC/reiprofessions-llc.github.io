@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nationwide Prospecting CRM — Miles</title>
+  <meta name="description" content="Nationwide Prospecting CRM for leads, DealSnap, pipeline, property management, and vendors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --signal-red:#E8421A;
+      --gold:#C8A84B;
+      --ink:#0D0F14;
+      --bone:#F5F0E8;
+      --mist:#8B95A3;
+      --surface:#11161E;
+      --surface-2:#151B24;
+      --surface-3:#F7F1E8;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(13,15,20,.10);
+      --shadow:0 18px 48px rgba(13,15,20,.10);
+      --shadow-strong:0 28px 72px rgba(13,15,20,.22);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:'DM Sans',sans-serif;background:linear-gradient(180deg,#efe5d6 0%,#f7f1e8 100%);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    button,input,textarea,select{font:inherit}
+    .app{min-height:100vh;display:grid;grid-template-columns:280px 1fr}
+    .sidebar{position:sticky;top:0;height:100vh;padding:22px;background:linear-gradient(180deg,#11161e 0%,#0d0f14 100%);color:var(--bone);display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-strong)}
+    .brand{padding:12px 12px 6px}
+    .brand h1{margin:0;font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:.08em;line-height:1}
+    .brand p{margin:8px 0 0;color:rgba(245,240,232,.72);font-size:13px;line-height:1.5}
+    .nav{display:grid;gap:10px}
+    .nav-item{width:100%;border:1px solid rgba(245,240,232,.08);background:rgba(245,240,232,.04);border-radius:18px;padding:14px 14px;display:flex;gap:12px;align-items:center;color:var(--bone);cursor:pointer;transition:.18s ease}
+    .nav-item:hover,.nav-item.active{background:rgba(245,240,232,.10);border-color:rgba(245,240,232,.14);transform:translateX(2px)}
+    .nav-ico{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(200,168,75,.14);color:var(--gold)}
+    .nav-item strong{display:block;font-size:14px}
+    .nav-item small{display:block;color:rgba(245,240,232,.62);font-size:12px;margin-top:2px}
+    .side-foot{margin-top:auto;padding:14px;border-radius:18px;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.08);display:grid;gap:10px}
+    .side-foot .label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--mist)}
+    .side-foot strong{font-size:13px;line-height:1.5}
+    .main{padding:22px;display:grid;gap:18px}
+    .panel{background:rgba(255,250,243,.90);border:1px solid rgba(13,15,20,.08);border-radius:30px;box-shadow:0 18px 52px rgba(13,15,20,.10)}
+    .topbar{padding:22px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(232,66,26,.08);border:1px solid rgba(232,66,26,.12);font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--ink)}
+    .hero h2{margin:12px 0 8px;font-size:30px;line-height:1.1}
+    .hero p{margin:0;max-width:780px;color:rgba(13,15,20,.72);line-height:1.6}
+    .pill-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .pill{padding:10px 12px;border-radius:999px;background:#fff;border:1px solid rgba(13,15,20,.08);font-size:12px;color:rgba(13,15,20,.75)}
+    .pill strong{font-family:'JetBrains Mono',monospace;color:var(--ink)}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:16px;border:1px solid transparent;font-weight:700;cursor:pointer;transition:.18s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:var(--signal-red);color:var(--bone);box-shadow:0 14px 28px rgba(232,66,26,.18)}
+    .btn.secondary{background:#fff;color:var(--ink);border-color:rgba(13,15,20,.12)}
+    .stack{display:grid;gap:18px}
+    .section{padding:22px}
+    .section-title{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+    .section-title h3{margin:0;font-size:21px}
+    .section-title p{margin:7px 0 0;color:rgba(13,15,20,.66);line-height:1.55;max-width:900px}
+    .sub{color:var(--mist);font-size:12px;text-transform:uppercase;letter-spacing:.14em}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .kpi-card,.card,.lane,.tenant-card,.vendor-card,.lead-profile{background:linear-gradient(180deg,#fff,#fbf7f1);border:1px solid rgba(13,15,20,.08);border-radius:24px;box-shadow:0 12px 24px rgba(13,15,20,.05)}
+    .kpi-card{padding:18px;display:grid;gap:12px}
+    .kpi-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .kpi-label{margin:0;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:rgba(13,15,20,.55)}
+    .kpi-value{font-family:'Bebas Neue',sans-serif;font-size:54px;line-height:1;color:var(--ink)}
+    .kpi-note{color:rgba(13,15,20,.62);font-size:13px}
+    .badge{padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;background:rgba(13,15,20,.05)}
+    .badge.good{background:rgba(200,168,75,.14)}
+    .badge.warn{background:rgba(232,66,26,.10);color:var(--signal-red)}
+    .badge.dark{background:var(--ink);color:var(--bone)}
+    .filters{display:flex;gap:10px;flex-wrap:wrap}
+    .filter{padding:10px 14px;border-radius:999px;border:1px solid rgba(13,15,20,.10);background:#fff;cursor:pointer;font-weight:700;transition:.18s ease}
+    .filter.active,.filter:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+    .searchbar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;background:#fff;border:1px solid rgba(13,15,20,.10)}
+    .searchbar input{border:0;outline:none;flex:1;background:transparent;color:var(--ink)}
+    .workspace{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card{padding:16px;display:grid;gap:12px}
+    .card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .card h4,.lead-profile h4,.tenant-card h4,.vendor-card h4{margin:0;font-size:16px}
+    .card p,.lead-meta,.tenant-meta,.vendor-meta{margin:0;color:rgba(13,15,20,.68);font-size:13px;line-height:1.5}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{padding:7px 10px;border-radius:999px;background:rgba(13,15,20,.05);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-family:'JetBrains Mono',monospace}
+    .chip.red{background:rgba(232,66,26,.08);color:var(--signal-red)}
+    .chip.gold{background:rgba(200,168,75,.12);color:var(--ink)}
+    .chip.dark{background:var(--ink);color:var(--bone)}
+    .status{padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;background:rgba(13,15,20,.05)}
+    .status.good{background:rgba(200,168,75,.14)}
+    .status.warn{background:rgba(232,66,26,.10);color:var(--signal-red)}
+    .status.dark{background:var(--ink);color:var(--bone)}
+    .progress{height:8px;border-radius:999px;background:#ece3d5;overflow:hidden}
+    .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--signal-red));border-radius:999px}
+    .lane-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+    .lane{padding:14px;display:grid;gap:12px;min-height:300px}
+    .lane.dragover{outline:2px dashed rgba(232,66,26,.35);outline-offset:2px}
+    .lane h4{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mist)}
+    .lane-card{padding:14px;border-radius:18px;background:linear-gradient(180deg,#fff,#fcf7f1);border:1px solid rgba(13,15,20,.08);display:grid;gap:10px;cursor:grab}
+    .lane-card:active{cursor:grabbing}
+    .lane-card[draggable="true"]{user-select:none}
+    .table-wrap{overflow:auto;border-radius:22px;border:1px solid rgba(13,15,20,.08);background:#fff}
+    table{width:100%;border-collapse:collapse}
+    thead th{position:sticky;top:0;background:linear-gradient(180deg,#fff,#f9f4eb);font-size:11px;text-transform:uppercase;letter-spacing:.12em;text-align:left;padding:14px 16px;border-bottom:1px solid rgba(13,15,20,.08)}
+    tbody td{padding:14px 16px;border-bottom:1px solid rgba(13,15,20,.06);vertical-align:top}
+    tbody tr:hover{background:rgba(247,241,232,.8)}
+    .lead-row{cursor:pointer}
+    .profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .lead-profile{padding:16px;display:grid;gap:12px}
+    .profile-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .profile-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .field{padding:12px;border-radius:16px;background:rgba(247,241,232,.78);border:1px solid rgba(13,15,20,.08)}
+    .field span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--mist);margin-bottom:5px}
+    .field strong{font-size:14px}
+    .drawer{position:fixed;top:18px;right:18px;width:min(430px,calc(100vw - 36px));max-height:calc(100vh - 36px);overflow:auto;display:none;z-index:20}
+    .drawer.open{display:block}
+    .drawer .lead-profile{box-shadow:var(--shadow-strong)}
+    .drawer-close{position:absolute;top:14px;right:14px;background:transparent;border:0;font-size:20px;cursor:pointer;color:var(--mist)}
+    .inline-edit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .inline-edit label{display:grid;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--mist)}
+    .inline-edit input,.inline-edit textarea,.modal input,.modal textarea,.modal select{padding:12px 13px;border-radius:14px;border:1px solid rgba(13,15,20,.12);background:#fff;outline:none}
+    .ledger{display:grid;gap:12px}
+    .ledger-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .ledger-box{padding:12px;border-radius:16px;background:rgba(247,241,232,.78);border:1px solid rgba(13,15,20,.08)}
+    .ledger-box span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--mist);margin-bottom:6px}
+    .ledger-box strong{font-size:14px}
+    .payment-history{display:flex;gap:8px;flex-wrap:wrap}
+    .payment-pill{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid rgba(13,15,20,.08);font-size:12px}
+    .ledger-edit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .ledger-edit label{display:grid;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--mist)}
+    .ledger-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:rgba(13,15,20,.60);font-size:12px;padding:4px 6px 8px}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(13,15,20,.48);backdrop-filter:blur(4px);display:none;z-index:30}
+    .modal-backdrop.open{display:block}
+    .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;display:none;z-index:31}
+    .modal.open{display:block}
+    .modal .lead-profile{box-shadow:var(--shadow-strong)}
+    .modal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .modal-grid .full{grid-column:1/-1}
+    .hidden{display:none !important}
+    @media (max-width: 1180px){
+      .app{grid-template-columns:1fr}
+      .sidebar{position:relative;height:auto}
+      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid{grid-template-columns:1fr 1fr}
+      .drawer{width:min(500px,calc(100vw - 36px))}
+    }
+    @media (max-width: 760px){
+      .main{padding:14px}
+      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.ledger-grid,.profile-fields,.modal-grid,.ledger-edit{grid-template-columns:1fr}
+      .topbar{padding:18px}
+      .section{padding:18px}
+      .drawer,.modal{width:calc(100vw - 20px);right:10px;left:10px;transform:none;top:10px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>NATIONWIDE<br>PROSPECTING CRM</h1>
+        <p>Functional operations shell for leads, DealSnap intake, deal flow, property management, and vendors.</p>
+      </div>
+      <div class="nav">
+        <button class="nav-item active" data-jump="#dashboard"><span class="nav-ico">⌂</span><span><strong>Dashboard</strong><small>KPI cards and activity</small></span></button>
+        <button class="nav-item" data-jump="#ocr"><span class="nav-ico">◫</span><span><strong>DealSnap</strong><small>Convert docs into leads</small></span></button>
+        <button class="nav-item" data-jump="#pipeline"><span class="nav-ico">↺</span><span><strong>Kanban Pipeline</strong><small>Drag to update stage</small></span></button>
+        <button class="nav-item" data-jump="#leads"><span class="nav-ico">▦</span><span><strong>All Leads</strong><small>Profiles and property data</small></span></button>
+        <button class="nav-item" data-jump="#tenants"><span class="nav-ico">⚑</span><span><strong>Property Management</strong><small>Asset-level payment ledger</small></span></button>
+        <button class="nav-item" data-jump="#vendors"><span class="nav-ico">◉</span><span><strong>Vendors</strong><small>Contractors and services</small></span></button>
+      </div>
+      <div class="side-foot">
+        <span class="label">Backend</span>
+        <strong id="syncState">Connecting…</strong>
+        <strong id="dataAge">Supabase REST mapping active</strong>
+      </div>
+      <div class="side-foot">
+        <span class="label">Baseline</span>
+        <strong>47 active leads • $4.2M pipeline • 6 under contract • 11 closed YTD</strong>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="panel topbar" id="dashboard">
+        <div class="hero">
+          <span class="kicker">visual crm / lead flow / rental ops</span>
+          <h2>Dashboard</h2>
+          <p>Core surfaces only: KPI cards, DealSnap, Kanban Pipeline, All Leads, Tenant Management, and Vendors. Live Supabase data is used when available, with the mockup baseline as fallback.</p>
+        </div>
+        <div style="display:grid;gap:14px;justify-items:end">
+          <div class="pill-row">
+            <span class="pill">Signal Red <strong>#E8421A</strong></span>
+            <span class="pill">Gold <strong>#C8A84B</strong></span>
+            <span class="pill">Ink <strong>#0D0F14</strong></span>
+            <span class="pill">Bone <strong>#F5F0E8</strong></span>
+            <span class="pill">Mist <strong>#8B95A3</strong></span>
+          </div>
+          <div class="hero-actions">
+            <button class="btn primary" id="openLeadModal">Add Lead</button>
+            <button class="btn secondary" id="refreshData">Refresh Data</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-title">
+          <div><h3>KPIs</h3><p>Exact mockup baseline is applied until live records are available.</p></div>
+          <div class="sub" id="recordCount">—</div>
+        </div>
+        <div class="kpi-grid" id="kpiGrid"></div>
+      </section>
+
+      <section class="panel section" id="ocr">
+        <div class="section-title">
+          <div><h3>DealSnap</h3><p>Document intake mapped to the DealSnap workflow with conversion actions.</p></div>
+          <div class="sub" id="ocrCount">—</div>
+        </div>
+        <div class="card-grid" id="ocrCards"></div>
+      </section>
+
+      <section class="panel section" id="pipeline">
+        <div class="section-title">
+          <div><h3>Kanban Pipeline</h3><p>Drag cards between stages to sync status back to Supabase.</p></div>
+          <div class="sub" id="pipelineCount">—</div>
+        </div>
+        <div class="lane-grid" id="kanbanBoard"></div>
+      </section>
+
+      <section class="panel section" id="leads">
+        <div class="section-title">
+          <div><h3>All Leads</h3><p>Lead cards with property info, owner details, and contact history.</p></div>
+          <div class="sub" id="leadCount">—</div>
+        </div>
+        <div class="stack">
+          <div class="searchbar"><span style="color:var(--mist)">⌕</span><input id="searchInput" type="text" placeholder="Search leads, buyers, vendors, properties, notes, addresses…" /></div>
+          <div class="filters" id="filterBar">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="leads">Leads</button>
+            <button class="filter" data-filter="buyers">Buyers</button>
+            <button class="filter" data-filter="vendors">Vendors</button>
+            <button class="filter" data-filter="tenants">Property Management</button>
+          </div>
+          <div class="filters" id="strategyBar" style="margin-top:2px">
+            <button class="filter active" data-strategy="all">All Strategies</button>
+            <button class="filter" data-strategy="SubTo">SubTo</button>
+            <button class="filter" data-strategy="Lease Option">Lease Option</button>
+            <button class="filter" data-strategy="Owner Finance">Owner Finance</button>
+            <button class="filter" data-strategy="Wholesale">Wholesale</button>
+            <button class="filter" data-strategy="Cash">Cash</button>
+            <button class="filter" data-strategy="Creative">Creative</button>
+          </div>
+          <div class="filters" id="boardModeBar" style="margin-top:2px">
+            <button class="filter active" data-board-mode="stage">Group by Stage</button>
+            <button class="filter" data-board-mode="strategy">Group by Strategy</button>
+          </div>
+          <div class="profile-grid" id="leadProfiles"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Record</th><th>Type</th><th>Market</th><th>Status</th><th>Strategy</th><th>Contact</th><th>Score</th></tr>
+              </thead>
+              <tbody id="leadsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel section" id="tenants">
+        <div class="section-title">
+          <div><h3>Property Management</h3><p>Asset-level ledger editing for payments, debt, and history tied to each individual property.</p></div>
+          <div class="sub" id="tenantCount">—</div>
+        </div>
+        <div class="card-grid" id="tenantCards"></div>
+      </section>
+
+      <section class="panel section" id="vendors">
+        <div class="section-title">
+          <div><h3>Vendors</h3><p>Contractors, cleaners, food trucks, and service partners.</p></div>
+          <div class="sub" id="vendorCount">—</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Vendor</th><th>Category / Type</th><th>Contact Info</th><th>Status</th><th>Notes / Scheduling</th></tr></thead>
+            <tbody id="vendorsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="footer"><span>Deployable Miles CRM build</span><span>Supabase REST integrated</span></div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="backdrop"></div>
+  <div class="modal" id="leadModal">
+    <div class="lead-profile">
+      <button class="drawer-close" id="closeModal">×</button>
+      <div class="profile-top"><div><h4>Add Lead</h4><div class="lead-meta">Insert a new lead row into Supabase and refresh the app view.</div></div></div>
+      <div class="modal-grid">
+        <label class="field full"><span>Lead Name</span><input id="m_name" placeholder="Victorian" /></label>
+        <label class="field"><span>Property</span><input id="m_property" placeholder="123 W. Laurel" /></label>
+        <label class="field"><span>Owner / Contact</span><input id="m_owner" placeholder="Owner name" /></label>
+        <label class="field"><span>Market</span><input id="m_market" placeholder="San Antonio, TX" /></label>
+        <label class="field"><span>Status</span><select id="m_status"><option>new</option><option>contacted</option><option>qualified</option><option>contract</option><option>closed</option></select></label>
+        <label class="field"><span>Strategy</span><select id="m_strategy"></select></label>
+        <label class="field"><span>Contact</span><input id="m_contact" placeholder="email or phone" /></label>
+        <label class="field"><span>Rent</span><input id="m_rent" inputmode="numeric" placeholder="0" /></label>
+        <label class="field"><span>Fees</span><input id="m_fees" inputmode="numeric" placeholder="0" /></label>
+        <label class="field"><span>Debt</span><input id="m_debt" inputmode="numeric" placeholder="0" /></label>
+        <label class="field full"><span>Contact History / Notes</span><textarea id="m_notes" rows="4" placeholder="Recent contact notes"></textarea></label>
+      </div>
+      <div class="ledger-actions"><button class="btn primary" id="saveLead">Save Lead</button><button class="btn secondary" id="cancelLead">Cancel</button></div>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://egpqhzubdeklzstzdmtt.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_iBBJYG09g5LAqXEo7QdC2w_HcyXKzxG';
+    const BASELINE = {
+      kpis: { leads: 47, pipelineValue: 4200000, contract: 6, closed: 11 },
+      financing: [
+        { label: 'Owner Finance', value: 68 },
+        { label: 'Lease Option', value: 22 },
+        { label: 'Conventional', value: 10 }
+      ],
+      activity: [
+        { text: 'New DealSnap lead in Uvalde Co. queued for review.', meta: 'Today • DealSnap' },
+        { text: 'Phil Essex replied on a Frio County opportunity.', meta: 'Today • Lead follow-up' },
+        { text: 'Title Search order placed and confirmed.', meta: 'Today • Title workflow' }
+      ],
+      ocr: [
+        { title: 'Uvalde Co. screenshot', status: 'queued', confidence: 91, source: 'DealSnap webhook', note: 'Waiting for extraction' },
+        { title: 'Frio Co. document', status: 'review', confidence: 83, source: 'DealSnap queue', note: 'Needs address normalization' },
+        { title: 'Title Search receipt', status: 'processing', confidence: 76, source: 'workflow', note: 'Attachment detected' }
+      ],
+      leads: [
+        { id:'victorian', name:'Victorian', type:'lead', market:'San Antonio, TX', status:'new', strategy:'Sober Living', rent:1750, fees:175, debt:350, contact:'info@example.com', score:82, property:'Victorian', owner:'Owner data pending', history:'Initial inquiry', notes:'Potential acquisition' },
+        { id:'northridge', name:'Northridge', type:'lead', market:'Austin, TX', status:'contacted', strategy:'Midterm Rental', rent:1925, fees:125, debt:525, contact:'team@example.com', score:78, property:'Northridge', owner:'Owner data pending', history:'Follow-up sent', notes:'Buyer interest' },
+        { id:'falls-of-west-oaks', name:'Falls of West Oaks', type:'lead', market:'Houston, TX', status:'qualified', strategy:'Owner Finance', rent:2200, fees:250, debt:0, contact:'lead@example.com', score:74, property:'Falls of West Oaks', owner:'Owner data pending', history:'Qualified on call', notes:'Multifamily pipeline' },
+        { id:'berkshire', name:'Berkshire', type:'lead', market:'Dallas, TX', status:'contract', strategy:'SubTo', rent:2500, fees:300, debt:1200, contact:'buyer@example.com', score:88, property:'The Berkshire Apartments', owner:'Ownership group', history:'Under contract', notes:'Contract stage' }
+      ],
+      buyers: [
+        { id:'buyer-1', name:'Althing Properties', type:'buyer', market:'Texas', status:'active', strategy:'Buyer Pool', rent:0, fees:0, debt:0, contact:'investors@althingproperties.com', score:86, property:'Buy box', owner:'Landon Cole', history:'Repeat counterpart', notes:'Buyer / developer' }
+      ],
+      tenants: [
+        { id:'laurel', name:'123 W. Laurel', lease:'active', property:'123 W. Laurel, San Antonio', monthlyRent:1750, pastDebt:0, balanceOwed:350, paymentHistory:['Jun $1750','May $1750','Apr $1750'] },
+        { id:'rosewood', name:'711 W. Rosewood', lease:'active', property:'711 W. Rosewood, San Antonio', monthlyRent:1925, pastDebt:125, balanceOwed:525, paymentHistory:['Jun $1925','May $1925','Apr $1800'] }
+      ],
+      vendors: [
+        { id:'vendor-1', name:'Ryan Urias', category:'Contractor', contact:'(210) 555-0199', status:'active', notes:'Framing and rehab scheduling' },
+        { id:'vendor-2', name:'Kitchen Clean Co.', category:'Cleaner', contact:'clean@example.com', status:'active', notes:'Turn cleaning after move-out' }
+      ]
+    };
+    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], search:'', filter:'all', selected:null, boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'] };
+    const $ = id => document.getElementById(id);
+    const escapeHtml = s => String(s ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    const numFmt = v => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Number(v) || 0);
+    const usdFmt = v => new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 }).format(Number(v)||0);
+    const pctFmt = v => `${numFmt(v)}%`;
+    const statusClass = s => {
+      s = String(s||'').toLowerCase();
+      if (['closed','approved','active','contract','qualified'].includes(s)) return 'good';
+      if (['queued','new','review','contacted','processing','open'].includes(s)) return 'warn';
+      return 'dark';
+    };
+    function show(el, on){ el.classList.toggle('open', !!on); }
+    async function api(path, options={}){
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        ...options,
+        headers: { apikey: SUPABASE_KEY, authorization:`Bearer ${SUPABASE_KEY}`, accept:'application/json', 'content-type':'application/json', ...(options.headers||{}) }
+      });
+      if (!res.ok) throw new Error(`${path} ${res.status}`);
+      const txt = await res.text();
+      return txt ? JSON.parse(txt) : [];
+    }
+    async function fetchFirst(paths){ for (const p of paths){ try { const d = await api(p); if (Array.isArray(d)) return d; } catch(e){} } return []; }
+    const tableCandidates = {
+      leads: ['deal_intakes?select=*&order=updated_at.desc&limit=200','dealintakes?select=*&order=updated_at.desc&limit=200','leads?select=*&order=updated_at.desc&limit=200'],
+      buyers: ['buyers?select=*&order=updated_at.desc&limit=200','buyer_profiles?select=*&order=updated_at.desc&limit=200'],
+      ocr: ['ocr_queue?select=*&order=updated_at.desc&limit=200','ocr_documents?select=*&order=updated_at.desc&limit=200','documents?select=*&order=updated_at.desc&limit=200'],
+      tenants: ['tenant_ledger?select=*&order=updated_at.desc&limit=200','tenants?select=*&order=updated_at.desc&limit=200','tenant_management?select=*&order=updated_at.desc&limit=200'],
+      vendors: ['vendors?select=*&order=updated_at.desc&limit=200','vendor_profiles?select=*&order=updated_at.desc&limit=200']
+    };
+    const chooseTable = paths => paths[0].split('?')[0];
+    const STRATEGIES = ['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'];
+    function strategyDefaults(name){
+      const n = String(name || '').toLowerCase();
+      if (n === 'sober living') return { rent: 1750, fees: 175, debt: 350 };
+      if (n === 'midterm rental') return { rent: 1925, fees: 125, debt: 525 };
+      if (n === 'subto') return { rent: 2500, fees: 300, debt: 1200 };
+      if (n === 'lease option') return { rent: 1800, fees: 150, debt: 0 };
+      if (n === 'owner finance') return { rent: 2200, fees: 250, debt: 0 };
+      if (n === 'wholesale') return { rent: 0, fees: 0, debt: 0 };
+      if (n === 'cash') return { rent: 0, fees: 0, debt: 0 };
+      if (n === 'creative') return { rent: 0, fees: 0, debt: 0 };
+      return { rent: 0, fees: 0, debt: 0 };
+    }
+    function normalizeLead(item){
+      return {
+        id: item.id || item.lead_id || item.name || crypto.randomUUID(),
+        name: item.deal_name || item.lead_name || item.name || item.seller_name || item.company_name || item.address || 'Untitled record',
+        type: item.buyer_type ? 'buyer' : (item.type || 'lead'),
+        market: item.market || item.city || item.state || item.region || '—',
+        status: item.deal_status || item.intake_status || item.status || 'new',
+        contact: item.email || item.contact_email || item.phone || '—',
+        score: Number(item.buy_box_completeness || item.score || item.fit_score || 0) || 0,
+        property: item.property || item.address || item.property_name || '—',
+        owner: item.owner || item.owner_name || item.seller_name || item.contact_name || 'Owner data pending',
+        history: item.contact_history || item.history || item.notes || 'No history yet',
+        strategy: item.strategy || item.deal_strategy || item.exit_strategy || 'Other',
+        rent: Number(item.rent || item.monthly_rent || item.monthlyRent || 0) || 0,
+        fees: Number(item.fees || item.monthly_fees || item.fee || 0) || 0,
+        debt: Number(item.debt || item.pastDebt || item.balance_owed || item.balanceOwed || 0) || 0,
+        notes: item.notes || item.description || '',
+        raw: item
+      };
+    }
+    function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
+    function normalizeTenant(item){ const history = Array.isArray(item.paymentHistory) ? item.paymentHistory : (Array.isArray(item.payment_history) ? item.payment_history : []); return { id:item.id||crypto.randomUUID(), name:item.name||item.tenant_name||item.property_name||'Tenant', property:item.property||item.property_name||item.address||'—', lease:item.lease||item.lease_status||'active', monthlyRent:Number(item.monthlyRent||item.monthly_rent||item.rent||0)||0, pastDebt:Number(item.pastDebt||item.past_debt||0)||0, balanceOwed:Number(item.balanceOwed||item.balance_owed||item.amount_due||0)||0, paymentHistory:history.length ? history : ['No payments logged'], raw:item }; }
+    function normalizeVendor(item){ return { id:item.id||crypto.randomUUID(), name:item.vendor_name||item.name||item.company_name||'Vendor', category:item.category||item.vendor_type||item.type||'Service', contact:item.phone||item.email||item.contact||'—', status:item.status||(item.active===false?'inactive':'active'), notes:item.notes||item.scheduling||item.schedule||'—', raw:item }; }
+    function normalizeBuyer(item){ return normalizeLead({...item, type:'buyer'}); }
+    async function loadData(){
+      const [leads,buyers,ocr,tenants,vendors] = await Promise.all([
+        fetchFirst(tableCandidates.leads), fetchFirst(tableCandidates.buyers), fetchFirst(tableCandidates.ocr), fetchFirst(tableCandidates.tenants), fetchFirst(tableCandidates.vendors)
+      ]);
+      state.leads = leads.length ? leads.map(normalizeLead) : BASELINE.leads.map(normalizeLead);
+      state.buyers = buyers.length ? buyers.map(normalizeBuyer) : BASELINE.buyers.map(normalizeBuyer);
+      state.ocr = ocr.length ? ocr.map(normalizeOcr) : BASELINE.ocr.map(normalizeOcr);
+      state.tenants = tenants.length ? tenants.map(normalizeTenant) : BASELINE.tenants.map(normalizeTenant);
+      state.vendors = vendors.length ? vendors.map(normalizeVendor) : BASELINE.vendors.map(normalizeVendor);
+      state.source = (leads.length || buyers.length || ocr.length || tenants.length || vendors.length) ? 'live' : 'baseline';
+      $('syncState').textContent = state.source === 'live' ? 'Connected' : 'Baseline mode';
+      $('dataAge').textContent = state.source === 'live' ? `Live data loaded • ${new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}` : 'Using PDF mockup baseline';
+      render();
+    }
+    function allRecords(){ return [...state.leads, ...state.buyers]; }
+    function filteredRecords(){ const q = state.search.trim().toLowerCase(); return allRecords().filter(item => { const text = JSON.stringify(item).toLowerCase(); if (q && !text.includes(q)) return false; if (state.filter === 'all') return true; return state.filter === item.type || (state.filter === 'leads' && item.type === 'lead') || (state.filter === 'buyers' && item.type === 'buyer') || (state.filter === 'tenants' && item.type === 'tenant') || (state.filter === 'vendors' && item.type === 'vendor'); }); }
+    function filteredTenants(){ const q = state.search.trim().toLowerCase(); return state.tenants.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
+    function filteredVendors(){ const q = state.search.trim().toLowerCase(); return state.vendors.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
+    function ocrMatches(){ const q = state.search.trim().toLowerCase(); return state.ocr.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
+    function stageFor(item){ const s = String(item.status||'').toLowerCase(); if (['new','queued','intake'].includes(s)) return 'New'; if (['review','triaged','qualified','candidate'].includes(s)) return 'Review'; if (['contacted','follow_up','followup','outreach'].includes(s)) return 'Outreach'; if (['negotiation','underwriting','in_progress','active'].includes(s)) return 'Negotiation'; if (['closed','approved','contract','matched'].includes(s)) return 'Close'; return 'Review'; }
+    function stageToStatus(stage){ return { 'New':'new', 'Review':'qualified', 'Outreach':'contacted', 'Negotiation':'negotiation', 'Close':'contract' }[stage] || 'new'; }
+    function leadTable(){ return filteredRecords().slice(0,60); }
+    function renderKpis(){
+      const liveLeads = state.leads.length;
+      const leads = state.source === 'live' ? liveLeads : BASELINE.kpis.leads;
+      const cards = [
+        ['Active Leads', leads, 'Live' , '+12 this week'],
+        ['Pipeline Value', usdFmt(BASELINE.kpis.pipelineValue), 'Total', '+$840K in motion'],
+        ['Under Contract', BASELINE.kpis.contract, 'In escrow', '+2 this month'],
+        ['Closed YTD', BASELINE.kpis.closed, 'Won', '+3 vs last year']
+      ];
+      $('kpiGrid').innerHTML = cards.map(([title,value,badge,note]) => `<div class="kpi-card"><div class="kpi-top"><h4 class="kpi-label">${title}</h4><span class="badge ${badge==='Live'?'good':'dark'}">${badge}</span></div><div class="kpi-value">${value}</div><div class="kpi-note">${note}</div></div>`).join('');
+      $('recordCount').textContent = `${leadTable().length} records shown`;
+    }
+    function renderOcr(){
+      const items = ocrMatches();
+      $('ocrCount').textContent = `${items.length} items shown`;
+      $('ocrCards').innerHTML = items.map(item => `
+        <article class="card">
+          <div class="card-head"><div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.source)}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div>
+          <div class="chips"><span class="chip">Confidence ${pctFmt(item.confidence)}</span><span class="chip gold">DealSnap Intake</span></div>
+          <div class="progress"><i style="width:${Math.max(8, Math.min(100, item.confidence))}%"></i></div>
+          <p>${escapeHtml(item.note)}</p>
+          <div class="ledger-actions"><button class="btn primary" data-ocr-convert="${escapeHtml(item.id)}">Convert to Lead</button><button class="btn secondary" data-ocr-mark="${escapeHtml(item.id)}">Mark Reviewed</button></div>
+        </article>
+      `).join('');
+    }
+    function renderPipeline(){
+      const items = filteredRecords();
+      $('pipelineCount').textContent = `${items.length} cards available`;
+      const groups = state.boardMode === 'strategy' ? STRATEGIES : ['New','Review','Outreach','Negotiation','Close'];
+      $('kanbanBoard').innerHTML = groups.map(group => {
+        const laneItems = state.boardMode === 'strategy'
+          ? items.filter(item => String(item.strategy || 'Other') === group).slice(0, 8)
+          : items.filter(item => stageFor(item) === group).slice(0, 8);
+        return `<div class="lane" data-stage="${group}"><h4>${group}</h4>${laneItems.map(item => `<div class="lane-card" draggable="true" data-id="${escapeHtml(item.id)}" data-type="${escapeHtml(item.type)}"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.property || item.market || 'CRM record')}</p></div><span class="badge ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="chips"><span class="chip">${escapeHtml(item.type)}</span><span class="chip gold">${escapeHtml(item.strategy || 'Other')}</span><span class="chip">${item.score ? pctFmt(item.score) : '—'}</span></div><div class="progress"><i style="width:${Math.max(6, Math.min(100, Number(item.score || 0)))}%"></i></div><p>${escapeHtml(item.owner || item.history || 'No details')}</p></div>`).join('') || '<div class="card" style="opacity:.7">No items</div>'}</div>`;
+      }).join('');
+    }
+    function renderLeads(){
+      const items = leadTable();
+      $('leadCount').textContent = `${items.length} rows shown`;
+      $('leadsTable').innerHTML = items.map(item => `<tr class="lead-row" data-lead="${escapeHtml(item.id)}"><td><strong>${escapeHtml(item.name)}</strong><div class="lead-meta">${escapeHtml(item.property || item.notes || 'CRM record')}</div></td><td><span class="badge ${item.type==='buyer'?'good':'warn'}">${escapeHtml(item.type)}</span></td><td class="lead-meta">${escapeHtml(item.market || '—')}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.strategy || 'Other')}</td><td class="lead-meta">${escapeHtml(item.contact || '—')}</td><td>${item.score ? pctFmt(item.score) : '—'}</td></tr>`).join('');
+      $('leadProfiles').innerHTML = items.slice(0,6).map(item => `<article class="lead-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="chips"><span class="chip">${escapeHtml(item.type)}</span><span class="chip gold">${item.score ? pctFmt(item.score) : '—'}</span><button class="btn secondary" data-open-lead="${escapeHtml(item.id)}">Open</button></div></article>`).join('');
+    }
+    function renderTenants(){
+      const items = filteredTenants();
+      $('tenantCount').textContent = `${items.length} records shown`;
+      $('tenantCards').innerHTML = items.map(item => `<article class="tenant-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.property)}</p></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="ledger"><div class="ledger-grid"><div class="ledger-box"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="ledger-box"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="ledger-box"><span>Current Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="ledger-box"><span>Payment History</span><strong>${item.paymentHistory.length} entries</strong></div></div><div class="payment-history">${item.paymentHistory.map(p => `<span class="payment-pill">${escapeHtml(p)}</span>`).join('')}</div><div class="ledger-edit"><label><span>Monthly Rent</span><input value="${item.monthlyRent}" inputmode="numeric" data-tenant-field="monthlyRent" data-tenant-id="${escapeHtml(item.id)}"></label><label><span>Past Debt</span><input value="${item.pastDebt}" inputmode="numeric" data-tenant-field="pastDebt" data-tenant-id="${escapeHtml(item.id)}"></label><label><span>Balance Owed</span><input value="${item.balanceOwed}" inputmode="numeric" data-tenant-field="balanceOwed" data-tenant-id="${escapeHtml(item.id)}"></label><label class="full" style="grid-column:1/-1"><span>Payment History (pipe-separated)</span><input value="${escapeHtml(item.paymentHistory.join(' | '))}" data-tenant-field="paymentHistory" data-tenant-id="${escapeHtml(item.id)}"></label></div></div></article>`).join('');
+    }
+    function renderVendors(){
+      const items = filteredVendors();
+      $('vendorCount').textContent = `${items.length} records shown`;
+      $('vendorsTable').innerHTML = items.map(item => `<tr><td><strong>${escapeHtml(item.name)}</strong></td><td class="lead-meta">${escapeHtml(item.category)}</td><td class="lead-meta">${escapeHtml(item.contact)}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.notes)}</td></tr>`).join('');
+    }
+    function render(){ renderKpis(); renderOcr(); renderPipeline(); renderLeads(); renderTenants(); renderVendors(); }
+    function openLead(item){ state.selected = item; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Rent</span><strong>${usdFmt(item.rent)}</strong></div><div class="field"><span>Fees</span><strong>${usdFmt(item.fees)}</strong></div><div class="field"><span>Debt</span><strong>${usdFmt(item.debt)}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="inline-edit"><label><span>Name</span><input id="d_name" value="${escapeHtml(item.name)}"></label><label><span>Status</span><input id="d_status" value="${escapeHtml(item.status)}"></label><label><span>Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.rent||0)}"></label><label><span>Fees</span><input id="d_fees" inputmode="numeric" value="${Number(item.fees||0)}"></label><label><span>Debt</span><input id="d_debt" inputmode="numeric" value="${Number(item.debt||0)}"></label><label class="full"><span>Notes</span><textarea id="d_notes" rows="4">${escapeHtml(item.notes || item.history || '')}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
+    function closeLead(){ show($('drawer'), false); state.selected = null; }
+    async function persistLeadPatch(item){
+      const table = chooseTable(tableCandidates.leads);
+      const payload = { name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, deal_status:item.status, strategy:item.strategy, rent:item.rent, fees:item.fees, debt:item.debt, notes:item.notes, contact_history:item.history, property:item.property, owner:item.owner, market:item.market, updated_at:new Date().toISOString() };
+      try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
+      localStorage.setItem(`lead-${item.id}`, JSON.stringify(item));
+    }
+    async function persistTenant(item){
+      const table = chooseTable(tableCandidates.tenants);
+      const payload = { tenant_id:item.id, tenant_name:item.name, monthly_rent:item.monthlyRent, past_debt:item.pastDebt, balance_owed:item.balanceOwed, payment_history:item.paymentHistory, updated_at:new Date().toISOString() };
+      try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
+      localStorage.setItem(`tenant-${item.id}`, JSON.stringify(item));
+    }
+    async function persistVendor(item){
+      const table = chooseTable(tableCandidates.vendors);
+      const payload = { vendor_name:item.name, category:item.category, phone:item.contact, status:item.status, notes:item.notes, updated_at:new Date().toISOString() };
+      try { await api(`${table}?id=eq.${encodeURIComponent(item.id)}`, { method:'PATCH', headers:{ Prefer:'return=minimal' }, body: JSON.stringify(payload) }); } catch(e) {}
+      localStorage.setItem(`vendor-${item.id}`, JSON.stringify(item));
+    }
+    async function createLeadFromModal(){
+      const item = { id: crypto.randomUUID(), name: $('m_name').value.trim(), type:'lead', market: $('m_market').value.trim(), status: $('m_status').value.trim(), strategy: $('m_strategy').value.trim(), contact: $('m_contact').value.trim(), score: 0, property: $('m_property').value.trim(), owner: $('m_owner').value.trim(), rent: Number($('m_rent').value || 0) || 0, fees: Number($('m_fees').value || 0) || 0, debt: Number($('m_debt').value || 0) || 0, history: $('m_notes').value.trim(), notes: $('m_notes').value.trim(), raw:{} };
+      if (!item.name) return alert('Lead name required');
+      state.leads.unshift(item);
+      const table = chooseTable(tableCandidates.leads);
+      try { await api(table, { method:'POST', headers:{ Prefer:'return=minimal' }, body: JSON.stringify({ id:item.id, name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, deal_status:item.status, strategy:item.strategy, rent:item.rent, fees:item.fees, debt:item.debt, market:item.market, contact:item.contact, property:item.property, owner:item.owner, notes:item.notes, contact_history:item.history, updated_at:new Date().toISOString() }) }); } catch(e) {}
+      render(); closeModal();
+    }
+    async function handleOcrConvert(id){
+      const item = state.ocr.find(x => x.id === id);
+      if (!item) return;
+      const lead = { id: crypto.randomUUID(), name: item.title, type:'lead', market:'—', status:'new', strategy:'Other', rent:0, fees:0, debt:0, contact:'—', score:item.confidence || 0, property:item.title, owner:'DealSnap Import', history:`Converted from DealSnap: ${item.note}`, notes:item.note, raw:{} };
+      state.leads.unshift(lead);
+      item.status = 'converted';
+      const table = chooseTable(tableCandidates.leads);
+      try { await api(table, { method:'POST', headers:{ Prefer:'return=minimal' }, body: JSON.stringify({ id:lead.id, name:lead.name, deal_name:lead.name, lead_name:lead.name, status:'new', deal_status:'new', property:lead.property, owner:lead.owner, notes:lead.notes, contact_history:lead.history, updated_at:new Date().toISOString() }) }); } catch(e) {}
+      render();
+    }
+    async function updateLeadStage(id, stage){
+      const item = state.leads.find(x => x.id === id) || state.buyers.find(x => x.id === id);
+      if (!item) return;
+      if (state.boardMode === 'strategy') {
+        item.strategy = stage;
+        item.raw = { ...(item.raw||{}), strategy:item.strategy };
+      } else {
+        item.status = stageToStatus(stage);
+        item.raw = { ...(item.raw||{}), status:item.status };
+      }
+      await persistLeadPatch(item);
+      render();
+    }
+    function openModal(){ renderStrategySelect('Sober Living'); syncDefaultsFromStrategy('Sober Living'); show($('backdrop'), true); show($('leadModal'), true); }
+    function renderStrategySelect(selected='Sober Living'){ const sel = $('m_strategy'); if (!sel) return; const opts = state.strategyChoices.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('') + '<option value="__new__">Create New Strategy</option>'; sel.innerHTML = opts; sel.value = state.strategyChoices.includes(selected) ? selected : 'Sober Living'; }
+    function syncDefaultsFromStrategy(name){ const d = strategyDefaults(name); $('m_rent').value = d.rent; $('m_fees').value = d.fees; $('m_debt').value = d.debt; }
+    function closeModal(){ show($('backdrop'), false); show($('leadModal'), false); }
+    async function saveTenantField(id, field, value){ const item = state.tenants.find(x => x.id === id); if (!item) return; if (field === 'paymentHistory') item.paymentHistory = String(value).split('|').map(s => s.trim()).filter(Boolean); else item[field] = Number(value) || 0; await persistTenant(item); renderTenants(); }
+    async function saveVendorField(item, key, value){ item[key] = value; await persistVendor(item); renderVendors(); }
+    document.addEventListener('click', async (e) => {
+      const nav = e.target.closest('[data-jump]'); if (nav) document.querySelector(nav.dataset.jump)?.scrollIntoView({behavior:'smooth', block:'start'});
+      const leadBtn = e.target.closest('[data-open-lead]'); if (leadBtn) return openLead(allRecords().find(x => x.id === leadBtn.dataset.openLead));
+      const row = e.target.closest('[data-lead]'); if (row) return openLead(allRecords().find(x => x.id === row.dataset.lead));
+      const ocr = e.target.closest('[data-ocr-convert]'); if (ocr) return handleOcrConvert(ocr.dataset.ocrConvert);
+      const reviewed = e.target.closest('[data-ocr-mark]'); if (reviewed){ const item = state.ocr.find(x => x.id === reviewed.dataset.ocrMark); if (item) item.status='reviewed'; renderOcr(); }
+      const close1 = e.target.closest('#closeModal'); if (close1) return closeModal();
+      const close2 = e.target.closest('#cancelLead'); if (close2) return closeModal();
+      const close3 = e.target.closest('#drawerClose') || e.target.closest('#drawerClose2'); if (close3) return closeLead();
+      const saveLead = e.target.closest('#saveLead'); if (saveLead) return createLeadFromModal();
+      const openLeadModal = e.target.closest('#openLeadModal'); if (openLeadModal) return openModal();
+      const refresh = e.target.closest('#refreshData'); if (refresh) return loadData();
+      const modalBackdrop = e.target.id === 'backdrop'; if (modalBackdrop) { closeModal(); closeLead(); }
+      const laneCard = e.target.closest('.lane-card');
+      if (laneCard && !e.target.closest('button')) {
+        openLead(allRecords().find(x => x.id === laneCard.dataset.id));
+      }
+      const stageDrop = e.target.closest('.lane');
+      if (stageDrop && stageDrop.dataset.stage && e.target.classList.contains('lane')) stageDrop.classList.remove('dragover');
+    });
+    document.addEventListener('input', async (e) => {
+      const leadField = e.target.closest('[data-tenant-field]');
+      if (leadField) return saveTenantField(leadField.dataset.tenantId, leadField.dataset.tenantField, leadField.value);
+      if (e.target.id === 'm_strategy') {
+        if (e.target.value === '__new__') {
+          const custom = prompt('Create new strategy name');
+          if (custom && custom.trim()) {
+            const value = custom.trim();
+            if (!state.strategyChoices.includes(value)) state.strategyChoices.splice(state.strategyChoices.length - 1, 0, value);
+            renderStrategySelect(value);
+            syncDefaultsFromStrategy(value);
+          } else {
+            renderStrategySelect('Sober Living');
+            syncDefaultsFromStrategy('Sober Living');
+          }
+          return;
+        }
+        syncDefaultsFromStrategy(e.target.value);
+      }
+      if (e.target.id === 'd_name' || e.target.id === 'd_status' || e.target.id === 'd_notes' || e.target.id === 'd_rent' || e.target.id === 'd_fees' || e.target.id === 'd_debt') {
+        const item = state.selected; if (!item) return; item.name = $('d_name').value; item.status = $('d_status').value; item.notes = $('d_notes').value; item.history = $('d_notes').value; item.rent = Number($('d_rent').value || 0) || 0; item.fees = Number($('d_fees').value || 0) || 0; item.debt = Number($('d_debt').value || 0) || 0; }
+    });
+    document.addEventListener('dragstart', e => { const card = e.target.closest('.lane-card'); if (card) e.dataTransfer.setData('text/plain', card.dataset.id); });
+    document.addEventListener('dragover', e => { const lane = e.target.closest('.lane'); if (lane) { e.preventDefault(); lane.classList.add('dragover'); } });
+    document.addEventListener('dragleave', e => { const lane = e.target.closest('.lane'); if (lane) lane.classList.remove('dragover'); });
+    document.addEventListener('drop', async e => { const lane = e.target.closest('.lane'); if (!lane) return; e.preventDefault(); lane.classList.remove('dragover'); const id = e.dataTransfer.getData('text/plain'); if (!id) return; await updateLeadStage(id, lane.dataset.stage); });
+    document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; render(); });
+    document.getElementById('filterBar').addEventListener('click', e => { const btn = e.target.closest('button[data-filter]'); if (!btn) return; document.querySelectorAll('#filterBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.filter = btn.dataset.filter; render(); });
+    document.getElementById('strategyBar').addEventListener('click', e => { const btn = e.target.closest('button[data-strategy]'); if (!btn) return; document.querySelectorAll('#strategyBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.strategyFilter = btn.dataset.strategy; render(); });
+    document.getElementById('boardModeBar').addEventListener('click', e => { const btn = e.target.closest('button[data-board-mode]'); if (!btn) return; document.querySelectorAll('#boardModeBar .filter').forEach(el => el.classList.remove('active')); btn.classList.add('active'); state.boardMode = btn.dataset.boardMode; render(); });
+    document.addEventListener('click', async e => {
+      const drawerSave = e.target.closest('#drawerSave');
+      if (drawerSave && state.selected) { await persistLeadPatch(state.selected); closeLead(); render(); }
+    });
+    async function seedLocal(){
+      if (localStorage.getItem('miles-functional-seeded')) return;
+      localStorage.setItem('miles-functional-seeded', '1');
+      BASELINE.leads.forEach(x => localStorage.setItem(`lead-${x.id}`, JSON.stringify(x)));
+      BASELINE.tenants.forEach(x => localStorage.setItem(`tenant-${x.id}`, JSON.stringify(x)));
+      BASELINE.vendors.forEach(x => localStorage.setItem(`vendor-${x.id}`, JSON.stringify(x)));
+    }
+    document.addEventListener('DOMContentLoaded', async () => { await seedLocal(); renderStrategySelect('Sober Living'); syncDefaultsFromStrategy('Sober Living'); try { await loadData(); } catch (e) { state.source = 'baseline'; $('syncState').textContent = 'Baseline mode'; render(); } });
+  </script>
+</body>
+</html>
