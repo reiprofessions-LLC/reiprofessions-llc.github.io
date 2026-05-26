@@ -170,6 +170,13 @@
     .buyer-card .chip,.buyer-card .status{background:rgba(245,240,232,.08);color:var(--bone)}
     .buyer-card .chip.gold{background:rgba(200,168,75,.18);color:var(--bone)}
     .buyer-card .btn.secondary{background:transparent;color:var(--bone);border-color:rgba(245,240,232,.16)}
+    .network-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .network-card{padding:16px;display:grid;gap:12px;background:linear-gradient(180deg,#11161e,#151b24);color:var(--bone);border:1px solid rgba(245,240,232,.08);border-radius:24px;box-shadow:0 12px 28px rgba(13,15,20,.20)}
+    .network-card .lead-meta,.network-card p,.network-card .field strong,.network-card .field span{color:inherit}
+    .network-card .field{background:rgba(245,240,232,.05);border-color:rgba(245,240,232,.08)}
+    .network-card .chip,.network-card .status{background:rgba(245,240,232,.08);color:var(--bone)}
+    .network-card .chip.gold{background:rgba(200,168,75,.18);color:var(--bone)}
+    .network-card .btn.secondary{background:transparent;color:var(--bone);border-color:rgba(245,240,232,.16)}
     .match-panel{display:grid;gap:10px}
     .match-row{padding:12px 13px;border-radius:16px;background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.08);display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
     .match-row strong{display:block;font-size:14px;margin-bottom:4px}
@@ -183,12 +190,12 @@
     @media (max-width: 1180px){
       .app{grid-template-columns:1fr}
       .sidebar{position:relative;height:auto}
-      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.hero-shell,.alert-bar,.buyer-grid,.buyer-fields{grid-template-columns:1fr 1fr}
+      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.hero-shell,.alert-bar,.buyer-grid,.buyer-fields,.network-grid{grid-template-columns:1fr 1fr}
       .drawer{width:min(500px,calc(100vw - 36px))}
     }
     @media (max-width: 760px){
       .main{padding:14px}
-      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.ledger-grid,.profile-fields,.modal-grid,.ledger-edit{grid-template-columns:1fr}
+      .lane-grid,.kpi-grid,.card-grid,.workspace,.profile-grid,.ledger-grid,.profile-fields,.modal-grid,.ledger-edit,.network-grid{grid-template-columns:1fr}
       .topbar{padding:18px}
       .section{padding:18px}
       .drawer,.modal{width:calc(100vw - 20px);right:10px;left:10px;transform:none;top:10px}
@@ -208,8 +215,9 @@
         <button class="nav-item" data-jump="#pipeline"><span class="nav-ico">↺</span><span><strong>Kanban Pipeline</strong><small>Lead to contract flow</small></span></button>
         <button class="nav-item" data-jump="#leads"><span class="nav-ico">▦</span><span><strong>Leads</strong><small>Capture and underwriting</small></span></button>
         <button class="nav-item" data-jump="#buyers"><span class="nav-ico">◎</span><span><strong>Buyers</strong><small>Matchmaking and buy boxes</small></span></button>
+        <button class="nav-item" data-jump="#network"><span class="nav-ico">◈</span><span><strong>Network</strong><small>Realtors, brokers, lenders</small></span></button>
         <button class="nav-item" data-jump="#tenants"><span class="nav-ico">⚑</span><span><strong>Property Management</strong><small>Operational side</small></span></button>
-        <button class="nav-item" data-jump="#vendors"><span class="nav-ico">◉</span><span><strong>Vendors</strong><small>Contractors and services</small></span></button>
+        <button class="nav-item" data-jump="#vendors"><span class="nav-ico">◉</span><span><strong>Vendors</strong><small>Small businesses and services</small></span></button>
       </div>
       <div class="side-foot">
         <span class="label">Backend</span>
@@ -289,7 +297,7 @@
           <div class="sub" id="leadCount">—</div>
         </div>
         <div class="stack">
-          <div class="searchbar"><span style="color:var(--mist)">⌕</span><input id="searchInput" type="text" placeholder="Search leads, buyers, vendors, properties, notes, addresses…" /></div>
+          <div class="searchbar"><span style="color:var(--mist)">⌕</span><input id="searchInput" type="text" placeholder="Search leads, buyers, network contacts, vendors, properties, notes, addresses…" /></div>
           <div class="filters" id="filterBar">
             <button class="filter active" data-filter="all">All</button>
             <button class="filter" data-filter="leads">Leads</button>
@@ -330,6 +338,14 @@
         <div class="buyer-grid" id="buyerCards"></div>
       </section>
 
+      <section class="panel section" id="network">
+        <div class="section-title">
+          <div><h3>Network</h3><p>Realtors, brokers, lenders, and referral partners pulled from the Notion network database for buyer-side matchmaking.</p></div>
+          <div class="sub" id="networkCount">—</div>
+        </div>
+        <div class="network-grid" id="networkCards"></div>
+      </section>
+
       <section class="panel section" id="tenants">
         <div class="section-title">
           <div><h3>Property Management</h3><p>Asset-level ledger editing for payments, debt, and history tied to each individual property.</p></div>
@@ -341,7 +357,7 @@
 
       <section class="panel section" id="vendors">
         <div class="section-title">
-          <div><h3>Vendors</h3><p>Contractors, cleaners, food trucks, and service partners.</p></div>
+          <div><h3>Vendors</h3><p>Small businesses and service providers like contractors and cleaners.</p></div>
           <div class="sub" id="vendorCount">—</div>
         </div>
         <div class="table-wrap">
@@ -436,9 +452,20 @@
       vendors: [
         { id:'vendor-1', name:'Ryan Urias', category:'Contractor', contact:'(210) 555-0199', status:'active', notes:'Framing and rehab scheduling' },
         { id:'vendor-2', name:'Kitchen Clean Co.', category:'Cleaner', contact:'clean@example.com', status:'active', notes:'Turn cleaning after move-out' }
+      ],
+      network: [
+        { id:'network-trudy', name:'Trudy Scott', role:'Realtor', company:"Coldwell Banker D'Ann Harper, REALTORS", market:'San Antonio, TX', status:'Pending', email:'tscott@cbharper.com', phone:'', linkedin:'https://www.linkedin.com/in/trudy-scott-6b8b3273', focus:['San Antonio'], channels:['Email'], notes:'San Antonio market coverage. Lead with an 8–12 month tenant-buyer path and ask for tenant-buyer referrals.', nextFollowUp:'2026-05-01', source:'Notion / Realtor-Broker Contacts' },
+        { id:'network-brooks', name:'Brooks Murphy', role:'Realtor', company:'(See LinkedIn)', market:'Dallas, TX', status:'Pending', email:'', phone:'', linkedin:'https://www.linkedin.com/in/brooksmurphy', focus:['Dallas','DFW'], channels:['LinkedIn'], notes:'Investor, rentals, and referrals. WARM outreach target for tenant-buyer and buy-box matching.', nextFollowUp:'2026-05-20', source:'Notion / Realtor-Broker Contacts' },
+        { id:'network-linda', name:'Linda Hall', role:'Broker', company:'Keller Williams Realty', market:'Dallas, TX', status:'Pending', email:'', phone:'', linkedin:'', focus:['Dallas'], channels:['LinkedIn'], notes:'Team lead, tech-forward, customer-focused, high-volume pipeline.', nextFollowUp:'', source:'Notion / Realtor-Broker Contacts' },
+        { id:'network-brandi', name:'Brandi Faircloth', role:'Realtor', company:'Faircloth Realty', market:'Tennessee', status:'Referral Fee Offered', email:'brandi@fairclothre.com', phone:'(281) 744-4444', linkedin:'https://www.linkedin.com/in/brandi-faircloth-realtor', focus:['Tennessee'], channels:['LinkedIn'], notes:'Lease options, creative finance, experienced. Email domain bounce noted; use LinkedIn or a new email if available.', nextFollowUp:'2026-04-27', source:'Notion / Realtor-Broker Contacts' },
+        { id:'network-kate', name:'Kate Porter Buxton', role:'Realtor', company:'Independent Realtor', market:'Dallas, TX', status:'Connection Sent D0', email:'', phone:'', linkedin:'', focus:['Dallas','DFW'], channels:['LinkedIn'], notes:'First-time homebuyer specialist; luxury + FTB niche; high-volume potential. Strong fit for tenant-buyer referral partnerships in DFW.', nextFollowUp:'2026-04-26', source:'Notion / Realtor-Broker Contacts' },
+        { id:'network-liza', name:'Liza King', role:'Realtor', company:'Real Broker, LLC', market:'San Antonio, TX', status:'Pending', email:'', phone:'', linkedin:'https://www.linkedin.com/in/lizakingteam', focus:['San Antonio'], channels:['LinkedIn'], notes:'Team lead vibe and referrals. 8–12 month tenant→buyer path.', nextFollowUp:'2026-04-15', source:'Notion / Realtor-Broker Contacts' },
+        { id:'network-christopher', name:'Christopher Rothschild', role:'Lender', company:'First City Finance Inc.', market:'Nationwide / TX', status:'WARM', email:'apply@firstcityfinanceinc.com', phone:'415-545-8950', linkedin:'https://www.firstcityfinanceinc.com', focus:['Nationwide','TX','CA'], channels:['Email'], notes:'Direct private lending source. Bridge, refinance, construction, fix & flip, multifamily, rental/residential, and alternative funding.', nextFollowUp:'2026-05-04', source:'Notion / Private Money Partners' },
+        { id:'network-spencer', name:'Spencer', role:'Lender', company:'FundWithSequel', market:'Private money', status:'Active', email:'spencer@fundwithsequel.com', phone:'', linkedin:'', focus:['Bridge','Rehab','Acquisition'], channels:['Email'], notes:'Private lender / capital partner for bridge and acquisition funding.', nextFollowUp:'', source:'User contacts / funding network' },
+        { id:'network-vanessa', name:'Vanessa', role:'Lender', company:'FundWithSequel', market:'Private money', status:'Active', email:'vanessa@fundwithsequel.com', phone:'', linkedin:'', focus:['Loan Processing','Bridge'], channels:['Email'], notes:'Loan processor / funding support on acquisitions.', nextFollowUp:'', source:'User contacts / funding network' }
       ]
     };
-    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], search:'', filter:'all', selected:null, boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'] };
+    const state = { source:'baseline', leads:[], buyers:[], ocr:[], tenants:[], vendors:[], network:[], search:'', filter:'all', selected:null, boardMode:'stage', strategyFilter:'all', strategyChoices:['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'] };
     const $ = id => document.getElementById(id);
     const escapeHtml = s => String(s ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const numFmt = v => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Number(v) || 0);
@@ -466,7 +493,8 @@
       buyers: ['buyers?select=*&order=updated_at.desc&limit=200','buyer_profiles?select=*&order=updated_at.desc&limit=200'],
       ocr: ['ocr_queue?select=*&order=updated_at.desc&limit=200','ocr_documents?select=*&order=updated_at.desc&limit=200','documents?select=*&order=updated_at.desc&limit=200'],
       tenants: ['tenant_ledger?select=*&order=updated_at.desc&limit=200','tenants?select=*&order=updated_at.desc&limit=200','tenant_management?select=*&order=updated_at.desc&limit=200'],
-      vendors: ['vendors?select=*&order=updated_at.desc&limit=200','vendor_profiles?select=*&order=updated_at.desc&limit=200']
+      vendors: ['vendors?select=*&order=updated_at.desc&limit=200','vendor_profiles?select=*&order=updated_at.desc&limit=200'],
+      network: ['network_contacts?select=*&order=updated_at.desc&limit=200','realtor_broker_contacts?select=*&order=updated_at.desc&limit=200','referral_partners?select=*&order=updated_at.desc&limit=200']
     };
     const chooseTable = paths => paths[0].split('?')[0];
     const STRATEGIES = ['Sober Living','Midterm Rental','SubTo','Lease Option','Owner Finance','Wholesale','Cash','Creative','Other'];
@@ -505,6 +533,10 @@
     function normalizeOcr(item){ return { id: item.id || crypto.randomUUID(), title: item.file_name || item.document_name || item.title || item.name || 'DealSnap item', status: item.status || item.ocr_status || 'queued', confidence: Number(item.confidence || item.ocr_confidence || 0) || 0, source: item.source || item.bucket || 'DealSnap queue', note: item.notes || item.preview_text || item.ocr_text || 'Waiting for extraction', raw:item }; }
     function normalizeTenant(item){ const history = Array.isArray(item.paymentHistory) ? item.paymentHistory : (Array.isArray(item.payment_history) ? item.payment_history : []); const activity = Array.isArray(item.activityLog) ? item.activityLog : (Array.isArray(item.activity_log) ? item.activity_log : []); return { id:item.id||crypto.randomUUID(), name:item.name||item.tenant_name||item.property_name||'Tenant', property:item.property||item.property_name||item.address||'—', lease:item.lease||item.lease_status||'active', strategy:item.strategy||item.deal_strategy||item.exit_strategy||'Midterm Rental', monthlyRent:Number(item.monthlyRent||item.monthly_rent||item.rent||0)||0, pastDebt:Number(item.pastDebt||item.past_debt||0)||0, balanceOwed:Number(item.balanceOwed||item.balance_owed||item.amount_due||0)||0, paymentHistory:history.length ? history : ['No payments logged'], activityLog:activity.length ? activity : ['No activity logged'], notes:item.notes || item.description || '', raw:item }; }
     function normalizeVendor(item){ return { id:item.id||crypto.randomUUID(), name:item.vendor_name||item.name||item.company_name||'Vendor', category:item.category||item.vendor_type||item.type||'Service', contact:item.phone||item.email||item.contact||'—', status:item.status||(item.active===false?'inactive':'active'), notes:item.notes||item.scheduling||item.schedule||'—', raw:item }; }
+    function normalizeNetwork(item){
+      const focus = Array.isArray(item.focus) ? item.focus : splitList(item.focus || item.marketFocus || item['Market Focus'] || '');
+      const channels = Array.isArray(item.channels) ? item.channels : splitList(item.channels || item['Outreach Channel'] || '');
+      return { id:item.id||crypto.randomUUID(), name:item.name||item.contact_name||item.primary_contact_name||'Network Contact', role:item.role||item.category||item.contact_type||'Partner', company:item.company||item.company_brokerage||item['Company/Brokerage']||item.organization||'—', market:item.market||item.location||item['Location (City/State)']||'—', status:item.status||item.contact_status||item['Contact Status']||'Pending', email:item.email||item['Email']||'', phone:item.phone||item['Phone']||item['Phone Number']||'', linkedin:item.linkedin||item['LinkedIn Profile']||'', focus, channels, notes:item.notes||item['Notes']||'', nextFollowUp:item.nextFollowUp||item.next_follow_up||item['date:Next Follow-Up:start']||'', source:item.source||'Network', raw:item }; }
     function splitList(v){ return String(v ?? '').split(/\n|,|\|/).map(s => s.trim()).filter(Boolean); }
     function leadZipText(lead){ return [lead.market, lead.property, lead.notes, lead.history].filter(Boolean).join(' ').match(/\b\d{5}\b/g) || []; }
     function strategyAssetFor(lead){
@@ -560,15 +592,16 @@
 
     function normalizeBuyer(item){ const lead = normalizeLead({...item, type:'buyer'}); const zipCodes = splitList(item.zipCodes || item.zip_codes || item.service_zips || item.zips || ''); const preferredStrategies = splitList(item.preferredStrategies || item.preferred_strategies || item.strategy_preferences || item.strategies || item.strategy || ''); const assetTypes = splitList(item.assetTypes || item.asset_types || item.asset_type || item.assetClass || item.asset_class || ''); return { ...lead, zipCodes, minPrice:Number(item.minPrice || item.min_price || item.priceMin || 0) || 0, maxPrice:Number(item.maxPrice || item.max_price || item.priceMax || 0) || 0, preferredStrategies: preferredStrategies.length ? preferredStrategies : ['Buyer Pool'], assetTypes, buyerNotes:item.buyerNotes || item.buy_box_notes || item.buyBoxNotes || item.notes || '' }; }
     async function loadData(){
-      const [leads,buyers,ocr,tenants,vendors] = await Promise.all([
-        fetchFirst(tableCandidates.leads), fetchFirst(tableCandidates.buyers), fetchFirst(tableCandidates.ocr), fetchFirst(tableCandidates.tenants), fetchFirst(tableCandidates.vendors)
+      const [leads,buyers,ocr,tenants,vendors,network] = await Promise.all([
+        fetchFirst(tableCandidates.leads), fetchFirst(tableCandidates.buyers), fetchFirst(tableCandidates.ocr), fetchFirst(tableCandidates.tenants), fetchFirst(tableCandidates.vendors), fetchFirst(tableCandidates.network)
       ]);
       state.leads = leads.length ? leads.map(normalizeLead) : BASELINE.leads.map(normalizeLead);
       state.buyers = buyers.length ? buyers.map(normalizeBuyer) : BASELINE.buyers.map(normalizeBuyer);
       state.ocr = ocr.length ? ocr.map(normalizeOcr) : BASELINE.ocr.map(normalizeOcr);
       state.tenants = tenants.length ? tenants.map(normalizeTenant) : BASELINE.tenants.map(normalizeTenant);
       state.vendors = vendors.length ? vendors.map(normalizeVendor) : BASELINE.vendors.map(normalizeVendor);
-      state.source = (leads.length || buyers.length || ocr.length || tenants.length || vendors.length) ? 'live' : 'baseline';
+      state.network = network.length ? network.map(normalizeNetwork) : BASELINE.network.map(normalizeNetwork);
+      state.source = (leads.length || buyers.length || ocr.length || tenants.length || vendors.length || network.length) ? 'live' : 'baseline';
       $('syncState').textContent = state.source === 'live' ? 'Connected' : 'Baseline mode';
       $('dataAge').textContent = state.source === 'live' ? `Live data loaded • ${new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}` : 'Using PDF mockup baseline';
       render();
@@ -577,6 +610,7 @@
     function filteredRecords(){ const q = state.search.trim().toLowerCase(); return allRecords().filter(item => { const text = JSON.stringify(item).toLowerCase(); if (q && !text.includes(q)) return false; if (state.filter === 'all') return true; return state.filter === item.type || (state.filter === 'leads' && item.type === 'lead') || (state.filter === 'buyers' && item.type === 'buyer') || (state.filter === 'tenants' && item.type === 'tenant') || (state.filter === 'vendors' && item.type === 'vendor'); }); }
     function filteredTenants(){ const q = state.search.trim().toLowerCase(); return state.tenants.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
     function filteredVendors(){ const q = state.search.trim().toLowerCase(); return state.vendors.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
+    function filteredNetwork(){ const q = state.search.trim().toLowerCase(); return state.network.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
     function ocrMatches(){ const q = state.search.trim().toLowerCase(); return state.ocr.filter(item => !q || JSON.stringify(item).toLowerCase().includes(q)); }
     function stageFor(item){ const s = String(item.status||'').toLowerCase(); if (['new','queued','intake'].includes(s)) return 'New'; if (['review','triaged','qualified','candidate'].includes(s)) return 'Review'; if (['contacted','follow_up','followup','outreach'].includes(s)) return 'Outreach'; if (['negotiation','underwriting','in_progress','active'].includes(s)) return 'Negotiation'; if (['closed','approved','contract','matched'].includes(s)) return 'Close'; return 'Review'; }
     function stageToStatus(stage){ return { 'New':'new', 'Review':'qualified', 'Outreach':'contacted', 'Negotiation':'negotiation', 'Close':'contract' }[stage] || 'new'; }
@@ -653,15 +687,21 @@
         return `<article class="lead-profile"><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property)}</div></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="profile-fields"><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Midterm Rental')}</strong></div><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${escapeHtml(item.paymentHistory.join(' • '))}</strong></div><div class="field"><span>Activity Log</span><strong>${escapeHtml((item.activityLog || []).join(' • '))}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">Matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="ledger-actions"><button class="btn primary" data-open-property="${escapeHtml(item.id)}">Open Property Profile</button><button class="btn secondary" data-find-matches="${escapeHtml(item.id)}">Run Matchmaking</button></div></article>`;
       }).join('');
     }
+    function renderNetwork(){
+      const items = filteredNetwork();
+      $('networkCount').textContent = `${items.length} partners`;
+      $('networkCards').innerHTML = items.map(item => `<article class="network-card"><div class="card-head"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.company)}</p></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.role)}</span></div><div class="chips"><span class="chip gold">${escapeHtml(item.status)}</span><span class="chip">${escapeHtml(item.market)}</span><button class="btn secondary" data-open-network="${escapeHtml(item.id)}">Open Profile</button></div><div class="profile-fields"><div class="field"><span>Focus Markets</span><strong>${escapeHtml((item.focus || []).join(', ') || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.email || item.phone || '—')}</strong></div><div class="field"><span>Channel</span><strong>${escapeHtml((item.channels || []).join(', ') || '—')}</strong></div><div class="field"><span>Next Follow-Up</span><strong>${escapeHtml(item.nextFollowUp || '—')}</strong></div></div><p>${escapeHtml(item.notes || '—')}</p></article>`).join('');
+    }
     function renderVendors(){
       const items = filteredVendors();
       $('vendorCount').textContent = `${items.length} records shown`;
       $('vendorsTable').innerHTML = items.map(item => `<tr><td><strong>${escapeHtml(item.name)}</strong></td><td class="lead-meta">${escapeHtml(item.category)}</td><td class="lead-meta">${escapeHtml(item.contact)}</td><td><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></td><td class="lead-meta">${escapeHtml(item.notes)}</td></tr>`).join('');
     }
-    function render(){ renderKpis(); renderMatchAlerts(); renderOcr(); renderPipeline(); renderLeads(); renderBuyers(); renderTenants(); renderVendors(); }
+    function render(){ renderKpis(); renderMatchAlerts(); renderOcr(); renderPipeline(); renderLeads(); renderBuyers(); renderNetwork(); renderTenants(); renderVendors(); }
     function openLead(item){ state.selected = item; const matches = item.type === 'buyer' ? leadMatchesForBuyer(item) : buyerMatchesForLead(item); const matchTitle = item.type === 'buyer' ? 'Potential Leads found' : 'Potential Buyers found'; const matchCopy = item.type === 'buyer' ? 'Lead prospects ready for outreach.' : 'Buyer prospects ready for outreach.'; const emptyCopy = item.type === 'buyer' ? 'No lead matches yet. Broaden the buyer box or open more deals.' : 'No buyer matches yet. Run underwriting or broaden the buyer box.'; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || item.market || 'CRM record')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</span></div><div class="profile-fields"><div class="field"><span>Property Info</span><strong>${escapeHtml(item.property || '—')}</strong></div><div class="field"><span>Owner Details</span><strong>${escapeHtml(item.owner || '—')}</strong></div><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Other')}</strong></div><div class="field"><span>Rent</span><strong>${usdFmt(item.rent)}</strong></div><div class="field"><span>Fees</span><strong>${usdFmt(item.fees)}</strong></div><div class="field"><span>Debt</span><strong>${usdFmt(item.debt)}</strong></div><div class="field"><span>Contact History</span><strong>${escapeHtml(item.history || '—')}</strong></div><div class="field"><span>Contact</span><strong>${escapeHtml(item.contact || '—')}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">${matchTitle}</h3><p style="margin:6px 0 0">${matches.length ? `${matches.length} match${matches.length === 1 ? '' : 'es'} ready for outreach. ${matchCopy}` : emptyCopy}</p></div><div class="sub">Match priority</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(item.type === 'buyer' ? m.lead.name : m.buyer.name)}</strong><span>${escapeHtml(item.type === 'buyer' ? (m.lead.strategy || 'Any strategy') : (m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml(item.type === 'buyer' ? (m.lead.market || 'Any market') : (m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Capture the deal, underwrite it, then try broader matching filters.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="inline-edit"><label><span>Name</span><input id="d_name" value="${escapeHtml(item.name)}"></label><label><span>Status</span><input id="d_status" value="${escapeHtml(item.status)}"></label><label><span>Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.rent||0)}"></label><label><span>Fees</span><input id="d_fees" inputmode="numeric" value="${Number(item.fees||0)}"></label><label><span>Debt</span><input id="d_debt" inputmode="numeric" value="${Number(item.debt||0)}"></label><label class="full"><span>Notes</span><textarea id="d_notes" rows="4">${escapeHtml(item.notes || item.history || '')}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
     function closeLead(){ show($('drawer'), false); state.selected = null; }
     function openProperty(item){ state.selected = item; const matches = propertyMatchesForTenant(item); $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.property || 'Property profile')}</div></div><span class="status ${statusClass(item.lease)}">${escapeHtml(item.lease)}</span></div><div class="profile-fields"><div class="field"><span>Strategy</span><strong>${escapeHtml(item.strategy || 'Midterm Rental')}</strong></div><div class="field"><span>Monthly Rent</span><strong>${usdFmt(item.monthlyRent)}</strong></div><div class="field"><span>Past Debt</span><strong>${usdFmt(item.pastDebt)}</strong></div><div class="field"><span>Balance Owed</span><strong>${usdFmt(item.balanceOwed)}</strong></div><div class="field"><span>Payment History</span><strong>${escapeHtml(item.paymentHistory.join(' • '))}</strong></div><div class="field"><span>Activity Log</span><strong>${escapeHtml((item.activityLog || []).join(' • '))}</strong></div></div><div class="match-panel"><div class="section-title" style="margin:0"><div><h3 style="font-size:16px;margin:0">Matchmaking</h3><p style="margin:6px 0 0">Potential buyers from the Buyers table for this property profile.</p></div><div class="sub">${matches.length} found</div></div>${matches.map(m => `<div class="match-row"><div><strong>${escapeHtml(m.buyer.name)}</strong><span>${escapeHtml((m.buyer.preferredStrategies || []).join(', ') || 'Any strategy')} • ${escapeHtml((m.buyer.zipCodes || []).join(', ') || 'Any zip')}</span></div><div class="match-score">${numFmt(m.score)} pts</div></div>`).join('') || '<div class="match-row"><div><strong>No current matches</strong><span>Update the property data set or broaden the buy box.</span></div><div class="match-score">0 pts</div></div>'}</div><div class="inline-edit"><label><span>Strategy</span><input id="d_strategy" value="${escapeHtml(item.strategy || 'Midterm Rental')}"></label><label><span>Monthly Rent</span><input id="d_rent" inputmode="numeric" value="${Number(item.monthlyRent||0)}"></label><label><span>Past Debt</span><input id="d_pastDebt" inputmode="numeric" value="${Number(item.pastDebt||0)}"></label><label><span>Balance Owed</span><input id="d_balanceOwed" inputmode="numeric" value="${Number(item.balanceOwed||0)}"></label><label class="full"><span>Payment History</span><textarea id="d_history" rows="4">${escapeHtml(item.paymentHistory.join(' | '))}</textarea></label><label class="full"><span>Activity Log</span><textarea id="d_activity" rows="4">${escapeHtml((item.activityLog || []).join(' | '))}</textarea></label></div><div class="ledger-actions"><button class="btn primary" id="drawerSave">Save Changes</button><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
+    function openNetwork(item){ state.selected = item; $('drawer').innerHTML = `<article class="lead-profile" style="position:relative"><button class="drawer-close" id="drawerClose">×</button><div class="profile-top"><div><h4>${escapeHtml(item.name)}</h4><div class="lead-meta">${escapeHtml(item.company || item.market || 'Network contact')}</div></div><span class="status ${statusClass(item.status)}">${escapeHtml(item.role)}</span></div><div class="profile-fields"><div class="field"><span>Company / Brokerage</span><strong>${escapeHtml(item.company || '—')}</strong></div><div class="field"><span>Market / Location</span><strong>${escapeHtml(item.market || '—')}</strong></div><div class="field"><span>Status</span><strong>${escapeHtml(item.status || '—')}</strong></div><div class="field"><span>Email</span><strong>${escapeHtml(item.email || '—')}</strong></div><div class="field"><span>Phone</span><strong>${escapeHtml(item.phone || '—')}</strong></div><div class="field"><span>LinkedIn / Profile</span><strong>${escapeHtml(item.linkedin || '—')}</strong></div><div class="field"><span>Focus</span><strong>${escapeHtml((item.focus || []).join(' • ') || '—')}</strong></div><div class="field"><span>Follow-up</span><strong>${escapeHtml(item.nextFollowUp || '—')}</strong></div></div><label class="field"><span>Notes</span><textarea rows="5" readonly>${escapeHtml(item.notes || '')}</textarea></label><div class="ledger-actions"><button class="btn secondary" id="drawerClose2">Close</button></div></article>`; show($('drawer'), true); }
     async function persistLeadPatch(item){
       const table = chooseTable(tableCandidates.leads);
       const payload = { name:item.name, deal_name:item.name, lead_name:item.name, status:item.status, deal_status:item.status, strategy:item.strategy, rent:item.rent, fees:item.fees, debt:item.debt, notes:item.notes, contact_history:item.history, property:item.property, owner:item.owner, market:item.market, updated_at:new Date().toISOString() };
@@ -731,6 +771,7 @@
       const nav = e.target.closest('[data-jump]'); if (nav) document.querySelector(nav.dataset.jump)?.scrollIntoView({behavior:'smooth', block:'start'});
       const leadBtn = e.target.closest('[data-open-lead]'); if (leadBtn) return openLead(allRecords().find(x => x.id === leadBtn.dataset.openLead));
       const propBtn = e.target.closest('[data-open-property]'); if (propBtn) return openProperty(state.tenants.find(x => x.id === propBtn.dataset.openProperty));
+      const networkBtn = e.target.closest('[data-open-network]'); if (networkBtn) return openNetwork(state.network.find(x => x.id === networkBtn.dataset.openNetwork));
       const row = e.target.closest('[data-lead]'); if (row) return openLead(allRecords().find(x => x.id === row.dataset.lead));
       const ocr = e.target.closest('[data-ocr-convert]'); if (ocr) return handleOcrConvert(ocr.dataset.ocrConvert);
       const reviewed = e.target.closest('[data-ocr-mark]'); if (reviewed){ const item = state.ocr.find(x => x.id === reviewed.dataset.ocrMark); if (item) item.status='reviewed'; renderOcr(); }
@@ -811,6 +852,7 @@
       BASELINE.leads.forEach(x => localStorage.setItem(`lead-${x.id}`, JSON.stringify(x)));
       BASELINE.tenants.forEach(x => localStorage.setItem(`tenant-${x.id}`, JSON.stringify(x)));
       BASELINE.vendors.forEach(x => localStorage.setItem(`vendor-${x.id}`, JSON.stringify(x)));
+      BASELINE.network.forEach(x => localStorage.setItem(`network-${x.id}`, JSON.stringify(x)));
     }
     document.addEventListener('DOMContentLoaded', async () => { await seedLocal(); renderStrategySelect('Sober Living'); syncDefaultsFromStrategy('Sober Living'); try { await loadData(); } catch (e) { state.source = 'baseline'; $('syncState').textContent = 'Baseline mode'; render(); } });
   </script>
