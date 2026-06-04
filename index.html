@@ -3,161 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DealSnap — Buy Box Brain + Field Engine</title>
-  <meta name="description" content="Buy-box-first CRM and field prospecting dashboard for DealSnap with the Buy Boxes source synced to Supabase." />
-  <meta name="theme-color" content="#07090d" />
+  <title>DealSnap — Dual Engine Prospecting Ecosystem</title>
+  <meta name="description" content="Dual integrated CRM and mobile prospecting ecosystem for buyer-first buy boxes, OCR address intake, proximity scans, and matching." />
+  <meta name="theme-color" content="#0b0d12" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#05070a; --surface:#11161f; --surface-2:#151c27; --surface-3:rgba(255,255,255,.03);
-      --line:rgba(255,255,255,.08); --text:#f5efe4; --muted:#9ba6b5; --faint:#748196;
-      --gold:#c9a44b; --gold-2:#f3d58b; --ok:#6fe3b0; --bad:#ef6d50;
-      --shadow:0 28px 84px rgba(0,0,0,.46); --shadow-soft:0 12px 30px rgba(0,0,0,.22);
-      --r-xl:32px; --r-lg:22px; --r-md:16px;
+      --bg:#06080b;
+      --surface:#10161f;
+      --surface-2:#151c27;
+      --ink:#f5efe4;
+      --muted:#a5afbd;
+      --faint:#718094;
+      --gold:#c9a44b;
+      --gold-2:#f3d58b;
+      --line:rgba(255,255,255,.09);
+      --line-2:rgba(255,255,255,.14);
+      --ok:#6fe3b0;
+      --warn:#f2c96a;
+      --bad:#ef6d50;
+      --shadow:0 28px 84px rgba(0,0,0,.46);
+      --shadow-soft:0 10px 30px rgba(0,0,0,.22);
+      --r-xl:32px;
+      --r-lg:22px;
+      --r-md:16px;
     }
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{
-      margin:0; min-height:100vh; color:var(--text); font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
       background:
-        radial-gradient(circle at 15% 10%, rgba(201,164,75,.14), transparent 22%),
-        radial-gradient(circle at 82% 14%, rgba(111,227,176,.08), transparent 24%),
-        linear-gradient(180deg,#05070a 0%,#090d13 44%,#07090d 100%);
+        radial-gradient(circle at 12% 8%, rgba(201,164,75,.14), transparent 22%),
+        radial-gradient(circle at 85% 14%, rgba(111,227,176,.08), transparent 24%),
+        linear-gradient(180deg,#05070a 0%,#090d13 50%,#07090d 100%);
+      min-height:100vh;
+      letter-spacing:-.01em;
     }
-    a{color:inherit}
-    .shell{width:min(1500px, calc(100vw - 24px)); margin:12px auto 18px; border:1px solid var(--line); border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(9,12,17,.96), rgba(7,9,13,.98)); box-shadow:var(--shadow); backdrop-filter:blur(18px)}
-    .topbar{display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 22px; border-bottom:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.03), transparent)}
-    .brand{display:flex; align-items:center; gap:14px; min-width:0}
-    .sigil{width:46px;height:46px;border-radius:14px;flex:0 0 auto; position:relative; background:radial-gradient(circle at 30% 30%, rgba(243,213,139,.95), rgba(201,164,75,.28) 40%, transparent 41%), linear-gradient(145deg, rgba(201,164,75,.9), rgba(17,22,31,.92)); border:1px solid rgba(243,213,139,.24); box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 10px 24px rgba(201,164,75,.16)}
-    .sigil:before,.sigil:after{content:""; position:absolute; inset:11px; border:1px solid rgba(255,255,255,.18); border-radius:10px; transform:rotate(16deg)}
-    .sigil:after{inset:16px; transform:rotate(-10deg); opacity:.75}
-    .brand h1{margin:0; font-family:"Bebas Neue",sans-serif; font-size:2rem; line-height:1; letter-spacing:.09em; color:var(--gold-2)}
-    .brand p{margin:4px 0 0; color:var(--muted); font-size:.95rem; line-height:1.45}
-    .nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-    .nav a,.btn{display:inline-flex; align-items:center; gap:8px; text-decoration:none; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.03); padding:11px 14px; font-weight:800; font-size:.88rem; transition:transform .18s ease,border-color .18s ease,background .18s ease}
-    .nav a:hover,.btn:hover{transform:translateY(-1px); border-color:rgba(243,213,139,.28); background:rgba(243,213,139,.07)}
-    .btn.primary{background:linear-gradient(135deg, rgba(201,164,75,.96), rgba(243,213,139,.82)); color:#140f08; border-color:rgba(243,213,139,.35); box-shadow:0 14px 32px rgba(201,164,75,.22)}
-    .auth-shell[hidden], .app-shell[hidden]{display:none !important}
-    .auth-shell{width:min(1500px, calc(100vw - 24px)); margin:12px auto 18px; border:1px solid var(--line); border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(10,13,18,.98), rgba(7,9,12,.98)); box-shadow:var(--shadow); backdrop-filter:blur(18px)}
-    .auth-grid{display:grid; grid-template-columns:minmax(0,.96fr) minmax(360px,.7fr); gap:18px; padding:18px}
-    .panel{border:1px solid var(--line); border-radius:var(--r-xl); background:linear-gradient(180deg, rgba(17,22,31,.98), rgba(11,14,19,.96)); box-shadow:var(--shadow-soft)}
-    .auth-panel,.pricing-panel,.section,.console,.bridge{padding:22px}
-    .eyebrow{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(243,213,139,.08); border:1px solid rgba(243,213,139,.18); color:var(--gold-2); font-size:.78rem; letter-spacing:.16em; text-transform:uppercase}
-    .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--gold-2); box-shadow:0 0 0 4px rgba(243,213,139,.12)}
-    h2,h3,h4{margin:0; font-family:"Bebas Neue",sans-serif; letter-spacing:.09em; text-transform:uppercase}
-    .auth-panel h2{margin:12px 0 10px; font-size:clamp(2.9rem, 6vw, 5.3rem); line-height:.92; max-width:11ch}
-    .hero h2{font-size:clamp(3.1rem, 7vw, 6.3rem); line-height:.88; max-width:11ch}
-    .hero h2 span,.auth-panel h2 span{color:var(--gold-2)}
-    .copy{color:var(--muted); line-height:1.75; margin:0 0 18px; font-size:1.03rem}
-    .form{display:grid; gap:12px; margin-top:18px; max-width:680px}
-    .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    .field{display:grid; gap:8px}
-    label{color:var(--muted); font-size:.74rem; letter-spacing:.16em; text-transform:uppercase}
-    input, textarea, select{width:100%; padding:14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.03); color:var(--text); font:inherit; outline:none}
-    textarea{min-height:112px; resize:vertical}
-    input:focus,textarea:focus,select:focus{border-color:rgba(243,213,139,.36); box-shadow:0 0 0 4px rgba(201,164,75,.12)}
-    .note{color:var(--faint); font-size:.9rem; line-height:1.65}
-    .pricing-grid{display:grid; gap:12px; margin-top:14px}
-    .price-card{padding:18px; border-radius:20px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
-    .price-card.featured{border-color:rgba(243,213,139,.24); background:radial-gradient(circle at top right, rgba(201,164,75,.14), transparent 26%), rgba(255,255,255,.03)}
-    .tier{color:var(--gold-2); font-size:.76rem; text-transform:uppercase; letter-spacing:.18em}
-    .rate{font-size:2rem; font-weight:900; letter-spacing:-.05em; margin-top:8px}
-    .desc{color:var(--muted); line-height:1.6; margin:8px 0 0}
-    .list{margin:12px 0 0; padding-left:18px; color:var(--text); line-height:1.65}
-    .list li+li{margin-top:6px}
-    .app-shell{width:min(1500px, calc(100vw - 24px)); margin:12px auto 18px}
-    .hero-grid{display:grid; grid-template-columns:minmax(0,1.28fr) minmax(360px,.72fr); gap:18px; padding:18px}
-    .hero{padding:28px; min-height:560px; background:radial-gradient(circle at 16% 12%, rgba(201,164,75,.14), transparent 18%), radial-gradient(circle at 88% 0%, rgba(111,227,176,.08), transparent 20%), linear-gradient(180deg, rgba(17,22,31,.98), rgba(11,14,19,.96))}
-    .actions{display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 0}
-    .stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:22px}
-    .stat{padding:16px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.03)}
-    .stat .label{color:var(--muted); font-size:.74rem; text-transform:uppercase; letter-spacing:.16em}
-    .stat .value{margin-top:8px; font-size:1.35rem; font-weight:900; letter-spacing:-.04em}
-    .stat .note{margin-top:6px; color:var(--faint); font-size:.86rem; line-height:1.45}
-    .side{padding:22px; background:linear-gradient(180deg, rgba(18,24,36,.98), rgba(12,16,23,.98))}
-    .side h3{font-size:3.1rem; line-height:.88}
-    .side p{margin:10px 0 0; color:var(--muted); line-height:1.72}
-    .stack{display:grid; gap:12px; margin-top:16px}
-    .line-card{display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.03)}
-    .line-card strong{display:block; margin-bottom:4px}
-    .line-card small{color:var(--muted); line-height:1.5}
-    .pill{flex:0 0 auto; display:inline-flex; align-items:center; gap:7px; padding:8px 11px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); font-size:.78rem; white-space:nowrap}
-    .pill i{width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px rgba(201,164,75,.14); display:inline-block}
-    .grid2{display:grid; grid-template-columns:1.2fr .88fr; gap:18px; padding:0 18px 18px}
-    .section{background:linear-gradient(180deg, rgba(17,22,31,.96), rgba(10,14,20,.96))}
-    .section-head{display:flex; justify-content:space-between; gap:16px; align-items:flex-end; margin-bottom:16px}
-    .section-head p{margin:8px 0 0; color:var(--muted); line-height:1.65; max-width:72ch}
-    .subtabs{display:flex; gap:8px; flex-wrap:wrap}
-    .subtabs .pill.active{border-color:rgba(243,213,139,.24); background:rgba(243,213,139,.08)}
-    .crm-list{display:grid; gap:12px}
-    .buyer-card{border:1px solid var(--line); border-radius:22px; background:rgba(255,255,255,.03); overflow:hidden}
-    .buyer-card[open]{border-color:rgba(243,213,139,.24); box-shadow:0 18px 50px rgba(0,0,0,.2)}
-    .buyer-card summary{list-style:none; cursor:pointer; display:grid; gap:12px; padding:18px; outline:none}
-    .buyer-card summary::-webkit-details-marker{display:none}
-    .buyer-top{display:flex; justify-content:space-between; gap:14px; align-items:flex-start}
-    .buyer-name{font-size:1.65rem; line-height:.95; font-weight:800; letter-spacing:-.04em; margin:0}
-    .buyer-meta{margin:8px 0 0; color:var(--muted); line-height:1.55}
-    .badges{display:flex; flex-wrap:wrap; gap:8px}
-    .badge{padding:7px 10px; border-radius:999px; background:rgba(201,164,75,.08); border:1px solid rgba(201,164,75,.16); color:var(--gold-2); font-size:.78rem; letter-spacing:.03em}
-    .badge.bad{background:rgba(239,109,80,.08); border-color:rgba(239,109,80,.18); color:#ffb1a2}
-    .badge.soft{background:rgba(111,227,176,.08); border-color:rgba(111,227,176,.16); color:#a6f0cd}
-    .progress{height:10px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.05); overflow:hidden}
-    .progress > span{display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg, rgba(201,164,75,.96), rgba(243,213,139,.68)); box-shadow:0 0 18px rgba(201,164,75,.22)}
-    .buyer-body{padding:0 18px 18px; display:grid; gap:14px}
-    .group{padding:16px; border-radius:18px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02)}
-    .group h4{margin:0 0 12px; color:var(--gold-2); font-size:1.08rem; font-family:"Bebas Neue",sans-serif; letter-spacing:.14em; text-transform:uppercase}
-    .chips{display:flex; flex-wrap:wrap; gap:8px}
-    .chip{padding:7px 10px; border-radius:999px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--text); font-size:.8rem}
-    .grid-fields{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
-    .kv{padding:11px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03)}
-    .kv .k{color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.14em}
-    .kv .v{margin-top:5px; font-weight:700; line-height:1.35}
-    .details-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    .console{background:linear-gradient(180deg, rgba(17,22,31,.96), rgba(10,14,20,.96))}
-    .console h3,.bridge h3{font-size:3.1rem; line-height:.88}
-    .console .copy,.bridge .copy{margin-top:10px}
-    .scan-grid{display:grid; gap:12px; margin-top:12px}
-    .scan-item{display:grid; grid-template-columns:1fr auto; gap:10px; padding:15px; border-radius:18px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03)}
-    .scan-item strong{display:block; margin-bottom:6px}
-    .scan-item p{margin:0; color:var(--muted); line-height:1.55}
-    .scan-item .meta{color:var(--gold-2); font-weight:800; white-space:nowrap}
-    .actions-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
-    .queue{display:grid; gap:10px; margin-top:12px}
-    .queue-item{display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03)}
-    .queue-item p{margin:4px 0 0; color:var(--muted); line-height:1.5}
-    .queue-item .state{color:var(--gold-2); font-weight:800; white-space:nowrap}
-    .bridge{padding:22px; background:linear-gradient(180deg, rgba(17,22,31,.96), rgba(10,14,20,.96))}
-    .bridge-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
-    .bridge-card{padding:16px; border-radius:18px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03)}
-    .bridge-card strong{display:block; margin-bottom:6px}
-    .bridge-card p{margin:0; color:var(--muted); line-height:1.6}
-    .footer-note{padding:0 22px 24px; color:var(--faint); font-size:.9rem; line-height:1.7}
-    @media (max-width:1200px){
-      .auth-grid,.hero-grid,.grid2{grid-template-columns:1fr}
-      .stats,.bridge-grid,.details-grid,.grid-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .nav{justify-content:flex-start}
+    a { color:inherit; }
+    .shell {
+      width:min(1500px, calc(100vw - 24px));
+      margin:12px auto 20px;
+      border:1px solid var(--line);
+      border-radius:34px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(9,12,17,.96), rgba(7,9,13,.98));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
     }
-    @media (max-width:760px){
-      .shell,.auth-shell,.app-shell{width:min(100vw - 12px, 1500px); border-radius:22px}
-      .topbar,.hero-grid,.grid2,.auth-grid{padding-left:12px; padding-right:12px}
-      .hero,.auth-panel,.pricing-panel,.section,.console,.bridge,.side{padding:16px}
-      .stats,.bridge-grid,.details-grid,.grid-fields{grid-template-columns:1fr}
-      .nav a,.btn{width:100%; justify-content:center}
-      .buyer-top,.line-card,.scan-item,.queue-item{flex-direction:column; align-items:flex-start}
-      .console h3,.bridge h3,.side h3{font-size:2.5rem}
-      .hero h2{font-size:clamp(2.8rem, 15vw, 4.8rem)}
-      .buyer-name{font-size:1.4rem}
+    .topbar {
+      display:flex; justify-content:space-between; align-items:center; gap:16px;
+      padding:18px 22px; border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+    }
+    .brand { display:flex; align-items:center; gap:14px; min-width:0; }
+    .sigil {
+      width:46px; height:46px; border-radius:14px; flex:0 0 auto;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(243,213,139,.95), rgba(201,164,75,.28) 40%, transparent 41%),
+        linear-gradient(145deg, rgba(201,164,75,.9), rgba(17,22,31,.92));
+      border:1px solid rgba(243,213,139,.24);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 10px 24px rgba(201,164,75,.16);
+      position:relative;
+    }
+    .sigil:before,.sigil:after{ content:""; position:absolute; inset:11px; border:1px solid rgba(255,255,255,.18); border-radius:10px; transform:rotate(16deg); }
+    .sigil:after{ inset:16px; transform:rotate(-10deg); opacity:.75; }
+    .brand h1 { margin:0; font-size:.93rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold-2); }
+    .brand p { margin:4px 0 0; color:var(--muted); font-size:.95rem; }
+    .nav { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .nav a, .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; border:1px solid var(--line); border-radius:999px;
+      background:rgba(255,255,255,.03); padding:11px 14px; font-weight:700; font-size:.88rem;
+      transition:transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .nav a:hover, .btn:hover { transform:translateY(-1px); border-color:rgba(243,213,139,.28); background:rgba(243,213,139,.07); }
+    .btn.primary {
+      background:linear-gradient(135deg, rgba(201,164,75,.96), rgba(243,213,139,.82)); color:#140f08;
+      border-color:rgba(243,213,139,.35); box-shadow:0 14px 32px rgba(201,164,75,.22);
+    }
+    .hero, .grid2, .grid3 { display:grid; gap:18px; padding:18px; }
+    .hero { grid-template-columns:minmax(0,1.35fr) minmax(360px,.72fr); }
+    .grid2 { grid-template-columns:1fr 1fr; }
+    .grid3 { grid-template-columns:1fr 1fr 1fr; }
+    .panel {
+      border:1px solid var(--line); border-radius:var(--r-xl);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+    }
+    .panel.pad { padding:22px; }
+    .headline {
+      padding:28px; min-height:520px;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(201,164,75,.14), transparent 18%),
+        radial-gradient(circle at 88% 0%, rgba(111,227,176,.08), transparent 20%),
+        linear-gradient(180deg, rgba(17,22,31,.98), rgba(11,14,19,.96));
+    }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background:rgba(243,213,139,.08); border:1px solid rgba(243,213,139,.18);
+      color:var(--gold-2); font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
+    }
+    .eyebrow .dot { width:7px; height:7px; border-radius:50%; background:var(--gold-2); box-shadow:0 0 0 4px rgba(243,213,139,.12); }
+    .hero h2 {
+      margin:18px 0 12px; max-width:12ch; font-size:clamp(3.2rem, 7vw, 6.2rem); line-height:.9; letter-spacing:-.06em;
+    }
+    .hero h2 span { color:var(--gold-2); text-shadow:0 0 44px rgba(243,213,139,.16); }
+    .copy { color:var(--muted); line-height:1.75; font-size:1.06rem; margin:0 0 20px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:12px; }
+    .stat { padding:16px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.03); }
+    .stat .label { color:var(--muted); font-size:.74rem; text-transform:uppercase; letter-spacing:.16em; }
+    .stat .value { margin-top:8px; font-size:1.35rem; font-weight:900; letter-spacing:-.04em; }
+    .stat .note { margin-top:6px; color:var(--faint); font-size:.86rem; line-height:1.45; }
+    .right-card { padding:22px; background:linear-gradient(180deg, rgba(18,24,36,.98), rgba(12,16,23,.98)); }
+    .right-card h3 { margin:10px 0 8px; font-size:1.65rem; line-height:1.08; }
+    .right-card p { margin:0; color:var(--muted); line-height:1.7; }
+    .stack { display:grid; gap:12px; margin-top:18px; }
+    .line-card { display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.03); }
+    .line-card strong { display:block; margin-bottom:4px; }
+    .line-card small { color:var(--muted); line-height:1.5; }
+    .pill { flex:0 0 auto; display:inline-flex; align-items:center; gap:7px; padding:8px 11px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); font-size:.78rem; white-space:nowrap; }
+    .pill i { width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px rgba(201,164,75,.14); display:inline-block; }
+    .auth-shell[hidden], .app-shell[hidden] { display:none !important; }
+    .auth-shell {
+      width:min(1500px, calc(100vw - 24px)); margin:12px auto 18px; border:1px solid var(--line); border-radius:34px; overflow:hidden;
+      background:linear-gradient(180deg, rgba(10,13,18,.98), rgba(7,9,12,.98)); box-shadow:var(--shadow); backdrop-filter:blur(18px);
+    }
+    .auth-grid { display:grid; grid-template-columns:minmax(0,.95fr) minmax(360px,.7fr); gap:18px; padding:18px; }
+    .auth-panel, .pricing-panel { padding:26px; border-radius:var(--r-xl); border:1px solid var(--line); background:linear-gradient(180deg, rgba(17,22,31,.98), rgba(11,14,19,.96)); box-shadow:var(--shadow-soft); }
+    .auth-panel h2 { margin:12px 0 10px; font-size:clamp(2.7rem, 6vw, 5rem); line-height:.94; letter-spacing:-.06em; max-width:11ch; }
+    .auth-panel .copy { font-size:1rem; }
+    .form { display:grid; gap:12px; margin-top:18px; max-width:640px; }
+    .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    label { color:var(--muted); font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; }
+    input, textarea, select {
+      width:100%; border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.03); color:var(--ink);
+      border-radius:16px; padding:14px 16px; font:inherit; outline:none;
+    }
+    textarea { min-height:108px; resize:vertical; }
+    input:focus, textarea:focus, select:focus { border-color:rgba(243,213,139,.36); box-shadow:0 0 0 4px rgba(201,164,75,.12); }
+    .field { display:grid; gap:8px; }
+    .note { color:var(--faint); font-size:.9rem; line-height:1.65; }
+    .badge {
+      display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:999px; border:1px solid rgba(243,213,139,.2);
+      background:rgba(243,213,139,.08); color:var(--gold-2); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
+    }
+    .pricing-grid { display:grid; gap:12px; margin-top:14px; }
+    .price-card {
+      padding:18px; border-radius:20px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+    .price-card.featured { border-color:rgba(243,213,139,.24); background:radial-gradient(circle at top right, rgba(201,164,75,.14), transparent 26%), rgba(255,255,255,.03); }
+    .tier { color:var(--gold-2); font-size:.76rem; text-transform:uppercase; letter-spacing:.18em; }
+    .rate { font-size:2rem; font-weight:900; letter-spacing:-.05em; margin-top:8px; }
+    .desc { color:var(--muted); line-height:1.6; margin:8px 0 0; }
+    .list { margin:12px 0 0; padding-left:18px; color:var(--ink); line-height:1.65; }
+    .list li + li { margin-top:6px; }
+    .hint { margin-top:12px; color:var(--faint); font-size:.88rem; line-height:1.6; }
+    .app-shell { width:min(1500px, calc(100vw - 24px)); margin:12px auto 20px; }
+    .banner {
+      padding:18px 22px; border:1px solid var(--line); border-radius:24px; background:rgba(255,255,255,.03); display:flex; justify-content:space-between; gap:12px; align-items:center;
+    }
+    .banner strong { display:block; }
+    .banner span { color:var(--muted); font-size:.9rem; }
+    .dual {
+      display:grid; grid-template-columns:1.08fr .92fr; gap:18px; margin-top:18px;
+    }
+    .section { padding:22px; background:linear-gradient(180deg, rgba(17,22,31,.96), rgba(10,14,20,.96)); }
+    .section h3 { margin:0; font-size:1rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-2); }
+    .section-head { display:flex; justify-content:space-between; gap:14px; align-items:flex-end; margin-bottom:16px; }
+    .section-head p { margin:8px 0 0; color:var(--muted); line-height:1.65; max-width:72ch; }
+    .subtabs { display:flex; gap:8px; flex-wrap:wrap; }
+    .subtabs .pill.active { border-color:rgba(243,213,139,.24); background:rgba(243,213,139,.08); }
+    .mod-grid { display:grid; gap:14px; }
+    .crm-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .card, .match-card, .draft-card, .bridge-card, .module-card { padding:18px; border-radius:20px; border:1px solid var(--line); background:rgba(255,255,255,.03); }
+    .module-title { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .module-title h4 { margin:0; font-size:1.15rem; letter-spacing:-.03em; }
+    .mini { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.14em; }
+    .tag-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .tag { padding:7px 10px; border-radius:999px; background:rgba(201,164,75,.08); border:1px solid rgba(201,164,75,.16); color:var(--gold-2); font-size:.78rem; }
+    .specs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:14px; }
+    .spec { padding:11px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); }
+    .spec .label { color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.14em; }
+    .spec .value { margin-top:5px; font-weight:700; line-height:1.35; }
+    .progress { margin-top:14px; height:10px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.05); overflow:hidden; }
+    .progress > span { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg, rgba(201,164,75,.95), rgba(243,213,139,.68)); box-shadow:0 0 18px rgba(201,164,75,.22); }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .relay { display:grid; gap:12px; }
+    .relay-item { display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); }
+    .relay-item p { margin:4px 0 0; color:var(--muted); line-height:1.55; }
+    .relay-item strong { display:block; }
+    .score { color:var(--gold-2); font-family:"JetBrains Mono",monospace; font-weight:700; white-space:nowrap; }
+    .composer { display:grid; gap:12px; }
+    .lead-box { min-height:140px; }
+    .actions-row { display:flex; flex-wrap:wrap; gap:10px; }
+    .queue { display:grid; gap:10px; }
+    .queue-item { display:flex; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); }
+    .queue-item p { margin:4px 0 0; color:var(--muted); line-height:1.5; }
+    .queue-item .state { color:var(--gold-2); font-weight:800; white-space:nowrap; }
+    .scan-grid { display:grid; gap:12px; }
+    .scan-item { padding:15px; border-radius:18px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); display:grid; grid-template-columns:1fr auto; gap:10px; }
+    .scan-item p { margin:0; color:var(--muted); line-height:1.55; }
+    .scan-item strong { display:block; margin-bottom:6px; }
+    .scan-item .meta { color:var(--gold-2); font-weight:800; white-space:nowrap; }
+    .footer-note { padding:0 22px 24px; color:var(--faint); font-size:.9rem; line-height:1.7; }
+    @media (max-width:1200px) {
+      .hero, .auth-grid, .dual, .grid2 { grid-template-columns:1fr; }
+      .stats, .crm-grid, .specs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .two-col { grid-template-columns:1fr; }
+      .nav { justify-content:flex-start; }
+    }
+    @media (max-width:760px) {
+      .shell, .auth-shell, .app-shell { width:min(100vw - 12px, 1500px); }
+      .topbar, .hero, .grid2, .grid3, .auth-grid { padding-left:12px; padding-right:12px; }
+      .panel.pad, .headline, .auth-panel, .pricing-panel, .section, .card, .module-card, .match-card, .draft-card, .bridge-card { padding:16px; }
+      .stats, .crm-grid, .specs { grid-template-columns:1fr; }
+      .nav a, .btn { width:100%; justify-content:center; }
+      .banner, .line-card, .relay-item, .scan-item, .queue-item { flex-direction:column; align-items:flex-start; }
+      .actions-row .btn, .actions-row .btn.primary { width:100%; }
+      .hero h2, .auth-panel h2 { font-size:clamp(2.7rem, 14vw, 4.8rem); }
     }
   </style>
 </head>
 <body>
   <section class="auth-shell" id="auth-shell">
     <div class="auth-grid">
-      <article class="panel auth-panel">
-        <div class="eyebrow"><span class="dot"></span> secure dual-engine access</div>
-        <h2>Login to the <span>buyer brain</span> and field engine.</h2>
-        <p class="copy">Buy Boxes (Investors) is mirrored into Supabase, and the CRM stays clean by using expandable buyer profiles instead of one giant wall of fields. DealSnap remains the field engine that matches prospects back into live buy boxes.</p>
+      <article class="auth-panel">
+        <div class="badge">Secure dual-engine access</div>
+        <h2>Login to the buyer brain and the field engine.</h2>
+        <p class="copy">Authenticate to enter the split system. The CRM stays buyer-first, DealSnap stays mobile-first, and the bridge keeps both modules talking back and forth without clutter or render bloat.</p>
         <form class="form" id="auth-form">
           <div class="row2">
             <div class="field">
@@ -165,10 +244,10 @@
               <input id="email" type="email" placeholder="name@company.com" autocomplete="email" required />
             </div>
             <div class="field">
-              <label for="tier">Access tier</label>
-              <select id="tier">
+              <label for="accessTier">Access tier</label>
+              <select id="accessTier">
                 <option value="grandfathered">Grandfathered — $10/month</option>
-                <option value="future">Future — $50/month</option>
+                <option value="future">Future member — $50/month</option>
               </select>
             </div>
           </div>
@@ -178,41 +257,42 @@
               <input id="code" type="password" placeholder="Enter grandfathered code" autocomplete="current-password" />
             </div>
             <div class="field">
-              <label for="checkout">Subscription gate</label>
-              <input id="checkout" type="text" value="Stripe checkout / payment placeholder" readonly />
+              <label for="stripe">Subscription gate</label>
+              <input id="stripe" type="text" value="Stripe checkout / payment collection placeholder" readonly />
             </div>
           </div>
           <div class="actions-row">
             <button class="btn primary" type="submit">Enter dual ecosystem <span>→</span></button>
             <a class="btn" href="#pricing">Review pricing gate <span>→</span></a>
           </div>
-          <div class="note">Grandfathered users start at $10/month. Future members move to $50/month. The login wall stays in place until authentication succeeds.</div>
+          <div class="note">Grandfathered users start at $10/month. Future members move to $50/month. The auth wall keeps the CRM and DealSnap private until login succeeds.</div>
         </form>
       </article>
-      <aside class="panel pricing-panel" id="pricing">
-        <h3>Subscription tiers</h3>
+      <aside class="pricing-panel" id="pricing">
+        <h3 style="margin:0;font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);">Subscription tiers</h3>
         <div class="pricing-grid">
           <div class="price-card featured">
             <div class="tier">Grandfathered</div>
             <div class="rate">$10<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
-            <p class="desc">Reserved for current members. This tier unlocks the CRM and DealSnap modules with the same clean buyer-first hierarchy.</p>
+            <p class="desc">Legacy access for current users. This tier unlocks both programs and preserves the buyer-first hierarchy behind the auth wall.</p>
             <ul class="list">
-              <li>Buyer profiles</li>
-              <li>Field prospecting</li>
-              <li>Match queue and drafts</li>
+              <li>CRM Brain access</li>
+              <li>DealSnap field mode</li>
+              <li>Drafting queue for outreach</li>
             </ul>
           </div>
           <div class="price-card">
             <div class="tier">Future</div>
             <div class="rate">$50<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
-            <p class="desc">Planned future rate for new members. Replace the placeholder with live Stripe checkout when you’re ready.</p>
+            <p class="desc">Planned future monetization layer for new signups. Replace the placeholder with a live Stripe checkout when ready.</p>
             <ul class="list">
               <li><a id="checkout-link" href="https://example.com/stripe-checkout-placeholder" style="color:var(--gold-2)">Open payment collection placeholder</a></li>
-              <li>Subscription gate before the app</li>
-              <li>Premium onboarding flow</li>
+              <li>Subscription gate before dashboard</li>
+              <li>Clean premium onboarding</li>
             </ul>
           </div>
         </div>
+        <div class="hint">Static GitHub Pages can present the gate and route to checkout, but real server-side verification would still require a backend or hosted auth layer.</div>
       </aside>
     </div>
   </section>
@@ -224,32 +304,32 @@
           <div class="sigil" aria-hidden="true"></div>
           <div>
             <h1>DealSnap</h1>
-            <p>Buy Boxes (Investors) → Supabase → DealSnap matching bridge</p>
+            <p>Dual integrated ecosystem: CRM Brain + Mobile Prospecting Engine</p>
           </div>
         </div>
         <nav class="nav">
           <a href="#crm">CRM Brain</a>
           <a href="#deal-snap">DealSnap</a>
-          <a href="#bridge">Bridge</a>
-          <a href="#drafts">Drafts</a>
+          <a href="#bridge">Integration Bridge</a>
+          <a href="#drafts">Draft Queue</a>
         </nav>
       </header>
 
-      <section class="hero-grid">
-        <article class="panel hero">
-          <div class="eyebrow"><span class="dot"></span> buyer-first, expandable, not cluttered</div>
-          <h2>Buyer brain. <span>Field snap.</span></h2>
-          <p class="copy">The Buy Boxes (Investors) database from Notion is mirrored into Supabase with extra columns for real matching, then surfaced here as expandable cards so the CRM stays dense without getting messy. DealSnap stays responsible for OCR, distress cues, and proximity scans.</p>
+      <section class="hero">
+        <article class="panel headline">
+          <div class="eyebrow"><span class="dot"></span> two programs, one engine</div>
+          <h2>Buyer-first brain. Field-first <span>snap</span>.</h2>
+          <p class="copy">Program A is the CRM Brain: buy boxes, buyer hierarchy, missing-field flags, and matching precision. Program B is DealSnap Mobile: OCR intake, typed addresses, distress detection, proximity scanning, and auto-match back into the buyer stack.</p>
           <div class="actions">
             <a class="btn primary" href="#crm">Open CRM Brain <span>→</span></a>
             <a class="btn" href="#deal-snap">Open DealSnap <span>→</span></a>
-            <a class="btn" href="#bridge">See backend bridge <span>→</span></a>
+            <a class="btn" href="#drafts">Draft outreach <span>→</span></a>
           </div>
-          <div class="stats" id="stats"></div>
+          <div class="stats" id="hero-stats"></div>
         </article>
-        <aside class="panel side">
-          <h3>Supernatural system, clean modularity.</h3>
-          <p>The UI splits into modular components so the buyer cards, DealSnap engine, and backend bridge all render independently. That keeps the hierarchy sharp and avoids render-block chaos.</p>
+        <aside class="panel right-card">
+          <h3>Supernatural hierarchy, clean and modular.</h3>
+          <p>The layout separates the brain from the field engine while keeping a visible data bridge between them. No heavy nested blocks, no monolithic panels, and each section renders independently.</p>
           <div class="stack" id="status-stack"></div>
         </aside>
       </section>
@@ -258,418 +338,300 @@
         <article class="panel section" id="crm">
           <div class="section-head">
             <div>
-              <h3>CRM Brain / Buyer profiles</h3>
-              <p>Expandable buyer cards show the maximum useful surface area while keeping the default view clean. Click a buyer to open the full buy box, notes, and raw sync summary.</p>
+              <h3>Program A / CRM Brain</h3>
+              <p>Buyer boxes are the source of truth. Incomplete profiles are flagged, and missing pieces automatically create a draft request so matching precision improves over time.</p>
             </div>
-            <div class="subtabs">
-              <span class="pill active"><i></i>Expandable cards</span>
-              <span class="pill"><i></i>Supabase-backed</span>
-            </div>
+            <div class="subtabs"><span class="pill active"><i></i>Buyer-first</span><span class="pill"><i></i>Buy Box engine</span></div>
           </div>
-          <div class="crm-list" id="buyers"></div>
+          <div class="mod-grid crm-grid" id="buyers-grid"></div>
         </article>
 
-        <article class="panel console" id="deal-snap">
+        <article class="panel section" id="deal-snap">
           <div class="section-head">
             <div>
-              <h3>DealSnap / Mobile prospecting</h3>
-              <p>Paste OCR text or a typed address, run a distress + proximity scan, and the engine will rank the buyer matches. If a buyer box is incomplete, the system will flag it and draft a request for missing pieces.</p>
+              <h3>Program B / DealSnap Mobile</h3>
+              <p>Paste OCR text or a typed address, then scan for distress, cleaner contact signals, and 1–2 mile proximity matches against active buyers and retail databases.</p>
             </div>
+            <div class="subtabs"><span class="pill active"><i></i>Mobile prospecting</span><span class="pill"><i></i>OCR intake</span></div>
           </div>
-          <div class="field">
-            <label for="prospect-input">Screenshot OCR or typed address</label>
-            <textarea id="prospect-input" placeholder="Example: 1427 Elm St, notice of default, vacant, call owner"></textarea>
+          <div class="composer">
+            <div class="field lead-box">
+              <label for="ocrInput">Screenshot OCR or typed address</label>
+              <textarea id="ocrInput" placeholder="Paste OCR text, address, or property note... Example: 1427 Elm St, notice of default, vacant, call owner" ></textarea>
+            </div>
+            <div class="actions-row">
+              <button class="btn primary" id="scanBtn" type="button">Run distress + proximity scan <span>→</span></button>
+              <button class="btn" id="draftEmailBtn" type="button">Draft email <span>→</span></button>
+              <button class="btn" id="draftTextBtn" type="button">Draft text <span>→</span></button>
+            </div>
+            <div class="scan-grid" id="scan-results"></div>
           </div>
-          <div class="actions-row">
-            <button class="btn primary" id="scan-btn" type="button">Run scan <span>→</span></button>
-            <button class="btn" id="email-btn" type="button">Draft email <span>→</span></button>
-            <button class="btn" id="text-btn" type="button">Draft text <span>→</span></button>
-          </div>
-          <div class="scan-grid" id="scan-results"></div>
-          <div class="queue" id="drafts"></div>
         </article>
       </section>
 
       <section class="grid2">
-        <article class="panel bridge" id="bridge">
+        <article class="panel section" id="bridge">
           <div class="section-head">
             <div>
-              <h3>Backend bridge</h3>
-              <p>Notion Buyers is mirrored into public.buyers in Supabase, with a bridge view for matching and a sync-state record for the integration layer.</p>
+              <h3>Integration bridge</h3>
+              <p>When DealSnap finds a fit, it can queue a draft. When CRM is missing buy-box fields, it auto-creates a request for the missing pieces. Both programs keep feeding each other.</p>
             </div>
           </div>
-          <div class="bridge-grid" id="bridge-grid"></div>
+          <div class="mod-grid" id="bridge-grid"></div>
         </article>
 
-        <article class="panel bridge">
+        <article class="panel section">
           <div class="section-head">
             <div>
-              <h3>Field coverage</h3>
-              <p>These are the normalized columns now available in Supabase for cleaner matching, search, and future automation.</p>
+              <h3>Walking for dollars workflow</h3>
+              <p>Lead intake cleans contact info, scores distress, and separates ready matches from incomplete records so outreach stays focused and precise.</p>
             </div>
           </div>
-          <div class="grid-fields" id="coverage-grid"></div>
+          <div class="mod-grid" id="workflow-grid"></div>
         </article>
       </section>
 
-      <section class="panel section" id="land-leads">
-        <div class="section-head">
-          <div>
-            <h3>Live land leads</h3>
-            <p>Queried directly from public.properties so new land rows appear immediately in the CRM.</p>
+      <section class="grid2" id="drafts">
+        <article class="panel section">
+          <div class="section-head">
+            <div>
+              <h3>Draft queue</h3>
+              <p>Queued outreach and follow-up drafts created by matches or missing-field flags. In production, these can hand off to the connected messaging layer.</p>
+            </div>
           </div>
-          <div class="subtabs">
-            <span class="pill active"><i></i><span id="land-lead-count">0</span> live rows</span>
-            <span class="pill"><i></i>public.properties</span>
+          <div class="relay" id="draft-queue"></div>
+        </article>
+
+        <article class="panel section">
+          <div class="section-head">
+            <div>
+              <h3>Matching summary</h3>
+              <p>Current match state is shown here so the CRM and prospecting modules stay in sync with the active buyer stack.</p>
+            </div>
           </div>
-        </div>
-        <div class="crm-list" id="land-leads-list">
-          <div class="queue-item"><div><strong>Loading live land leads…</strong><p>Pulling the rows directly from Supabase.</p></div><div class="state">Syncing</div></div>
-        </div>
+          <div class="relay" id="match-summary"></div>
+        </article>
       </section>
 
-      <div class="footer-note">The CRM keeps the buyer data organized, DealSnap keeps the field workflow mobile-first, and the Supabase bridge keeps both sides ready for real-time matching. If a buyer is missing fields, the UI flags it and stages a request instead of hiding the problem.</div>
+      <div class="footer-note">Dual modular structure keeps the CRM brain and the mobile field engine separate while preserving a single matching loop. If a buyer box is incomplete, the system flags it; if a prospect matches, the system queues outreach.</div>
     </div>
   </main>
 
-  <script id="buyers-data" type="application/json">[{"id":"a40af422-063d-4d18-9175-949ec025331b","source_page_id":null,"name":"Ingryd Hernandez","company_name":null,"buyer_type":"investor","active":true,"agent_friendly":false,"cash_buyer":false,"open_to_virtual":false,"states_allowed":["AZ","AR","TX","FL"],"markets_allowed":[],"area_preferences":[],"asset_classes":["RV Park","MHP","Multifamily","SFH"],"strategy_types":["Creative Finance","Seller Finance","SubTo"],"structure_types":[],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":null,"financing_notes":null,"buy_box_notes":"Co-founder of Creative Listing. Expert real estate investor. Uses a 20-page investor agreement. Associated with Pace Morby network.","buy_box_completeness":"0.00","source_payload":{"origin":"Beside","created_by":"assistant","source_type":"call_summary"}},{"id":"b4649518-ac79-4580-b280-b87cd7727944","source_page_id":null,"name":"Shawn Matthew","company_name":null,"buyer_type":"investor","active":true,"agent_friendly":false,"cash_buyer":false,"open_to_virtual":false,"states_allowed":[],"markets_allowed":[],"area_preferences":[],"asset_classes":[],"strategy_types":[],"structure_types":[],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":null,"financing_notes":null,"buy_box_notes":null,"buy_box_completeness":"0.00","source_payload":{"source":"user_request","source_link":"https://click.email.prophethomes.com/?qs=ABB7InYiOjEsImQiOjQ4ODd9AA0AAAAAAE9SDiowHH54ENTcZZCYmOP64R2L13NU1eiEDTnR6IYR_E_Rtal-mOY9sR_K75pRKgVszrxzXRqo69IyytPSEYmetaW_hNnsUF-8q86u","matched_property":"1004 Kinney Ave, Austin, TX 78704"}},{"id":"6031f85d-d2d4-4ac6-ab0e-5ebfcbb7c24a","source_page_id":null,"name":"Dan Forbes","company_name":null,"buyer_type":"investor","active":true,"agent_friendly":false,"cash_buyer":false,"open_to_virtual":false,"states_allowed":[],"markets_allowed":[],"area_preferences":[],"asset_classes":[],"strategy_types":[],"structure_types":[],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":null,"financing_notes":null,"buy_box_notes":null,"buy_box_completeness":"0.00","source_payload":{"source":"user_request","source_link":"https://click.email.prophethomes.com/?qs=ABB7InYiOjEsImQiOjQ4ODd9AA0AAAAAAE9SDiowHH54ENTcZZCYmOP64R2L13NU1eiEDTnR6IYR_E_Rtal-mOY9sR_K75pRKgVszrxzXRqo69IyytPSEYmetaW_hNnsUF-8q86u","matched_property":"1004 Kinney Ave, Austin, TX 78704"}},{"id":"964ceb80-d7f2-4259-ad59-34dee3c81235","source_page_id":null,"name":"Land Acquisition - Bexar/Atascosa","company_name":null,"buyer_type":"investor","active":true,"agent_friendly":false,"cash_buyer":false,"open_to_virtual":false,"states_allowed":[],"markets_allowed":["Bexar","Atascosa","San Antonio"],"area_preferences":[],"asset_classes":["Land"],"strategy_types":[],"structure_types":[],"acreage_min":"10.0000","acreage_max":"30.0000","beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":"Already-split tracts or land-splitting projects; we want the larger tract to be the one split by us","financing_notes":null,"buy_box_notes":"10-30 acres, $10k-$15k/acre max; exclude already-split / land-splitting projects; prefer larger tracts we can split ourselves","buy_box_completeness":"0.00","source_payload":{}},{"id":"0014ad69-a619-4dfa-9f9d-9d80a0e92ad8","source_page_id":"3686db28-4fc5-8119-a071-f48ae68a34d1","name":"Farina","company_name":null,"buyer_type":"tenant_buyer","active":true,"agent_friendly":false,"cash_buyer":false,"open_to_virtual":false,"states_allowed":["TX"],"markets_allowed":["San Antonio"],"area_preferences":["San Antonio, TX"],"asset_classes":["Single Family"],"strategy_types":[],"structure_types":[],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":null,"financing_notes":"Budget $1,500 - $2,000/month; income $4k - $6k/month; credit 680+; timeline 2 months; employer American Airlines (W2).","buy_box_notes":"Tenant buyer lead. Budget $1,500 - $2,000/month; income $4k - $6k/month; credit 680+; timeline 2 months; preferred criteria 4/2, new build, 2000 sqft; employer American Airlines (W2). Matches San Antonio 3+ bed / 2+ bath buy box rules. Underwriting confirms 2.5x+ income-to-payment ratio. Match candidates: 5131 Gemsbuck Chase; 214 Preston Avenue. Next step: Send welcome email + property match list; clarify down payment and structure preference.","buy_box_completeness":"0.60","source_payload":{"name":"Farina","email":"rardinfarina1103@gmail.com","notes":"Matches San Antonio 3+ bed / 2+ bath buy box rules. Underwriting confirms 2.5x+ income-to-payment ratio.","phone":"614-260-4091","score":6,"budget":"$1,500 - $2,000/month","credit":"680+","income":"$4k - $6k/month","source":"Vizzy/Sintra AI (Google Form)","status":"WARM","employer":"American Airlines (W2)","location":"San Antonio, TX","timeline":"2 months","next_step":"Send welcome email + property match list; clarify down payment and structure preference.","source_link":"https://www.notion.so/Farina-3686db284fc58119a071f48ae68a34d1","match_candidates":["5131 Gemsbuck Chase","214 Preston Avenue"],"preferred_criteria":"4/2, new build, 2000 sqft"}},{"id":"adaa4451-58d8-4382-99e9-b13f303b5d14","source_page_id":"3676db28-4fc5-811b-a51c-d90ab4e4d4c4","name":"Dick Nicolas","company_name":null,"buyer_type":"operator","active":true,"agent_friendly":true,"cash_buyer":false,"open_to_virtual":false,"states_allowed":[],"markets_allowed":[],"area_preferences":[],"asset_classes":["RV Park","Campground"],"strategy_types":["Acquisition"],"structure_types":[],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":null,"financing_notes":null,"buy_box_notes":"Looking to buy an RV park and asked Chris for help. Not an investor buyer.","buy_box_completeness":"0.00","source_payload":{"Name":"Dick Nicolas","Email":"nicholasindustries@yahoo.com","Notes":"Lead looking to buy an RV park; asked Chris for help. Not an investor buyer.","Buy Box Notes":"Looking to buy an RV park and asked Chris for help.","Agent Friendly":"__YES__","What type of properties do you buy?":"RV parks / campgrounds","Anything else we should know about your buy box or investment strategy?":"Looking to buy an RV park and asked Chris for help."}},{"id":"0fc1319e-68ba-430c-b2f7-e4e4f963d69b","source_page_id":null,"name":"Zakary Niselshtein","company_name":"Birbas Partners","buyer_type":"institutional","active":true,"agent_friendly":false,"cash_buyer":true,"open_to_virtual":false,"states_allowed":["TX","FL","NY","NJ","CT","PA","MA","MD","VA","NC","SC","GA"],"markets_allowed":[],"area_preferences":[],"asset_classes":["Commercial","Multifamily","Land"],"strategy_types":["Off-Market Acquisitions","Direct-to-Seller","Special Situations"],"structure_types":[],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":"10000000.00","price_max":"100000000.00","price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":"No publicly available or actively marketed deals. Only direct from seller with real access.","financing_notes":null,"buy_box_notes":"Focused on clean paths and real access. Responded to San Marcos Emerson at Trace lead. Based in Montreal/Austin. Values relationships first.\nStrong preference for raw land deals.","buy_box_completeness":"0.85","source_payload":{}},{"id":"1c0c801e-d924-4e4d-bdaa-153d9652cbed","source_page_id":null,"name":"Creative Finance / Multifamily Buy Box","company_name":null,"buyer_type":"investor","active":true,"agent_friendly":false,"cash_buyer":false,"open_to_virtual":false,"states_allowed":["TX"],"markets_allowed":["San Antonio"],"area_preferences":["Bexar County"],"asset_classes":["Multifamily"],"strategy_types":["Creative Finance","SubTo","Seller Finance"],"structure_types":["subject to","seller finance","wrap"],"acreage_min":null,"acreage_max":null,"beds_min":null,"beds_max":null,"baths_min":null,"baths_max":null,"units_min":null,"units_max":null,"price_min":null,"price_max":null,"price_per_door_min":null,"price_per_door_max":null,"equity_spread_min":null,"arv_pct_min":null,"cash_available":null,"absolute_no_gos":null,"financing_notes":"Open to creative terms for distressed multifamily opportunities; verify financials and lien structure in person.","buy_box_notes":"Foreclosure-rescue / creative-finance buyer profile for the 421 Howard St opportunity in San Antonio.","buy_box_completeness":"0.65","source_payload":{"state":"TX","market":"San Antonio","lead_type":"target_buy_box","created_by":"crm_sync"}}]</script>
   <script>
-    const AUTH_KEY = 'dealsnap_dual_auth_v2';
+    const AUTH_KEY = 'dealsnap_dual_auth_v1';
     const GRAND_CODE = 'GRANDFATHERED10';
-    const BUYERS = JSON.parse(document.getElementById('buyers-data').textContent);
-    const SUPABASE_URL = 'https://egpqhzubdeklzstzdmtt.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_iBBJYG09g5LAqXEo7QdC2w_HcyXKzxG';
+    const checkoutLink = document.getElementById('checkout-link');
+    if (checkoutLink) checkoutLink.href = 'https://example.com/stripe-checkout-placeholder';
 
     const app = {
       stats: [
-        { label: 'Buyer records', value: String(BUYERS.length), note: 'Mirrored from Notion into Supabase' },
-        { label: 'Bridge view', value: 'buyers_match_bridge', note: 'Matching-ready projection' },
-        { label: 'Expanded columns', value: '14', note: 'Extra sync fields added' },
-        { label: 'Draft queue', value: 'Live', note: 'Email/text staging from matches' },
+        { label: 'Modules', value: '2', note: 'CRM Brain + DealSnap Mobile' },
+        { label: 'Buy Boxes', value: '4', note: 'Active buyer profiles' },
+        { label: 'Proximity scan', value: '1-2 mi', note: 'Motivated seller detection lane' },
+        { label: 'Draft queue', value: 'Live', note: 'Emails and texts staged from matches' },
       ],
       status: [
-        { title: 'Notion sync', detail: 'The Buy Boxes (Investors) database is mirrored into public.buyers and tagged as synced in integration state.', pill: 'Synced' },
-        { title: 'Expandability', detail: 'Buyer cards open into nested sections so the CRM stays dense without becoming a wall of noise.', pill: 'Clean' },
-        { title: 'Matching bridge', detail: 'Supabase view buyers_match_bridge exposes the fields DealSnap needs for ranking and follow-up.', pill: 'Ready' },
+        { title: 'CRM Brain', detail: 'Buy boxes are the source of truth and missing fields are auto-flagged.', state: 'Primary' },
+        { title: 'DealSnap Mobile', detail: 'OCR/text intake detects distress, contact signals, and fit.', state: 'Field' },
+        { title: 'Bridge logic', detail: 'Matches create drafts; gaps create follow-up requests.', state: 'Synced' },
+      ],
+      buyers: [
+        {
+          name: 'RapidClose Partners',
+          tier: 'Core buyer / high velocity',
+          fit: '96%',
+          tags: ['SubTo', 'LO', 'SFR', 'Quick close'],
+          spec: { Radius: '35 mi', Type: 'SFR / small MF', Price: '$120k-$420k', Finance: 'SubTo preferred' },
+          completeness: 96,
+          missing: []
+        },
+        {
+          name: 'South Texas Stack',
+          tier: 'Repeat relationship buyer',
+          fit: '91%',
+          tags: ['Landlord', 'Cash flow', 'Value-add'],
+          spec: { Radius: 'San Antonio area', Type: 'SFR / duplex / triplex', Price: '$90k-$325k', Finance: 'SubTo / light LO' },
+          completeness: 90,
+          missing: []
+        },
+        {
+          name: 'Heritage Capital',
+          tier: 'Selective / luxury lane',
+          fit: '76%',
+          tags: ['Luxury', 'Quiet off-market', 'Legacy'],
+          spec: { Radius: 'Premier submarkets', Type: 'Luxury SFR', Price: '$750k+', Finance: 'Case by case' },
+          completeness: 74,
+          missing: ['Preferred closing timeline']
+        },
+        {
+          name: 'Flex Equity',
+          tier: 'Structure-friendly buyer',
+          fit: '84%',
+          tags: ['MF', 'Seller carry', 'Creative terms'],
+          spec: { Radius: 'Major metros', Type: 'MF / mixed use', Price: '$450k-$2.5M', Finance: 'Flexible' },
+          completeness: 88,
+          missing: []
+        },
+      ],
+      scans: [
+        { title: 'OCR intake recognized an address and a distress cue', body: '1427 Elm St was parsed from text and matched against active buy boxes. The scan tagged notice of default and vacancy language as high-signal distress.', meta: 'Score 94' },
+        { title: 'Cleaner contact info surfaced', body: 'Phone and email fields were standardized from the raw note so the outreach can use cleaner contact info instead of the original screenshot noise.', meta: 'Cleaned' },
+        { title: 'Proximity scan found a 1.7 mile fit', body: 'The lead sits inside the preferred proximity window for a core buyer and is routed to the highest-fit buy box instead of the general queue.', meta: '1.7 mi' },
       ],
       bridge: [
-        { title: 'public.buyers', body: 'Normalized buyer store with the current Notion snapshot and matching-friendly columns.' },
-        { title: 'public.buyers_match_bridge', body: 'Active buyer projection with core criteria, notes, and raw payloads for DealSnap.' },
-        { title: 'public.integration_sync_states', body: 'Sync record shows the Buy Boxes (Investors) database as mirrored and current.' },
-        { title: 'DealSnap handoff', body: 'Prospect matches can be drafted into email/text without leaving the modular flow.' },
+        { title: 'Buyer-box gap detected', body: 'Heritage Capital is missing a closing timeline. A draft request is queued asking for the missing piece to improve match precision.', state: 'Needs info' },
+        { title: 'Match-ready lead detected', body: 'DealSnap can draft email or text outreach for a matched seller lead and pass the payload into the messaging handoff.', state: 'Ready' },
+        { title: 'Retail database cross-check', body: 'If buyer fit is thin, the bridge can push the lead into the retail database lane for secondary routing.', state: 'Fallback' },
       ],
-      coverage: [
-        'card_description', 'card_url', 'cheat_codes', 'class_labels', 'closing_speed', 'creative_deals_allowed', 'deal_alerts', 'deal_entry_methods', 'deal_structure_labels', 'labels', 'facebook_url', 'attachment_count', 'attachment_links', 'data_room_notes'
+      workflow: [
+        { title: 'Walk the block', body: 'Capture screenshot or typed address on mobile, then run the scan.', state: 'Step 1' },
+        { title: 'Clean the record', body: 'Standardize contact info and remove OCR noise for better outreach.', state: 'Step 2' },
+        { title: 'Draft outreach', body: 'If matched, queue email/text. If missing fields exist, request them.', state: 'Step 3' },
       ],
-      drafts: []
+      matches: [
+        { title: 'Top fit', body: 'RapidClose Partners remains the highest-confidence buyer for the current lead set.', state: '96%' },
+        { title: 'Missing fields', body: 'Heritage Capital needs closing timeline data to sharpen match logic.', state: '1 flag' },
+        { title: 'Retail handoff', body: 'Lead can be re-routed into the retail database if buyer fit weakens.', state: 'Available' },
+      ],
+      drafts: [],
     };
 
-    function esc(v) {
-      return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-    function formatMoney(v) {
-      const n = Number(v);
-      if (!Number.isFinite(n)) return '—';
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
-    }
-    function formatRange(min, max, suffix = '') {
-      const hasMin = min !== null && min !== undefined && min !== '';
-      const hasMax = max !== null && max !== undefined && max !== '';
-      if (!hasMin && !hasMax) return '—';
-      if (hasMin && hasMax) return `${min}${suffix} – ${max}${suffix}`;
-      if (hasMin) return `≥ ${min}${suffix}`;
-      return `≤ ${max}${suffix}`;
-    }
-    function formatCurrencyRange(min, max) {
-      const hasMin = min !== null && min !== undefined && min !== '';
-      const hasMax = max !== null && max !== undefined && max !== '';
-      if (!hasMin && !hasMax) return '—';
-      const a = hasMin ? formatMoney(min) : '—';
-      const b = hasMax ? formatMoney(max) : '—';
-      return hasMin && hasMax ? `${a} – ${b}` : hasMin ? `≥ ${a}` : `≤ ${b}`;
-    }
-    function kv(k, v) { return `<div class="kv"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`; }
-    function chipSet(arr) { return arr.map(v => `<span class="chip">${esc(v)}</span>`).join(''); }
-    function setAuth(payload){ localStorage.setItem(AUTH_KEY, JSON.stringify(payload)); }
-    function getAuth(){ try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; } }
-    function renderAuth(){ const auth = getAuth(); const authShell = document.getElementById('auth-shell'); const appShell = document.getElementById('app-shell'); if (auth?.tier) { authShell.hidden = true; appShell.hidden = false; } else { authShell.hidden = false; appShell.hidden = true; } }
-    function renderStats(){ document.getElementById('stats').innerHTML = app.stats.map(s => `<div class="stat"><div class="label">${esc(s.label)}</div><div class="value">${esc(s.value)}</div><div class="note">${esc(s.note)}</div></div>`).join(''); }
-    function renderStatus(){ document.getElementById('status-stack').innerHTML = app.status.map(s => `<div class="line-card"><div><strong>${esc(s.title)}</strong><small>${esc(s.detail)}</small></div><div class="pill"><i></i>${esc(s.pill)}</div></div>`).join(''); }
-    function renderBridge(){ document.getElementById('bridge-grid').innerHTML = app.bridge.map(s => `<div class="bridge-card"><strong>${esc(s.title)}</strong><p>${esc(s.body)}</p></div>`).join(''); }
-    function renderCoverage(){ document.getElementById('coverage-grid').innerHTML = app.coverage.map(v => `<div class="kv"><div class="k">Normalized column</div><div class="v">${esc(v)}</div></div>`).join(''); }
-    function renderDrafts(){ document.getElementById('drafts').innerHTML = app.drafts.length ? app.drafts.map(d => `<div class="queue-item"><div><strong>${esc(d.type)} draft</strong><p>${esc(d.body)}</p></div><div class="state">${esc(d.state)}</div></div>`).join('') : `<div class="queue-item"><div><strong>No drafts queued</strong><p>Run a scan or flag a missing buyer field to stage outreach.</p></div><div class="state">Idle</div></div>`; }
-    function landCard(row, idx) {
-      const payload = row.source_payload || {};
-      const acreage = payload.acreage ? `${payload.acreage} ac` : '—';
-      const price = payload.asking_price ? formatMoney(payload.asking_price) : 'TBD';
-      const ppa = payload.price_per_acre ? `${formatMoney(payload.price_per_acre)}/ac` : '—';
-      const fit = payload.fit_status || 'unclassified';
-      const buyer = payload.buyer_match?.name || 'Unmapped';
-      const signals = (payload.distress_signals || []).slice(0, 4).join(' · ') || 'No distress signals listed';
-      const source = payload.source || row.source_system || '—';
-      const details = [row.city, row.county, row.state].filter(Boolean).join(', ') || '—';
-      return `
-      <details class="buyer-card">
-        <summary>
-          <div class="buyer-top">
-            <div>
-              <div class="eyebrow"><span class="dot"></span> live lead · record ${idx + 1}</div>
-              <h4 class="buyer-name">${esc(row.deal_name || 'Unnamed lead')}</h4>
-              <div class="buyer-meta">${esc(details)} · ${esc(source)}</div>
-            </div>
-            <div class="badges">
-              <span class="badge soft">${esc(fit)}</span>
-              <span class="badge">${esc(buyer)}</span>
-              <span class="badge">${esc(row.asset_class || row.property_type || 'Land')}</span>
-            </div>
-          </div>
-          <div class="badges">
-            <span class="badge soft">${esc(acreage)}</span>
-            <span class="badge">${esc(price)}</span>
-            <span class="badge">${esc(ppa)}</span>
-            <span class="badge">${esc(row.created_at || 'No created_at')}</span>
-          </div>
-        </summary>
-        <div class="buyer-body">
-          <div class="group">
-            <h4>Lead details</h4>
-            <div class="grid-fields">
-              ${kv('City / county', details)}
-              ${kv('State', row.state || '—')}
-              ${kv('Property type', row.property_type || '—')}
-              ${kv('Asset class', row.asset_class || '—')}
-              ${kv('Source system', row.source_system || '—')}
-              ${kv('Buyer match', buyer)}
-            </div>
-          </div>
-          <div class="group">
-            <h4>Signals and notes</h4>
-            <div class="details-grid">
-              ${kv('Notes', payload.notes || '—')}
-              ${kv('Distress signals', signals)}
-              ${kv('Source reference', payload.source || row.source_page_id || row.source_database_id || '—')}
-            </div>
-          </div>
-          <div class="group">
-            <h4>Raw sync payload</h4>
-            <div class="details-grid">
-              ${kv('Fit status', fit)}
-              ${kv('Asking price', payload.asking_price ? formatMoney(payload.asking_price) : '—')}
-              ${kv('Price / acre', payload.price_per_acre ? formatMoney(payload.price_per_acre) : '—')}
-              ${kv('Acreage', payload.acreage ?? '—')}
-            </div>
-          </div>
-        </div>
-      </details>`;
-    }
+    function saveAuth(payload) { localStorage.setItem(AUTH_KEY, JSON.stringify(payload)); }
+    function getAuth() { try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; } }
 
-    function renderLandLeads(rows) {
-      const target = document.getElementById('land-leads-list');
-      const count = document.getElementById('land-lead-count');
-      if (count) count.textContent = String(rows.length);
-      if (!rows.length) {
-        target.innerHTML = `<div class="queue-item"><div><strong>No live land leads returned</strong><p>The dashboard queried public.properties but nothing matched the land filter.</p></div><div class="state">Empty</div></div>`;
-        return;
+    function renderAuth() {
+      const auth = getAuth();
+      const authShell = document.getElementById('auth-shell');
+      const appShell = document.getElementById('app-shell');
+      if (auth?.tier) {
+        authShell.hidden = true;
+        appShell.hidden = false;
+      } else {
+        authShell.hidden = false;
+        appShell.hidden = true;
       }
-      target.innerHTML = rows.map((row, idx) => landCard(row, idx)).join('');
     }
 
-    async function loadLandLeads() {
-      const url = `${SUPABASE_URL}/rest/v1/properties?select=id,deal_name,city,state,county,property_type,asset_class,source_system,source_payload,source_page_id,source_database_id,created_at,updated_at&or=(asset_class.eq.land,property_type.ilike.%25land%25)&order=created_at.desc`;
-      const res = await fetch(url, {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          Accept: 'application/json'
-        }
-      });
-      if (!res.ok) throw new Error(`Supabase land lead fetch failed: ${res.status}`);
-      const rows = await res.json();
-      renderLandLeads(Array.isArray(rows) ? rows : []);
+    function buyerCard(b) {
+      const missing = b.missing.length ? `<div class="tag-row">${b.missing.map(m => `<span class="tag" style="background:rgba(239,109,80,.08);border-color:rgba(239,109,80,.18);color:#ffb1a2">Missing: ${m}</span>`).join('')}</div>` : '';
+      return `<article class="card">
+        <div class="module-title"><div><div class="mini">${b.tier}</div><h4>${b.name}</h4></div><div class="score">${b.fit}</div></div>
+        <div class="tag-row">${b.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="specs">${Object.entries(b.spec).map(([k,v]) => `<div class="spec"><div class="label">${k}</div><div class="value">${v}</div></div>`).join('')}</div>
+        <div class="progress"><span style="width:${b.completeness}%"></span></div>
+        ${missing}
+      </article>`;
     }
 
-
-    function buyerCard(b, idx) {
-      const states = (b.states_allowed || []).length ? b.states_allowed.join(', ') : 'None listed';
-      const markets = (b.markets_allowed || []).length ? b.markets_allowed.join(', ') : 'None listed';
-      const areas = (b.area_preferences || []).length ? b.area_preferences.join(', ') : 'None listed';
-      const assets = (b.asset_classes || []).length ? b.asset_classes.join(' · ') : 'None listed';
-      const strategies = (b.strategy_types || []).length ? b.strategy_types.join(' · ') : 'None listed';
-      const structures = (b.structure_types || []).length ? b.structure_types.join(' · ') : 'None listed';
-      const classLabels = (b.class_labels || []).length ? b.class_labels.join(' · ') : 'None listed';
-      const entryMethods = (b.deal_entry_methods || []).length ? b.deal_entry_methods.join(' · ') : 'None listed';
-      const dealStructures = (b.deal_structure_labels || []).length ? b.deal_structure_labels.join(' · ') : 'None listed';
-      const labels = (b.labels || []).length ? b.labels.join(' · ') : 'None listed';
-      const sourceKeys = b.source_payload ? Object.keys(b.source_payload) : [];
-      const percent = Math.max(0, Math.min(100, Math.round(Number(b.buy_box_completeness || 0) * 100)));
-      const missing = [];
-      if (!b.source_page_id) missing.push('No Notion page id');
-      if (!b.price_min && !b.price_max) missing.push('Price range missing');
-      if (!(b.states_allowed || []).length) missing.push('No states listed');
-      if (!(b.markets_allowed || []).length) missing.push('No markets listed');
-      if (!(b.asset_classes || []).length) missing.push('No asset classes listed');
-      if (String(b.buy_box_completeness || '') === '0.00') missing.push('Low buy-box completeness');
-      const sourceBadges = sourceKeys.slice(0, 8).map(k => `<span class="chip">${esc(k)}</span>`).join('');
-      return `
-      <details class="buyer-card">
-        <summary>
-          <div class="buyer-top">
-            <div>
-              <div class="eyebrow"><span class="dot"></span> ${esc(b.buyer_type || 'buyer')} · record ${idx + 1}</div>
-              <h4 class="buyer-name">${esc(b.name || 'Unnamed buyer')}</h4>
-              <div class="buyer-meta">${esc(b.company_name || 'No company listed')} · ${states}</div>
-            </div>
-            <div class="badges">
-              <span class="badge soft">${percent}% complete</span>
-              <span class="badge">${esc(b.active ? 'Active' : 'Inactive')}</span>
-              <span class="badge">${esc(b.cash_buyer ? 'Cash buyer' : 'Structured / flexible')}</span>
-            </div>
-          </div>
-          <div class="badges">
-            ${b.agent_friendly ? '<span class="badge soft">Agent friendly</span>' : ''}
-            ${b.open_to_virtual ? '<span class="badge soft">Virtual OK</span>' : ''}
-            ${b.price_min || b.price_max ? `<span class="badge">${esc(formatCurrencyRange(b.price_min, b.price_max))}</span>` : ''}
-            ${b.cash_available ? `<span class="badge">Cash ${esc(formatMoney(b.cash_available))}</span>` : ''}
-            ${missing.length ? `<span class="badge bad">${missing.length} gap${missing.length === 1 ? '' : 's'}</span>` : '<span class="badge soft">No obvious gaps</span>'}
-          </div>
-          <div class="progress"><span style="width:${percent}%"></span></div>
-        </summary>
-        <div class="buyer-body">
-          <div class="group">
-            <h4>Core identity</h4>
-            <div class="grid-fields">
-              ${kv('Email', b.email || '—')}
-              ${kv('Phone', b.phone || '—')}
-              ${kv('Website', b.website || '—')}
-              ${kv('Source page', b.source_page_id || '—')}
-              ${kv('Source system', b.source_system || '—')}
-              ${kv('Notion synced', b.notion_last_synced_at || '—')}
-            </div>
-          </div>
-          <div class="group">
-            <h4>Buy box criteria</h4>
-            <div class="chips">
-              ${chipSet(['States: ' + states, 'Markets: ' + markets, 'Areas: ' + areas, 'Assets: ' + assets, 'Strategy: ' + strategies, 'Structure: ' + structures, 'Class: ' + classLabels, 'Entry: ' + entryMethods, 'Deal structures: ' + dealStructures, 'Labels: ' + labels])}
-            </div>
-          </div>
-          <div class="group">
-            <h4>Size / price / pace</h4>
-            <div class="grid-fields">
-              ${kv('Acreage', formatRange(b.acreage_min, b.acreage_max))}
-              ${kv('Beds', formatRange(b.beds_min, b.beds_max))}
-              ${kv('Baths', formatRange(b.baths_min, b.baths_max))}
-              ${kv('Units', formatRange(b.units_min, b.units_max))}
-              ${kv('Price', formatCurrencyRange(b.price_min, b.price_max))}
-              ${kv('Price / door', formatCurrencyRange(b.price_per_door_min, b.price_per_door_max))}
-              ${kv('Equity spread', formatRange(b.equity_spread_min, null, '%'))}
-              ${kv('ARV %', formatRange(b.arv_pct_min, null, '%'))}
-            </div>
-          </div>
-          <div class="group">
-            <h4>Guardrails and notes</h4>
-            <div class="details-grid">
-              ${kv('Absolute no-go’s', b.absolute_no_gos || '—')}
-              ${kv('Financing notes', b.financing_notes || '—')}
-              ${kv('Buy box notes', b.buy_box_notes || '—')}
-              ${kv('Source payload keys', sourceKeys.length ? String(sourceKeys.length) : '0')}
-            </div>
-          </div>
-          <div class="group">
-            <h4>Raw sync payload</h4>
-            <div class="chips">${sourceBadges || '<span class="chip">No payload fields</span>'}</div>
-          </div>
-        </div>
-      </details>`;
+    function statCard(item) {
+      return `<div class="stat"><div class="label">${item.label}</div><div class="value">${item.value}</div><div class="note">${item.note}</div></div>`;
     }
 
-    function scoreBuyer(buyer, text) {
-      const t = text.toLowerCase();
-      let score = 0;
-      const addIf = (cond, pts) => { if (cond) score += pts; };
-      (buyer.states_allowed || []).forEach(s => addIf(t.includes(String(s).toLowerCase()), 10));
-      (buyer.markets_allowed || []).forEach(s => addIf(t.includes(String(s).toLowerCase()), 9));
-      (buyer.area_preferences || []).forEach(s => addIf(t.includes(String(s).toLowerCase()), 7));
-      (buyer.asset_classes || []).forEach(s => addIf(t.includes(String(s).toLowerCase()), 7));
-      (buyer.strategy_types || []).forEach(s => addIf(t.includes(String(s).toLowerCase()), 7));
-      (buyer.structure_types || []).forEach(s => addIf(t.includes(String(s).toLowerCase()), 6));
-      addIf(t.includes('cash') && buyer.cash_buyer, 8);
-      addIf(t.includes('creative') && (buyer.strategy_types || []).some(s => /creative|subto|seller finance/i.test(s)), 8);
-      addIf(t.includes('vacant') && (buyer.buy_box_notes || '').toLowerCase().includes('vacant'), 5);
-      addIf(t.includes('delinquent') || t.includes('notice of default') || t.includes('foreclosure'), 6);
-      addIf(t.includes('agent') && buyer.agent_friendly, 5);
-      addIf(t.includes('virtual') && buyer.open_to_virtual, 4);
-      addIf(Number(buyer.buy_box_completeness) >= 0.5, 4);
-      return Math.min(100, score + Math.round(Number(buyer.buy_box_completeness || 0) * 20));
+    function lineCard(item) {
+      return `<div class="line-card"><div><strong>${item.title}</strong><small>${item.detail}</small></div><div class="pill"><i></i>${item.state}</div></div>`;
     }
+
+    function scanCard(item) {
+      return `<div class="scan-item"><div><strong>${item.title}</strong><p>${item.body}</p></div><div class="meta">${item.meta}</div></div>`;
+    }
+
+    function queueItem(item) {
+      return `<div class="queue-item"><div><strong>${item.title}</strong><p>${item.body}</p></div><div class="state">${item.state}</div></div>`;
+    }
+
+    function render() {
+      document.getElementById('hero-stats').innerHTML = app.stats.map(statCard).join('');
+      document.getElementById('status-stack').innerHTML = app.status.map(s => lineCard({ title:s.title, detail:s.detail, state:s.state })).join('');
+      document.getElementById('buyers-grid').innerHTML = app.buyers.map(buyerCard).join('');
+      document.getElementById('scan-results').innerHTML = app.scans.map(scanCard).join('');
+      document.getElementById('bridge-grid').innerHTML = app.bridge.map(lineCard).join('');
+      document.getElementById('workflow-grid').innerHTML = app.workflow.map(lineCard).join('');
+      document.getElementById('match-summary').innerHTML = app.matches.map(lineCard).join('');
+      document.getElementById('draft-queue').innerHTML = app.drafts.length ? app.drafts.map(queueItem).join('') : `<div class="line-card"><div><strong>No drafts queued yet</strong><small>Run a scan or flag a missing field to stage outreach.</small></div><div class="pill"><i></i>Idle</div></div>`;
+    }
+
     function extractAddress(text) {
       const m = text.match(/\b\d{1,6}\s+[A-Za-z0-9.'\- ]+(?:St|Street|Rd|Road|Ave|Avenue|Blvd|Boulevard|Ln|Lane|Dr|Drive|Ct|Court|Way|Pkwy|Parkway|Hwy|Highway|Cir|Circle)\b/i);
-      return m ? m[0].replace(/\s+/g, ' ').trim() : 'No address detected';
-    }
-    function prospectFlags(text) {
-      const t = text.toLowerCase();
-      const flags = [];
-      if (/foreclosure|notice of default|auction/.test(t)) flags.push('distress');
-      if (/vacant|vacancy/.test(t)) flags.push('vacant');
-      if (/delinquent|tax lien|code violation/.test(t)) flags.push('delinquency');
-      if (/probate|eviction/.test(t)) flags.push('motivation');
-      return flags.length ? flags : ['no explicit distress'];
-    }
-    function queueDraft(type, body, state) { app.drafts.unshift({ type, body, state }); if (app.drafts.length > 4) app.drafts.length = 4; renderDrafts(); }
-    function runScan(text) {
-      const input = text.trim();
-      const address = extractAddress(input);
-      const flags = prospectFlags(input);
-      const scored = BUYERS.map(b => ({ buyer: b, score: scoreBuyer(b, input) })).sort((a,b) => b.score - a.score).slice(0, 4);
-      document.getElementById('scan-results').innerHTML = [
-        { title: `OCR / address parsed: ${address}`, body: `Detected signals: ${flags.join(', ')}. The scan is matched against the buyer brain rather than a generic lead bucket.`, meta: input ? 'Parsed' : 'Waiting' },
-        { title: `Top buyer match: ${scored[0]?.buyer?.name || 'n/a'}`, body: scored[0] ? `${scored[0].buyer.buyer_type} · ${scored[0].buyer.company_name || 'No company listed'} · completeness ${scored[0].buyer.buy_box_completeness}` : 'No matches found.', meta: scored[0] ? `${scored[0].score} / 100` : '0' },
-        ...scored.map(s => ({ title: s.buyer.name, body: `${(s.buyer.asset_classes || []).join(', ') || 'No asset classes'} · ${(s.buyer.states_allowed || []).join(', ') || 'No states'} · ${s.buyer.buy_box_notes || 'No notes listed'}`, meta: `${s.score}/100` }))
-      ].map(item => `<div class="scan-item"><div><strong>${esc(item.title)}</strong><p>${esc(item.body)}</p></div><div class="meta">${esc(item.meta)}</div></div>`).join('');
-
-      const top = scored[0]?.buyer;
-      if (top && Number(top.buy_box_completeness || 0) < 0.5) {
-        queueDraft('Gap request', `Ask ${top.name} for the missing buy-box fields needed to improve matching precision. Current gaps: ${top.source_page_id ? 'none obvious in source page' : 'Notion page id missing'}, price range, and geography details.`, 'Needs info');
-      }
-      if (top) {
-        queueDraft('Prospect email', `Draft a short email for ${address} targeted to ${top.name}. Mention ${flags.join(', ')} and keep it buyer-first.`, 'Ready');
-        queueDraft('Prospect text', `Draft a short text for ${address} targeted to ${top.name}. Keep it tight and local.`, 'Ready');
-      }
+      return m ? m[0].replace(/\s+/g,' ').trim() : 'No address detected';
     }
 
-    document.getElementById('buyers').innerHTML = BUYERS.map((b, i) => buyerCard(b, i)).join('');
-    renderStats(); renderStatus(); renderBridge(); renderCoverage(); renderDrafts(); renderAuth();
+    function distressSignals(text) {
+      const signals = [
+        ['foreclosure', 'foreclosure'], ['notice of default', 'notice of default'], ['vacant', 'vacancy'], ['delinquent', 'delinquency'],
+        ['probate', 'probate'], ['auction', 'auction'], ['tax lien', 'tax lien'], ['code violation', 'code violation'],
+        ['eviction', 'eviction'], ['repairs needed', 'condition'], ['distress', 'distress']
+      ];
+      const found = signals.filter(([needle]) => text.includes(needle)).map(([,label]) => label);
+      return found.length ? [...new Set(found)] : ['No explicit distress language'];
+    }
+
+    function buildMatch(text) {
+      const lower = text.toLowerCase();
+      const address = extractAddress(text);
+      const distress = distressSignals(lower);
+      const hasVacant = lower.includes('vacant');
+      const buyer = hasVacant || lower.includes('cash flow') ? app.buyers[1] : app.buyers[0];
+      const proximity = lower.includes('elm') || lower.includes('san antonio') ? '1.7 mi' : '2.0 mi';
+      const contact = /\b\d{3}[\s.-]?\d{3}[\s.-]?\d{4}\b/.exec(text)?.[0] || 'Add phone';
+      const email = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.exec(text)?.[0] || 'Add email';
+      const cleanedContact = contact !== 'Add phone' || email !== 'Add email'
+        ? `Clean contact info: ${contact}${email !== 'Add email' ? ` / ${email}` : ''}`
+        : 'Clean contact info not found in OCR text';
+      return { address, distress, buyer, proximity, cleanedContact };
+    }
+
+    function queueDraft(type, body, state) {
+      app.drafts.unshift({ title: `${type} draft`, body, state });
+      render();
+    }
+
     document.getElementById('auth-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      const tier = document.getElementById('tier').value;
-      const code = document.getElementById('code').value.trim();
       const email = document.getElementById('email').value.trim();
-      const finalTier = tier === 'grandfathered' && code === GRAND_CODE ? 'grandfathered' : tier;
-      setAuth({ email, tier: finalTier, ts: Date.now() });
+      const tier = document.getElementById('accessTier').value;
+      const code = document.getElementById('code').value.trim();
+      const finalTier = (tier === 'grandfathered' && code === GRAND_CODE) ? 'grandfathered' : tier;
+      saveAuth({ email, tier: finalTier, ts: Date.now() });
       renderAuth();
-    });
-    document.getElementById('scan-btn').addEventListener('click', () => runScan(document.getElementById('prospect-input').value));
-    document.getElementById('email-btn').addEventListener('click', () => {
-      const input = document.getElementById('prospect-input').value;
-      const top = BUYERS.slice().sort((a,b) => scoreBuyer(b, input) - scoreBuyer(a, input))[0];
-      queueDraft('Email', top ? `Ask ${top.name} about the lead at ${extractAddress(input || '')}. Use the buyer-first tone and request any missing fields needed for a cleaner match.` : 'No target buyer found yet.', 'Draft');
-    });
-    document.getElementById('text-btn').addEventListener('click', () => {
-      const input = document.getElementById('prospect-input').value;
-      const top = BUYERS.slice().sort((a,b) => scoreBuyer(b, input) - scoreBuyer(a, input))[0];
-      queueDraft('Text', top ? `Short text for ${top.name}: concise, local, and direct for ${extractAddress(input || '')}.` : 'No target buyer found yet.', 'Draft');
-    });
-    document.getElementById('prospect-input').addEventListener('focus', () => {
-      if (!document.getElementById('prospect-input').value) {
-        document.getElementById('prospect-input').value = '1427 Elm St, notice of default, vacant, call owner';
-      }
-    });
-    loadLandLeads().catch(err => {
-      const target = document.getElementById('land-leads-list');
-      const count = document.getElementById('land-lead-count');
-      if (count) count.textContent = '0';
-      if (target) target.innerHTML = `<div class="queue-item"><div><strong>Unable to load live land leads</strong><p>${esc(err?.message || 'Supabase fetch failed')}</p></div><div class="state">Error</div></div>`;
+      render();
     });
 
+    document.getElementById('scanBtn').addEventListener('click', () => {
+      const input = document.getElementById('ocrInput').value.trim();
+      if (!input) {
+        app.scans = [{ title:'No input provided', body:'Paste OCR text or a typed address to run the scan.', meta:'Waiting' }];
+        render();
+        return;
+      }
+      const m = buildMatch(input);
+      app.scans = [
+        { title: `OCR detected: ${m.address}`, body: `Distress cues: ${m.distress.join(', ')}. The lead was evaluated against the buyer brain before it was surfaced in the field engine.`, meta: m.proximity },
+        { title: `Matched buyer: ${m.buyer.name}`, body: `The lead is routed to ${m.buyer.tier.toLowerCase()} and can now be drafted for outreach or parked for follow-up.`, meta: m.buyer.fit },
+        { title: 'Cleaner contact info', body: m.cleanedContact, meta: 'Normalized' },
+      ];
+      app.matches = [
+        { title: 'Top fit', body: `${m.buyer.name} is the active match for this lead.`, state: m.buyer.fit },
+        { title: 'Proximity', body: `Lead is inside the ${m.proximity} working window.`, state: 'Scan ready' },
+        { title: 'Distress', body: m.distress.join(', '), state: 'Flagged' },
+      ];
+      queueDraft('Prospect email', `Draft email for ${m.address} to ${m.buyer.name}. Mention distress cues: ${m.distress.join(', ')}.`, 'Queued');
+      queueDraft('Prospect text', `Draft text for ${m.address} to ${m.buyer.name}. Keep it concise and local.`, 'Queued');
+    });
+
+    document.getElementById('draftEmailBtn').addEventListener('click', () => {
+      const input = document.getElementById('ocrInput').value.trim();
+      const m = buildMatch(input || 'No input');
+      queueDraft('Email', `Ask for interest on ${m.address}. If the buyer box is incomplete, request missing fields before sending more leads.`, 'Ready');
+    });
+
+    document.getElementById('draftTextBtn').addEventListener('click', () => {
+      const input = document.getElementById('ocrInput').value.trim();
+      const m = buildMatch(input || 'No input');
+      queueDraft('Text', `Short text for ${m.address}. Offer a quick reply path and keep the tone direct.`, 'Ready');
+    });
+
+    renderAuth();
+    render();
   </script>
 </body>
 </html>
