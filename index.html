@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg:#06080b;
@@ -234,42 +236,27 @@
   <section class="auth-shell" id="auth-shell">
     <div class="auth-grid">
       <article class="auth-panel">
-        <div class="badge">Secure dual-engine access</div>
-        <h2>Login to the buyer brain and the field engine.</h2>
+        <div class="badge">Secure Supabase Auth</div>
+        <h2 id="auth-title">Login to the buyer brain and the field engine.</h2>
         <p class="copy">Authenticate to enter the split system. The CRM stays buyer-first, DealSnap stays mobile-first, and the bridge keeps both modules talking back and forth without clutter or render bloat.</p>
         <form class="form" id="auth-form">
-          <div class="row2">
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" type="email" placeholder="name@company.com" autocomplete="email" required />
-            </div>
-            <div class="field">
-              <label for="accessTier">Access tier</label>
-              <select id="accessTier">
-                <option value="grandfathered">Grandfathered — $10/month</option>
-                <option value="future">Future member — $50/month</option>
-              </select>
-            </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="name@company.com" autocomplete="email" required />
           </div>
-          <div class="row2">
-            <div class="field">
-              <label for="code">Grandfathered access code</label>
-              <input id="code" type="password" placeholder="Enter grandfathered code" autocomplete="current-password" />
-            </div>
-            <div class="field">
-              <label for="stripe">Subscription gate</label>
-              <input id="stripe" type="text" value="Stripe checkout / payment collection placeholder" readonly />
-            </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
           </div>
           <div class="actions-row">
-            <button class="btn primary" type="submit">Enter dual ecosystem <span>→</span></button>
-            <a class="btn" href="#pricing">Review pricing gate <span>→</span></a>
+            <button class="btn primary" id="auth-submit-btn" type="submit">Sign In <span>→</span></button>
+            <button class="btn" id="toggle-auth-mode" type="button">Need an account? Sign Up <span>→</span></button>
           </div>
-          <div class="note">Grandfathered users start at $10/month. Future members move to $50/month. The auth wall keeps the CRM and DealSnap private until login succeeds.</div>
+          <div id="auth-error" class="note" style="color:var(--bad); margin-top:10px;"></div>
         </form>
       </article>
       <aside class="pricing-panel" id="pricing">
-        <h3 style="margin:0;font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);">Subscription tiers</h3>
+        <h3>Subscription tiers</h3>
         <div class="pricing-grid">
           <div class="price-card featured">
             <div class="tier">Grandfathered</div>
@@ -284,15 +271,15 @@
           <div class="price-card">
             <div class="tier">Future</div>
             <div class="rate">$50<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
-            <p class="desc">Planned future monetization layer for new signups. Replace the placeholder with a live Stripe checkout when ready.</p>
+            <p class="desc">Planned future monetization layer for new signups. Subscription verified upon login.</p>
             <ul class="list">
-              <li><a id="checkout-link" href="https://example.com/stripe-checkout-placeholder" style="color:var(--gold-2)">Open payment collection placeholder</a></li>
               <li>Subscription gate before dashboard</li>
               <li>Clean premium onboarding</li>
+              <li>Priority support lane</li>
             </ul>
           </div>
         </div>
-        <div class="hint">Static GitHub Pages can present the gate and route to checkout, but real server-side verification would still require a backend or hosted auth layer.</div>
+        <div class="hint">Static GitHub Pages can present the gate and route to checkout. Real server-side verification is best handled via a Netlify or Vercel edge layer.</div>
       </aside>
     </div>
   </section>
@@ -312,6 +299,7 @@
           <a href="#deal-snap">DealSnap</a>
           <a href="#bridge">Integration Bridge</a>
           <a href="#drafts">Draft Queue</a>
+          <button id="logout-btn" class="btn">Logout</button>
         </nav>
       </header>
 
@@ -418,10 +406,12 @@
   </main>
 
   <script>
-    const AUTH_KEY = 'dealsnap_dual_auth_v1';
-    const GRAND_CODE = 'GRANDFATHERED10';
-    const checkoutLink = document.getElementById('checkout-link');
-    if (checkoutLink) checkoutLink.href = 'https://example.com/stripe-checkout-placeholder';
+    // Supabase Initialization
+    const SUPABASE_URL = 'https://egpqhzubdeklzstzdmtt.supabase.co';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace with real key
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let isSignUpMode = false;
 
     const app = {
       stats: [
@@ -496,22 +486,50 @@
       drafts: [],
     };
 
-    function saveAuth(payload) { localStorage.setItem(AUTH_KEY, JSON.stringify(payload)); }
-    function getAuth() { try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; } }
+    // Auth Event Listeners
+    document.getElementById('toggle-auth-mode').addEventListener('click', () => {
+      isSignUpMode = !isSignUpMode;
+      document.getElementById('auth-title').textContent = isSignUpMode ? 'Create your dual-engine account.' : 'Login to the buyer brain and the field engine.';
+      document.getElementById('auth-submit-btn').innerHTML = isSignUpMode ? 'Sign Up <span>→</span>' : 'Sign In <span>→</span>';
+      document.getElementById('toggle-auth-mode').textContent = isSignUpMode ? 'Already have an account? Sign In →' : 'Need an account? Sign Up →';
+    });
 
-    function renderAuth() {
-      const auth = getAuth();
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorDiv = document.getElementById('auth-error');
+      errorDiv.textContent = '';
+
+      if (isSignUpMode) {
+        const { error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) errorDiv.textContent = error.message;
+        else alert('Check your email for the confirmation link!');
+      } else {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) errorDiv.textContent = error.message;
+      }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await supabaseClient.auth.signOut();
+    });
+
+    // Session State Management
+    supabaseClient.auth.onAuthStateChange((event, session) => {
       const authShell = document.getElementById('auth-shell');
       const appShell = document.getElementById('app-shell');
-      if (auth?.tier) {
+      if (session) {
         authShell.hidden = true;
         appShell.hidden = false;
+        render();
       } else {
         authShell.hidden = false;
         appShell.hidden = true;
       }
-    }
+    });
 
+    // App Rendering Logic
     function buyerCard(b) {
       const missing = b.missing.length ? `<div class="tag-row">${b.missing.map(m => `<span class="tag" style="background:rgba(239,109,80,.08);border-color:rgba(239,109,80,.18);color:#ffb1a2">Missing: ${m}</span>`).join('')}</div>` : '';
       return `<article class="card">
@@ -585,17 +603,6 @@
       render();
     }
 
-    document.getElementById('auth-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const tier = document.getElementById('accessTier').value;
-      const code = document.getElementById('code').value.trim();
-      const finalTier = (tier === 'grandfathered' && code === GRAND_CODE) ? 'grandfathered' : tier;
-      saveAuth({ email, tier: finalTier, ts: Date.now() });
-      renderAuth();
-      render();
-    });
-
     document.getElementById('scanBtn').addEventListener('click', () => {
       const input = document.getElementById('ocrInput').value.trim();
       if (!input) {
@@ -630,8 +637,6 @@
       queueDraft('Text', `Short text for ${m.address}. Offer a quick reply path and keep the tone direct.`, 'Ready');
     });
 
-    renderAuth();
-    render();
   </script>
 </body>
 </html>
