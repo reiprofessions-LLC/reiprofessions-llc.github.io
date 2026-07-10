@@ -153,6 +153,7 @@
       display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:999px; border:1px solid rgba(243,213,139,.2);
       background:rgba(243,213,139,.08); color:var(--gold-2); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
     }
+    .pricing-panel h3 { margin:0; font-size:1rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-2); }
     .pricing-grid { display:grid; gap:12px; margin-top:14px; }
     .price-card {
       padding:18px; border-radius:20px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
@@ -258,7 +259,7 @@
             </div>
             <div class="field">
               <label for="stripe">Subscription gate</label>
-              <input id="stripe" type="text" value="Stripe checkout / payment collection placeholder" readonly />
+              <input id="stripe" type="text" value="Subscription managed via Stripe" readonly />
             </div>
           </div>
           <div class="actions-row">
@@ -269,7 +270,7 @@
         </form>
       </article>
       <aside class="pricing-panel" id="pricing">
-        <h3 style="margin:0;font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);">Subscription tiers</h3>
+        <h3>Subscription tiers</h3>
         <div class="pricing-grid">
           <div class="price-card featured">
             <div class="tier">Grandfathered</div>
@@ -284,15 +285,15 @@
           <div class="price-card">
             <div class="tier">Future</div>
             <div class="rate">$50<span style="font-size:1rem;font-weight:700;color:var(--muted)">/month</span></div>
-            <p class="desc">Planned future monetization layer for new signups. Replace the placeholder with a live Stripe checkout when ready.</p>
+            <p class="desc">Planned future monetization layer for new signups. Subscription verified upon login.</p>
             <ul class="list">
-              <li><a id="checkout-link" href="https://example.com/stripe-checkout-placeholder" style="color:var(--gold-2)">Open payment collection placeholder</a></li>
               <li>Subscription gate before dashboard</li>
               <li>Clean premium onboarding</li>
+              <li>Priority support lane</li>
             </ul>
           </div>
         </div>
-        <div class="hint">Static GitHub Pages can present the gate and route to checkout, but real server-side verification would still require a backend or hosted auth layer.</div>
+        <div class="hint">Static GitHub Pages can present the gate and route to checkout. Real server-side verification is best handled via a Netlify or Vercel edge layer.</div>
       </aside>
     </div>
   </section>
@@ -420,8 +421,6 @@
   <script>
     const AUTH_KEY = 'dealsnap_dual_auth_v1';
     const GRAND_CODE = 'GRANDFATHERED10';
-    const checkoutLink = document.getElementById('checkout-link');
-    if (checkoutLink) checkoutLink.href = 'https://example.com/stripe-checkout-placeholder';
 
     const app = {
       stats: [
