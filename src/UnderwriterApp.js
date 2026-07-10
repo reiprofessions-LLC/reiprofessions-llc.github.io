@@ -26,12 +26,8 @@ export default function UnderwriterApp() {
     <div className="min-h-screen bg-white text-slate-900 font-sans p-8 max-w-4xl mx-auto border-x border-slate-100 shadow-sm">
       <header className="mb-12 border-b border-slate-100 pb-6 flex justify-between items-center text-slate-900">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-indigo-600">REI PROFESSIONS</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-indigo-600">DEALSNAP</h1>
           <p className="text-slate-400 text-sm font-medium uppercase tracking-tighter">Underwriting Mission Control</p>
-        </div>
-        <div className="text-right">
-          <p className="text-xs text-slate-400 uppercase tracking-widest">Primary Contact</p>
-          <p className="font-bold text-slate-700">210-954-3508</p>
         </div>
       </header>
 
@@ -123,7 +119,7 @@ export default function UnderwriterApp() {
       </section>
       
       <footer className="text-center text-[10px] text-slate-300 uppercase font-bold tracking-[0.3em] mt-12 mb-8">
-        Clean Build • REI Professions LLC
+        Clean Build • DEALSNAP
       </footer>
     </div>
   );
